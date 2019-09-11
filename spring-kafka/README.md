@@ -53,19 +53,19 @@ Inside `springboot-cloudkarafka` root folder, run the command below
 
 ## Execution example
 
-**Posting a new news title**
+**Posting a news**
 > I am using [HTTPie](https://httpie.org/) 
 ```
 http :9080/api/news source="Spring Boot Blog" title="Spring Boot and CloudKarafka"
 ```
 
-**Producer logs the following output**
+**Producer logs**
 ```
 INFO 1763 --- [nio-9080-exec-2] c.mycompany.producer.kafka.NewsProducer  : Sending News 'News(id=4e6857c1-cbfb-4c14-ba19-b9a0f1d535b2, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)' to topic '2gxxxxxx-news.json'
 
 ```
 
-**Consumer logs the output below**
+**Consumer logs**
 ```
 INFO 1917 --- [ntainer#0-0-C-1] c.mycompany.consumer.kafka.NewsConsumer  : Received message
 ---

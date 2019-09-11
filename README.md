@@ -9,7 +9,7 @@ a cloud-based messaging service called [`CloudKarafka`](https://www.cloudkarafka
 
 ## Examples
 
-### spring-kafka
+### [spring-kafka](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-kafka)
 
 In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the
 configuration between `Spring Boot` applications and `CloudKarafka`.
