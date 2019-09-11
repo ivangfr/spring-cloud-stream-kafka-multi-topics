@@ -18,8 +18,8 @@
     <description>Demo project for Spring Boot</description>
 
     <modules>
-        <module>spring-kafka/producer</module>
-        <module>spring-kafka/consumer</module>
+        <module>spring-kafka/producer-kafka</module>
+        <module>spring-kafka/consumer-kafka</module>
         <module>spring-cloud-stream/producer-cloud-stream</module>
         <module>spring-cloud-stream/consumer-cloud-stream</module>
     </modules>

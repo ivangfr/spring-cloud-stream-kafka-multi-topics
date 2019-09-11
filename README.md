@@ -14,7 +14,7 @@ a cloud-based messaging service called [`CloudKarafka`](https://www.cloudkarafka
 In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the
 configuration between `Spring Boot` applications and `CloudKarafka`.
 
-### spring-cloud-stream (TODO)
+### [spring-cloud-stream](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-cloud-stream)
 
 Here, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/)
 library to implement the configuration between `Spring Boot` applications and `CloudKarafka`.

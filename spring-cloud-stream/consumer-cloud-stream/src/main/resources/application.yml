@@ -19,7 +19,7 @@ spring:
         input:
           destination: ${CLOUDKARAFKA_USERNAME}-news.json
           content-type: application/json
-          group: consumerCloudSstreamGroup
+          group: consumerCloudStreamGroup
           consumer:
             start-offset: latest
             max-attempts: 4

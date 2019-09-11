@@ -69,7 +69,7 @@ INFO 5090 --- [nio-9082-exec-1] c.m.p.kafka.NewsProducer : Sending News 'News(id
 ```
 INFO 5066 --- [container-0-C-1] c.m.c.kafka.NewsConsumer : Received message
 ---
-TOPIC: 2gxxxxxx-news.json; PARTITION: 0; OFFSET: 2;
+TOPIC: 2gxxxxxx-news.json; PARTITION: 0; OFFSET: 1;
 PAYLOAD: News(id=04253f40-ff8e-4293-91ba-a570febda5e1, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)
 ---
 ```
