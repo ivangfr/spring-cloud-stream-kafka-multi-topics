@@ -20,6 +20,8 @@
     <modules>
         <module>spring-kafka/producer</module>
         <module>spring-kafka/consumer</module>
+        <module>spring-cloud-stream/producer-cloud-stream</module>
+        <module>spring-cloud-stream/consumer-cloud-stream</module>
     </modules>
 
     <properties>

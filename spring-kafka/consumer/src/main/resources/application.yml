@@ -9,7 +9,7 @@ kafka:
   bootstrap-servers: ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094
   consumer:
     group-id: consumer-group
-    auto-offset-reset: earliest
+    auto-offset-reset: latest
     topic: ${CLOUDKARAFKA_USERNAME}-news.json
   secure-connection:
     enabled: true

@@ -1,0 +1,26 @@
+server:
+  port: 9083
+
+spring:
+  application:
+    name: consumer-cloud-stream
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094
+          min-partition-count: 5
+          configuration:
+            security.protocol: SASL_SSL
+            sasl:
+              mechanism: SCRAM-SHA-256
+              jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUDKARAFKA_USERNAME}" password="${CLOUDKARAFKA_PASSWORD}";
+      bindings:
+        input:
+          destination: ${CLOUDKARAFKA_USERNAME}-news.json
+          content-type: application/json
+          group: consumerCloudSstreamGroup
+          consumer:
+            start-offset: latest
+            max-attempts: 4
+            back-off-initial-interval: 10000
