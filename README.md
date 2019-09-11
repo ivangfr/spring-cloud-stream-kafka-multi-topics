@@ -1,11 +1,12 @@
 # `springboot-cloudkarafka`
 
-The goal of this project is to implement a [`Spring Boot`](https://spring.io/projects/spring-boot) application (called
-`producer`) that _produces_ messages to some [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot`
-application (called `consumer`) that _consumes_ those messages. I have implemented similar projects before like,
-for example [`springboot-spring-kafka`](https://github.com/ivangfr/springboot-spring-kafka). However, this one is
-different because instead of running `Kafka` locally using [`Docker`](https://www.docker.com/) containers, it uses
-a cloud-based messaging service called [`CloudKarafka`](https://www.cloudkarafka.com/).
+The goal of this project is to implement a [`Spring Boot`](https://spring.io/projects/spring-boot) application that
+_produces_ messages to some [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot` application that
+_consumes_ those messages. I have implemented similar projects before like, for example
+[`springboot-spring-kafka`](https://github.com/ivangfr/springboot-spring-kafka) and
+[`spring-cloud-stream-elasticsearch`](https://github.com/ivangfr/spring-cloud-stream-elasticsearch). However, this one
+is different because instead of using a `Kafka` running locally as a [`Docker`](https://www.docker.com/) container, we
+are going to use a cloud-based messaging service called [`CloudKarafka`](https://www.cloudkarafka.com/).
 
 ## Examples
 
