@@ -22,5 +22,3 @@ spring:
           group: consumerCloudStreamGroup
           consumer:
             start-offset: latest
-            max-attempts: 4
-            back-off-initial-interval: 10000
