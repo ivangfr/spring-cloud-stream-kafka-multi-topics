@@ -1,23 +1,26 @@
-# `springboot-cloudkarafka /`
-# `spring-kafka`
+# `springboot-cloudkarafka`
+# `> spring-kafka`
 
 In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the
-configuration between `Spring Boot` applications and `CloudKarafka`.
+configuration between `Spring Boot` applications and `Kafka`.
 
 ## Microservices
 
 ### producer-kafka
 
-Spring Boot Web Java application that exposes one endpoint at which users can post `news` informing its
-`source` and `title`. Once a request is made, `producer-kafka` pushes a message about the `news` to Kafka.
+Spring Boot Web Java application that exposes one endpoint at which users can post `news`. In the `POST` request,
+`source` and `title` (both of type string), must be informed. Once a request is made, `producer-kafka` pushes a message
+about the `news` to Kafka.
 
 ### consumer-kafka
 
-Spring Boot Web Java application that listens from `Kafka` to messages published by the `producer-kafka` and logs it.
+Spring Boot Web Java application that listens to messages (published by the `producer-kafka`) and logs it.
 
 ## Start microservices
 
-### producer-kafka
+### Using CloudKarafka
+
+#### producer-kafka
 
 Open a terminal and export your `CloudKarafka` credentials to those environment variables
 ```
@@ -27,10 +30,10 @@ export CLOUDKARAFKA_PASSWORD=...
 
 Then, inside `springboot-cloudkarafka` root folder, run the following command
 ```
-./mvnw spring-boot:run --projects spring-kafka/producer-kafka
+./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.profiles=cloudkarafka
 ```
 
-### consumer-kafka
+#### consumer-kafka
 
 Open another terminal and, similar to what you did before, export your `CloudKarafka` credentials to the environment
 variable
@@ -41,17 +44,33 @@ export CLOUDKARAFKA_PASSWORD=...
 
 Inside `springboot-cloudkarafka` root folder, run the command below
 ```
+./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.profiles=cloudkarafka
+```
+
+### Using Kafka running locally
+
+#### producer-kafka
+
+Open a terminal and inside `springboot-cloudkarafka` root folder, run the following command
+```
+./mvnw spring-boot:run --projects spring-kafka/producer-kafka
+```
+
+#### consumer-kafka
+
+Open another terminal and inside `springboot-cloudkarafka` root folder, run the command below
+```
 ./mvnw spring-boot:run --projects spring-kafka/consumer-kafka
 ```
 
-## Microservices URLs
+## Microservice URLs
 
 | Microservice   | URL                   |
 | -------------- | --------------------- |
 | producer-kafka | http://localhost:9080 |
 | consumer-kafka | http://localhost:9081 |
 
-## Execution example
+## Execution example using CloudKarafka
 
 **Posting a news**
 > I am using [HTTPie](https://httpie.org/) 

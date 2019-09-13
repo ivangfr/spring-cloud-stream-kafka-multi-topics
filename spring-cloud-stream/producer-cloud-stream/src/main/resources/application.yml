@@ -8,6 +8,22 @@ spring:
     stream:
       kafka:
         binder:
+          brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
+      bindings:
+        output:
+          destination: news.json
+          content-type: application/json
+          producer:
+            partition-key-expression: headers['partitionKey']
+            partition-count: 5
+
+---
+spring:
+  profiles: cloudkarafka
+  cloud:
+    stream:
+      kafka:
+        binder:
           brokers: ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094
           configuration:
             security.protocol: SASL_SSL
@@ -17,7 +33,3 @@ spring:
       bindings:
         output:
           destination: ${CLOUDKARAFKA_USERNAME}-news.json
-          content-type: application/json
-          producer:
-            partition-key-expression: headers['partitionKey']
-            partition-count: 5

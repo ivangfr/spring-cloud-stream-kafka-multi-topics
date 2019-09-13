@@ -20,8 +20,10 @@ public class NewsController {
     }
 
     @PostMapping
-    public void publishNews(@Valid @RequestBody CreateNewsDto createNewsDto) {
-        newsProducer.send(new News(UUID.randomUUID().toString(), createNewsDto.getSource(), createNewsDto.getTitle()));
+    public String publishNews(@Valid @RequestBody CreateNewsDto createNewsDto) {
+        String id = UUID.randomUUID().toString();
+        newsProducer.send(new News(id, createNewsDto.getSource(), createNewsDto.getTitle()));
+        return id;
     }
 
 }
