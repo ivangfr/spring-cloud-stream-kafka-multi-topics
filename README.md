@@ -2,7 +2,9 @@
 
 The goal of this project is to implement a [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
 application that _produces_ messages to a [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot`
-application that _consumes_ those messages. Similar projects are: [`springboot-spring-kafka`](https://github.com/ivangfr/springboot-spring-kafka)
+application that _consumes_ those messages.
+
+Similar projects are: [`springboot-spring-kafka`](https://github.com/ivangfr/springboot-spring-kafka)
 and [`spring-cloud-stream-elasticsearch`](https://github.com/ivangfr/spring-cloud-stream-elasticsearch).
 
 However, in this one, when the profile `cloudkarafka` is used, `producer` and `consumer` will connect to a `Kafka`
@@ -19,7 +21,7 @@ configuration between `Spring Boot` applications and `Kafka`.
 
 ### [spring-cloud-stream](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-cloud-stream)
 
-Here, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/)
+In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/)
 library to implement the configuration between `Spring Boot` applications and `Kafka`.
 
 ## CloudKarafka Configuration
@@ -38,13 +40,16 @@ In order to get information about the topic you will use, click on the `Topics` 
 
 You can use the default topic or create a new one. In my case, I created a new one with suffix `news.json`.
 
-## Starting Kafka as Docker container
+## Running Kafka locally
 
-If you prefer to run everything locally in your machine, i.e, `producer`, `consumer` and `Kafka`, run the command
-below. It will start all container needed to have a `Kafka` broker running locally.
+If you prefer to have `Kafka` running locally in your machine, run the command below. It will start all containers needed.
 ```
 docker-compose up -d
 ```
+> To stop and remove containers, networks and volumes, run
+> ```
+> docker-compose down -v
+> ```
 
 ### Useful links
 
