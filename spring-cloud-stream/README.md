@@ -8,13 +8,17 @@ library to implement the configuration between `Spring Boot` applications and `K
 
 ### producer-cloud-stream
 
-Spring Boot Web Java application that exposes one endpoint at which users can post `news`. In the `POST` request,
-`source` and `title` (both of type string), must be informed. Once a request is made, `producer-kafka` pushes a message
-about the `news` to Kafka.
+Spring Boot Web Java application that exposes one endpoint at which users can post `news`. Once a request is made, 
+`producer-cloud-stream` pushes a message about the `news` to Kafka.
+
+Endpoint
+```
+POST /api/news {"source": "...", "title": "..."}
+```
 
 ### consumer-cloud-stream
 
-Spring Boot Web Java application that listens to messages (published by the `producer-kafka`) and logs it.
+Spring Boot Web Java application that listens to messages (published by the `producer-cloud-stream`) and logs it.
 
 ## Start microservices
 
@@ -48,6 +52,8 @@ Inside `springboot-cloudkarafka` root folder, run the command below
 ```
 
 ### Using Kafka running locally
+
+>Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.  
 
 #### producer-cloud-stream
 

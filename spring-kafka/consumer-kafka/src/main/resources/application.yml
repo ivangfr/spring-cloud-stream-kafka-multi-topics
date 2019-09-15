@@ -6,7 +6,7 @@ spring:
     name: consumer-kafka
 
 kafka:
-  bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
+  bootstrap-servers: localhost:29092
   consumer:
     group-id: consumerKafkaGroup
     auto-offset-reset: latest

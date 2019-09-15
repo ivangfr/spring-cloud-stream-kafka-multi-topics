@@ -1,8 +1,8 @@
 # `springboot-cloudkarafka`
 
-The goal of this project is to implement a [`Spring Boot`](https://spring.io/projects/spring-boot) application that
-_produces_ messages to a [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot` application that
-_consumes_ those messages. Similar projects are: [`springboot-spring-kafka`](https://github.com/ivangfr/springboot-spring-kafka)
+The goal of this project is to implement a [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+application that _produces_ messages to a [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot`
+application that _consumes_ those messages. Similar projects are: [`springboot-spring-kafka`](https://github.com/ivangfr/springboot-spring-kafka)
 and [`spring-cloud-stream-elasticsearch`](https://github.com/ivangfr/spring-cloud-stream-elasticsearch).
 
 However, in this one, when the profile `cloudkarafka` is used, `producer` and `consumer` will connect to a `Kafka`

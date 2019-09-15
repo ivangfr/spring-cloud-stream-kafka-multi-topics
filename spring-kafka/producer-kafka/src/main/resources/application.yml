@@ -6,7 +6,7 @@ spring:
     name: producer-kafka
 
 kafka:
-  bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
+  bootstrap-servers: localhost:29092
   producer:
     topic: news.json
     num-partitions: 5
