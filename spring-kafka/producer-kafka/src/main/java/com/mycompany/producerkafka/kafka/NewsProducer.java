@@ -21,7 +21,7 @@ public class NewsProducer {
 
     public void send(News news) {
         log.info("Sending News '{}' to topic '{}'", news, kafkaTopic);
-        kafkaTemplate.send(kafkaTopic, news.getSource(), news);
+        kafkaTemplate.send(kafkaTopic, news.getId(), news);
     }
 
 }

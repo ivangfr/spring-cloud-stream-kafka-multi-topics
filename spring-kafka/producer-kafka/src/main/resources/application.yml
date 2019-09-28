@@ -1,25 +1,31 @@
-server:
-  port: 9080
-
 spring:
   application:
     name: producer-kafka
 
 kafka:
-  bootstrap-servers: localhost:29092
+  bootstrap-servers: ${KAFKA_URL:localhost:29092}
   producer:
     topic: news.json
     num-partitions: 5
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 ---
 spring:
   profiles: cloudkarafka
 
 kafka:
-  bootstrap-servers: ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094
+  bootstrap-servers: ${KAFKA_URL:ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094}
   producer:
     topic: ${CLOUDKARAFKA_USERNAME}-news.json
-    num-partitions: 5
   configuration:
     security.protocol: SASL_SSL
     sasl:

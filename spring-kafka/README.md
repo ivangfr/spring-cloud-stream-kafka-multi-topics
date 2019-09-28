@@ -20,11 +20,39 @@ POST /api/news {"source": "...", "title": "..."}
 
 Spring Boot Web Java application that listens to messages (published by the `producer-kafka`) and logs it.
 
-## Start microservices
+## Build Docker images
+
+### producer-kafka
+
+In a terminal and inside `springboot-cloudkarafka` root folder, run the following command
+```
+./mvnw clean package dockerfile:build -DskipTests --projects spring-kafka/producer-kafka
+```
+
+| Environment Variable     | Description |
+| -----------------------  | ----------- |
+| `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
+| `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `cloudkarafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
+| `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
+| `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
+
+### consumer-kafka
+
+In a terminal and inside `springboot-cloudkarafka` root folder, run the following command
+```
+./mvnw clean package dockerfile:build -DskipTests --projects spring-kafka/consumer-kafka
+```
+
+| Environment Variable     | Description |
+| ------------------------ | ----------- |
+| `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `karafka`. The `default` will use local `Kafka` |
+| `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `karafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
+| `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
+| `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
+
+## Running microservices as Docker containers
 
 ### Using CloudKarafka
-
-#### producer-kafka
 
 Open a terminal and export your `CloudKarafka` credentials to those environment variables
 ```
@@ -32,49 +60,54 @@ export CLOUDKARAFKA_USERNAME=...
 export CLOUDKARAFKA_PASSWORD=...
 ```
 
-Then, inside `springboot-cloudkarafka` root folder, run the following command
-```
-./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.profiles=cloudkarafka
-```
-
-#### consumer-kafka
-
-Open another terminal and, similar to what you did before, export your `CloudKarafka` credentials to the environment
-variable
-```
-export CLOUDKARAFKA_USERNAME=...
-export CLOUDKARAFKA_PASSWORD=...
-```
-
-Inside `springboot-cloudkarafka` root folder, run the command below
-```
-./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.profiles=cloudkarafka
-```
+| Microservice     | Command |
+| ---------------- | ------- |
+| `producer-kafka` | `docker run -d --rm --name producer-kafka --network springboot-cloudkarafka_default -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9080:8080 docker.mycompany.com/producer-kafka:1.0.0` |
+| `consumer-kafka` | `docker run -d --rm --name consumer-kafka --network springboot-cloudkarafka_default -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9081:8080 docker.mycompany.com/consumer-kafka:1.0.0` |
 
 ### Using Kafka running locally
 
 >Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.
 
-#### producer-kafka
+| Microservice     | Command |
+| ---------------- | ------- |
+| `producer-kafka` | `docker run -d --rm --name producer-kafka --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 -p 9080:8080 docker.mycompany.com/producer-kafka:1.0.0` |
+| `consumer-kafka` | `docker run -d --rm --name consumer-kafka --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 -p 9081:8080 docker.mycompany.com/consumer-kafka:1.0.0` |
 
-Open a terminal and inside `springboot-cloudkarafka` root folder, run the following command
+## Running microservices using Maven
+
+### Using CloudKarafka
+
+In a terminal and export your `CloudKarafka` credentials to those environment variables
 ```
-./mvnw spring-boot:run --projects spring-kafka/producer-kafka
+export CLOUDKARAFKA_USERNAME=...
+export CLOUDKARAFKA_PASSWORD=...
 ```
 
-#### consumer-kafka
+Then, inside `springboot-cloudkarafka` root folder, run the following command
 
-Open another terminal and inside `springboot-cloudkarafka` root folder, run the command below
-```
-./mvnw spring-boot:run --projects spring-kafka/consumer-kafka
-```
+| Microservice     | Command |
+| ---------------- | ------- |
+| `producer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.profiles=cloudkarafka -Dspring-boot.run.jvmArguments="-Dserver.port=9080"` |
+| `consumer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.profiles=cloudkarafka -Dspring-boot.run.jvmArguments="-Dserver.port=9081"` |
+
+### Using Kafka running locally
+
+>Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.  
+
+Inside `springboot-cloudkarafka` root folder, run the following command
+
+| Microservice     | Command |
+| ---------------- | ------- |
+| `producer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9080"` |
+| `consumer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9081"` |
 
 ## Microservice URLs
 
-| Microservice   | URL                   |
-| -------------- | --------------------- |
-| producer-kafka | http://localhost:9080 |
-| consumer-kafka | http://localhost:9081 |
+| Microservice     | URL                   |
+| ---------------- | --------------------- |
+| `producer-kafka` | http://localhost:9080 |
+| `consumer-kafka` | http://localhost:9081 |
 
 ## Execution example using CloudKarafka
 

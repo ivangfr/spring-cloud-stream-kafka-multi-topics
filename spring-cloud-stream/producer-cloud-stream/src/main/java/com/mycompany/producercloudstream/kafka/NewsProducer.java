@@ -27,7 +27,7 @@ public class NewsProducer {
         log.info("Sending News '{}' to topic '{}'", news, kafkaTopic);
 
         Message<News> message = MessageBuilder.withPayload(news)
-                .setHeader("partitionKey", news.getSource())
+                .setHeader("partitionKey", news.getId())
                 .build();
         source.output().send(message);
     }

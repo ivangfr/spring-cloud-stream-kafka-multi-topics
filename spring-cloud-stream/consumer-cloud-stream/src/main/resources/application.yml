@@ -1,6 +1,3 @@
-server:
-  port: 9083
-
 spring:
   application:
     name: consumer-cloud-stream
@@ -8,7 +5,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:29092
+          brokers: ${KAFKA_URL:localhost:29092}
           min-partition-count: 5
       bindings:
         input:
@@ -18,6 +15,16 @@ spring:
           consumer:
             start-offset: latest
 
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always
+
 ---
 spring:
   profiles: cloudkarafka
@@ -25,7 +32,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094
+          brokers: ${KAFKA_URL:ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094}
           configuration:
             security.protocol: SASL_SSL
             sasl:

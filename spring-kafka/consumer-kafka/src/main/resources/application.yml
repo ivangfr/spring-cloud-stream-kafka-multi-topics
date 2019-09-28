@@ -1,23 +1,30 @@
-server:
-  port: 9081
-
 spring:
   application:
     name: consumer-kafka
 
 kafka:
-  bootstrap-servers: localhost:29092
+  bootstrap-servers: ${KAFKA_URL:localhost:29092}
   consumer:
     group-id: consumerKafkaGroup
     auto-offset-reset: latest
     topic: news.json
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 ---
 spring:
   profiles: cloudkarafka
 
 kafka:
-  bootstrap-servers: ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094
+  bootstrap-servers: ${KAFKA_URL:ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094}
   consumer:
     topic: ${CLOUDKARAFKA_USERNAME}-news.json
   configuration:

@@ -1,6 +1,3 @@
-server:
-  port: 9082
-
 spring:
   application:
     name: producer-cloud-stream
@@ -8,7 +5,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:29092
+          brokers: ${KAFKA_URL:localhost:29092}
       bindings:
         output:
           destination: news.json
@@ -17,6 +14,16 @@ spring:
             partition-key-expression: headers['partitionKey']
             partition-count: 5
 
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always
+
 ---
 spring:
   profiles: cloudkarafka
@@ -24,7 +31,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094
+          brokers: ${KAFKA_URL:ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094}
           configuration:
             security.protocol: SASL_SSL
             sasl:
