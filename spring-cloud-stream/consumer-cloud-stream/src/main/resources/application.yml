@@ -16,8 +16,6 @@ spring:
             start-offset: latest
 
 management:
-  security:
-    enabled: false
   endpoints:
     web:
       exposure.include: "*"

@@ -62,12 +62,12 @@ export CLOUDKARAFKA_PASSWORD=...
 
 | Microservice     | Command |
 | ---------------- | ------- |
-| `producer-kafka` | `docker run -d --rm --name producer-kafka --network springboot-cloudkarafka_default -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9080:8080 docker.mycompany.com/producer-kafka:1.0.0` |
-| `consumer-kafka` | `docker run -d --rm --name consumer-kafka --network springboot-cloudkarafka_default -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9081:8080 docker.mycompany.com/consumer-kafka:1.0.0` |
+| `producer-kafka` | `docker run -d --rm --name producer-kafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9080:8080 docker.mycompany.com/producer-kafka:1.0.0` |
+| `consumer-kafka` | `docker run -d --rm --name consumer-kafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9081:8080 docker.mycompany.com/consumer-kafka:1.0.0` |
 
 ### Using Kafka running locally
 
->Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.
+> Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.
 
 | Microservice     | Command |
 | ---------------- | ------- |
@@ -93,7 +93,7 @@ Then, inside `springboot-cloudkarafka` root folder, run the following command
 
 ### Using Kafka running locally
 
->Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.  
+> Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.  
 
 Inside `springboot-cloudkarafka` root folder, run the following command
 

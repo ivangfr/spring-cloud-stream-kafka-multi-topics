@@ -9,8 +9,6 @@ kafka:
     num-partitions: 5
 
 management:
-  security:
-    enabled: false
   endpoints:
     web:
       exposure.include: "*"

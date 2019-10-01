@@ -62,12 +62,12 @@ export CLOUDKARAFKA_PASSWORD=...
 
 | Microservice            | Command |
 | ----------------------- | ------- |
-| `producer-cloud-stream` | `docker run -d --rm --name producer-cloud-stream --network springboot-cloudkarafka_default -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9082:8080 docker.mycompany.com/producer-cloud-stream:1.0.0` |
-| `consumer-cloud-stream` | `docker run -d --rm --name consumer-cloud-stream --network springboot-cloudkarafka_default -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9083:8080 docker.mycompany.com/consumer-cloud-stream:1.0.0` |
+| `producer-cloud-stream` | `docker run -d --rm --name producer-cloud-stream -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9082:8080 docker.mycompany.com/producer-cloud-stream:1.0.0` |
+| `consumer-cloud-stream` | `docker run -d --rm --name consumer-cloud-stream -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9083:8080 docker.mycompany.com/consumer-cloud-stream:1.0.0` |
 
 ### Using Kafka running locally
 
->Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.
+> Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.
 
 | Microservice            | Command |
 | ----------------------- | ------- |
@@ -93,7 +93,7 @@ Then, inside `springboot-cloudkarafka` root folder, run the following command
 
 ### Using Kafka running locally
 
->Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.  
+> Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.  
 
 Inside `springboot-cloudkarafka` root folder, run the following command
 
