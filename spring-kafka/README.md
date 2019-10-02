@@ -4,7 +4,7 @@
 In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the
 configuration between `Spring Boot` applications and `Kafka`.
 
-## Microservices
+## Applications
 
 ### producer-kafka
 
@@ -50,7 +50,7 @@ In a terminal and inside `springboot-cloudkarafka` root folder, run the followin
 | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
 | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
 
-## Running microservices as Docker containers
+## Running applications as Docker containers
 
 ### Using CloudKarafka
 
@@ -60,21 +60,21 @@ export CLOUDKARAFKA_USERNAME=...
 export CLOUDKARAFKA_PASSWORD=...
 ```
 
-| Microservice     | Command |
+| Application      | Command |
 | ---------------- | ------- |
-| `producer-kafka` | `docker run -d --rm --name producer-kafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9080:8080 docker.mycompany.com/producer-kafka:1.0.0` |
-| `consumer-kafka` | `docker run -d --rm --name consumer-kafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -e SPRING_PROFILES_ACTIVE=cloudkarafka -p 9081:8080 docker.mycompany.com/consumer-kafka:1.0.0` |
+| `producer-kafka` | `docker run -d --rm --name producer-kafka -e SPRING_PROFILES_ACTIVE=cloudkarafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -p 9080:8080 docker.mycompany.com/producer-kafka:1.0.0` |
+| `consumer-kafka` | `docker run -d --rm --name consumer-kafka -e SPRING_PROFILES_ACTIVE=cloudkarafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD -p 9081:8080 docker.mycompany.com/consumer-kafka:1.0.0` |
 
 ### Using Kafka running locally
 
 > Note. you must have the `docker-compose.yml` services up and running, as explained in the main README.
 
-| Microservice     | Command |
+| Application      | Command |
 | ---------------- | ------- |
 | `producer-kafka` | `docker run -d --rm --name producer-kafka --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 -p 9080:8080 docker.mycompany.com/producer-kafka:1.0.0` |
 | `consumer-kafka` | `docker run -d --rm --name consumer-kafka --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 -p 9081:8080 docker.mycompany.com/consumer-kafka:1.0.0` |
 
-## Running microservices using Maven
+## Running applications using Maven
 
 ### Using CloudKarafka
 
@@ -86,7 +86,7 @@ export CLOUDKARAFKA_PASSWORD=...
 
 Then, inside `springboot-cloudkarafka` root folder, run the following command
 
-| Microservice     | Command |
+| Application      | Command |
 | ---------------- | ------- |
 | `producer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.profiles=cloudkarafka -Dspring-boot.run.jvmArguments="-Dserver.port=9080"` |
 | `consumer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.profiles=cloudkarafka -Dspring-boot.run.jvmArguments="-Dserver.port=9081"` |
@@ -97,19 +97,19 @@ Then, inside `springboot-cloudkarafka` root folder, run the following command
 
 Inside `springboot-cloudkarafka` root folder, run the following command
 
-| Microservice     | Command |
+| Application      | Command |
 | ---------------- | ------- |
 | `producer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9080"` |
 | `consumer-kafka` | `./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9081"` |
 
-## Microservice URLs
+## Application URLs
 
-| Microservice     | URL                   |
+| Application      | URL                   |
 | ---------------- | --------------------- |
 | `producer-kafka` | http://localhost:9080 |
 | `consumer-kafka` | http://localhost:9081 |
 
-## Execution example using CloudKarafka
+## Example of execution using CloudKarafka
 
 **Posting a news**
 > I am using [HTTPie](https://httpie.org/) 

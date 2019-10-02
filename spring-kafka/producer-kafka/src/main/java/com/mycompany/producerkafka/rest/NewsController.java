@@ -5,12 +5,14 @@ import com.mycompany.producerkafka.kafka.NewsProducer;
 import com.mycompany.producerkafka.rest.dto.CreateNewsDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RestController("/api/news")
+@RestController
+@RequestMapping("/api/news")
 public class NewsController {
 
     private final NewsProducer newsProducer;
