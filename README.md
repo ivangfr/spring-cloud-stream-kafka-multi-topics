@@ -14,12 +14,12 @@ the applications with `default` profile, `producer` and `consumer` will connect 
 
 ## Examples
 
-### [spring-kafka](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-kafka)
+### [spring-kafka](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-kafka#springboot-cloudkarafka)
 
 In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the
 configuration between `Spring Boot` applications and `Kafka`.
 
-### [spring-cloud-stream](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-cloud-stream)
+### [spring-cloud-stream](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-cloud-stream#springboot-cloudkarafka)
 
 In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/)
 library to implement the configuration between `Spring Boot` applications and `Kafka`.

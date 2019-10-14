@@ -1,5 +1,5 @@
 # `springboot-cloudkarafka`
-# `> spring-kafka`
+## `> spring-kafka`
 
 In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the
 configuration between `Spring Boot` applications and `Kafka`.

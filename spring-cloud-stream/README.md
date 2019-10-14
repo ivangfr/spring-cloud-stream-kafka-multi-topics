@@ -1,5 +1,5 @@
 # `springboot-cloudkarafka`
-# `> spring-cloud-stream`
+## `> spring-cloud-stream`
 
 In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/)
 library to implement the configuration between `Spring Boot` applications and `Kafka`.
