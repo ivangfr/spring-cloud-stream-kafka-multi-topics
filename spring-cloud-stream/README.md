@@ -34,7 +34,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
     
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
+    ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
     -Dspring-boot.run.profiles=cloudkarafka
     ```
 
@@ -50,7 +51,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
+    ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
     -Dspring-boot.run.profiles=cloudkarafka
     ```
 
@@ -64,7 +66,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
+    ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
     ```
 
 - **consumer-cloud-stream**
@@ -73,7 +76,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
+    ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
     ```
 
 ## Running applications as Docker containers
@@ -119,14 +123,16 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 - Run **producer-cloud-stream**
   ```
   docker run -d --rm --name producer-cloud-stream -p 9082:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
   docker.mycompany.com/producer-cloud-stream:1.0.0
   ```
 
 - Run **consumer-cloud-stream**
   ```
   docker run -d --rm --name consumer-cloud-stream -p 9083:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
   docker.mycompany.com/consumer-cloud-stream:1.0.0
   ```
 

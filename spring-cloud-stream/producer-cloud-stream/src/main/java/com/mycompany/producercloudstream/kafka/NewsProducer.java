@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @EnableBinding(Source.class)
 public class NewsProducer {
 
-    private final Source source;
-
     @Value("${spring.cloud.stream.bindings.output.destination}")
     private String kafkaTopic;
+
+    private final Source source;
 
     public NewsProducer(Source source) {
         this.source = source;

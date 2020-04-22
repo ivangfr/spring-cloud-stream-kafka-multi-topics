@@ -1,13 +1,12 @@
 spring:
   application:
     name: consumer-kafka
-
-kafka:
-  bootstrap-servers: ${KAFKA_URL:localhost:29092}
-  consumer:
-    group-id: consumerKafkaGroup
-    auto-offset-reset: latest
-    topic: news.json
+  kafka:
+    bootstrap-servers: ${KAFKA_URL:localhost:29092}
+    consumer:
+      group-id: consumerKafkaGroup
+      auto-offset-reset: latest
+      topic: news.json
 
 management:
   endpoints:
@@ -20,13 +19,13 @@ management:
 ---
 spring:
   profiles: cloudkarafka
-
-kafka:
-  bootstrap-servers: ${KAFKA_URL:ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094}
-  consumer:
-    topic: ${CLOUDKARAFKA_USERNAME}-news.json
-  configuration:
-    security.protocol: SASL_SSL
-    sasl:
-      mechanism: SCRAM-SHA-256
-      jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUDKARAFKA_USERNAME}" password="${CLOUDKARAFKA_PASSWORD}";
+  kafka:
+    bootstrap-servers: ${KAFKA_URL:ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094}
+    consumer:
+      topic: ${CLOUDKARAFKA_USERNAME}-news.json
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: SCRAM-SHA-256
+        jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUDKARAFKA_USERNAME}" password="${CLOUDKARAFKA_PASSWORD}";

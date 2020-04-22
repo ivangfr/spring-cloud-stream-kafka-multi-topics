@@ -34,7 +34,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
     
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9080" \
+    ./mvnw spring-boot:run --projects spring-kafka/producer-kafka \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9080" \
     -Dspring-boot.run.profiles=cloudkarafka
     ```
 
@@ -50,7 +51,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9081" \
+    ./mvnw spring-boot:run --projects spring-kafka/consumer-kafka \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9081" \
     -Dspring-boot.run.profiles=cloudkarafka
     ```
 
@@ -64,7 +66,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-kafka/producer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
+    ./mvnw spring-boot:run --projects spring-kafka/producer-kafka \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
     ```
 
 - **consumer-kafka**
@@ -73,7 +76,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   
   - Run application
     ```
-    ./mvnw spring-boot:run --projects spring-kafka/consumer-kafka -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
+    ./mvnw spring-boot:run --projects spring-kafka/consumer-kafka \
+    -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
     ```
 
 ## Running applications as Docker containers
@@ -119,14 +123,16 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 - Run **producer-kafka**
   ```
   docker run -d --rm --name producer-kafka -p 9080:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
   docker.mycompany.com/producer-kafka:1.0.0
   ```
 
 - Run **consumer-kafka**
   ```
   docker run -d --rm --name consumer-kafka -p 9081:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
   docker.mycompany.com/consumer-kafka:1.0.0
   ```
 

@@ -3,7 +3,8 @@ package com.mycompany.consumerkafka.kafka;
 import com.mycompany.consumerkafka.domain.News;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -16,23 +17,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @EnableKafka
+@EnableConfigurationProperties(KafkaProperties.class)
 @Configuration
 public class NewsConsumerConfig {
 
-    @Value("${kafka.bootstrap-servers}")
-    private String bootstrapServers;
+    private final KafkaProperties kafkaProperties;
 
-    @Value("${kafka.consumer.auto-offset-reset}")
-    private String autoOffsetReset;
-
-    @Value("${kafka.configuration.security.protocol:#{null}}")
-    private String securityProtocol;
-
-    @Value("${kafka.configuration.sasl.mechanism:#{null}}")
-    private String saslMechanism;
-
-    @Value("${kafka.configuration.sasl.jaas.config:#{null}}")
-    private String saslJaasConfig;
+    public NewsConsumerConfig(KafkaProperties kafkaProperties) {
+        this.kafkaProperties = kafkaProperties;
+    }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, News> kafkaListenerContainerFactory() {
@@ -49,14 +42,12 @@ public class NewsConsumerConfig {
     @Bean
     Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
-        if (securityProtocol != null) {
-            props.put("security.protocol", securityProtocol);
-            props.put("sasl.mechanism", saslMechanism);
-            props.put("sasl.jaas.config", saslJaasConfig);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaProperties.getConsumer().getAutoOffsetReset());
+        if (kafkaProperties.getProperties() != null) {
+            props.putAll(kafkaProperties.getProperties());
         }
         return props;
     }
