@@ -11,6 +11,12 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 - ### [spring-kafka](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-kafka#springboot-cloudkarafka)
 - ### [spring-cloud-stream](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-cloud-stream#springboot-cloudkarafka)
 
+## Prerequisites
+
+- `Java 11+`
+- `Docker`
+- `Docker-Compose`
+
 ## Using CloudKarafka
 
 ### Configuration

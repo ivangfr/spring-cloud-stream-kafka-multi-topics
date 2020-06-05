@@ -7,6 +7,8 @@ spring:
       group-id: consumerKafkaGroup
       auto-offset-reset: latest
       topic: news.json
+      properties:
+        concurrency: 2
 
 management:
   endpoints:

@@ -35,8 +35,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-kafka/producer-kafka \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9080" \
-    -Dspring-boot.run.profiles=cloudkarafka
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9080" \
+      -Dspring-boot.run.profiles=cloudkarafka
     ```
 
 - **consumer-kafka**
@@ -52,8 +52,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-kafka/consumer-kafka \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9081" \
-    -Dspring-boot.run.profiles=cloudkarafka
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9081" \
+      -Dspring-boot.run.profiles=cloudkarafka
     ```
 
 #### Using Kafka running locally
@@ -67,7 +67,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-kafka/producer-kafka \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
     ```
 
 - **consumer-kafka**
@@ -77,7 +77,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-kafka/consumer-kafka \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
     ```
 
 ## Running applications as Docker containers
@@ -88,7 +88,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - Build **producer-kafka** Docker image
   ```
-  ./mvnw clean package dockerfile:build -DskipTests --projects spring-kafka/producer-kafka
+  ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/producer-kafka
   ```
   
   | Environment Variable     | Description |
@@ -100,7 +100,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - Build **consumer-kafka** Docker image
   ```
-  ./mvnw clean package dockerfile:build -DskipTests --projects spring-kafka/consumer-kafka
+  ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/consumer-kafka
   ```
 
   | Environment Variable     | Description |
@@ -123,17 +123,17 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 - Run **producer-kafka**
   ```
   docker run -d --rm --name producer-kafka -p 9080:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-  docker.mycompany.com/producer-kafka:1.0.0
+    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+    docker.mycompany.com/producer-kafka:1.0.0
   ```
 
 - Run **consumer-kafka**
   ```
   docker run -d --rm --name consumer-kafka -p 9081:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-  docker.mycompany.com/consumer-kafka:1.0.0
+    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+    docker.mycompany.com/consumer-kafka:1.0.0
   ```
 
 #### Using Kafka running locally
@@ -142,16 +142,18 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - Run **producer-kafka**
   ```
-  docker run -d --rm --name producer-kafka -p 9080:8080 \
-  --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 \
-  docker.mycompany.com/producer-kafka:1.0.0
+  docker run -d --rm --name producer-kafka \
+    -p 9080:8080 -e KAFKA_URL=kafka:9092 \
+    --network springboot-cloudkarafka_default \
+    docker.mycompany.com/producer-kafka:1.0.0
   ```
 
 - Run **consumer-kafka**
   ```
-  docker run -d --rm --name consumer-kafka -p 9081:8080 \
-  --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 \
-  docker.mycompany.com/consumer-kafka:1.0.0
+  docker run -d --rm --name consumer-kafka \
+    -p 9081:8080 -e KAFKA_URL=kafka:9092 \
+    --network springboot-cloudkarafka_default \
+    docker.mycompany.com/consumer-kafka:1.0.0
   ```
 
 ## Applications URLs

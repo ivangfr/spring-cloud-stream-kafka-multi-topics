@@ -35,8 +35,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
-    -Dspring-boot.run.profiles=cloudkarafka
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
+      -Dspring-boot.run.profiles=cloudkarafka
     ```
 
 - **consumer-cloud-stream**
@@ -52,8 +52,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
-    -Dspring-boot.run.profiles=cloudkarafka
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
+      -Dspring-boot.run.profiles=cloudkarafka
     ```
 
 #### Using Kafka running locally
@@ -67,7 +67,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
     ```
 
 - **consumer-cloud-stream**
@@ -77,7 +77,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - Run application
     ```
     ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
-    -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
     ```
 
 ## Running applications as Docker containers
@@ -88,7 +88,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 - Build **producer-cloud-stream** Docker image
   ```
-  ./mvnw clean package dockerfile:build -DskipTests --projects spring-cloud-stream/producer-cloud-stream
+  ./mvnw clean spring-boot:build-image -DskipTests --projects spring-cloud-stream/producer-cloud-stream
   ```
   
   | Environment Variable     | Description |
@@ -100,7 +100,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 - Build **consumer-cloud-stream** Docker image
   ```
-  ./mvnw clean package dockerfile:build -DskipTests --projects spring-cloud-stream/consumer-cloud-stream
+  ./mvnw clean spring-boot:build-image -DskipTests --projects spring-cloud-stream/consumer-cloud-stream
   ```
 
   | Environment Variable     | Description |
@@ -123,17 +123,17 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 - Run **producer-cloud-stream**
   ```
   docker run -d --rm --name producer-cloud-stream -p 9082:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-  docker.mycompany.com/producer-cloud-stream:1.0.0
+    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+    docker.mycompany.com/producer-cloud-stream:1.0.0
   ```
 
 - Run **consumer-cloud-stream**
   ```
   docker run -d --rm --name consumer-cloud-stream -p 9083:8080 \
-  -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-  -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-  docker.mycompany.com/consumer-cloud-stream:1.0.0
+    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+    docker.mycompany.com/consumer-cloud-stream:1.0.0
   ```
 
 #### Using Kafka running locally
@@ -143,15 +143,15 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 - Run **producer-cloud-stream**
   ```
   docker run -d --rm --name producer-cloud-stream -p 9082:8080 \
-  --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 \
-  docker.mycompany.com/producer-cloud-stream:1.0.0
+    --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 \
+    docker.mycompany.com/producer-cloud-stream:1.0.0
   ```
 
 - Run **consumer-cloud-stream**
   ```
   docker run -d --rm --name consumer-cloud-stream -p 9083:8080 \
-  --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 \
-  docker.mycompany.com/consumer-cloud-stream:1.0.0
+    --network springboot-cloudkarafka_default -e KAFKA_URL=kafka:9092 \
+    docker.mycompany.com/consumer-cloud-stream:1.0.0
   ```
 
 ## Applications URLs
