@@ -1,4 +1,4 @@
-package com.mycompany.producercloudstream.config;
+package com.mycompany.producerkafka.config;
 
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.error.ErrorAttributeOptions.Include;
