@@ -14,8 +14,6 @@
     <name>producer-kafka</name>
     <description>Demo project for Spring Boot</description>
 
-    <properties></properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,24 +59,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib.maven-plugin.version}</version>
-                <configuration>
-                    <to>
-                        <image>${docker.image.prefix}/${project.artifactId}:${project.version}</image>
-                    </to>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
