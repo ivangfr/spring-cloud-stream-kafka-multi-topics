@@ -88,7 +88,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - Build **producer-kafka** Docker image
   ```
-  ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/producer-kafka
+  ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/producer-kafka
   ```
   
   | Environment Variable     | Description |
@@ -100,7 +100,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - Build **consumer-kafka** Docker image
   ```
-  ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/consumer-kafka
+  ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/consumer-kafka
   ```
 
   | Environment Variable     | Description |
@@ -124,7 +124,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   ```
   docker run -d --rm --name producer-kafka -p 9080:8080 \
     -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
+    -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
     docker.mycompany.com/producer-kafka:1.0.0
   ```
 
@@ -132,7 +133,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   ```
   docker run -d --rm --name consumer-kafka -p 9081:8080 \
     -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
+    -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
     docker.mycompany.com/consumer-kafka:1.0.0
   ```
 
