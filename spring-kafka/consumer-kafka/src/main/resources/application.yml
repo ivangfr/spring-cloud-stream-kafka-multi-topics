@@ -7,13 +7,13 @@ spring:
       group-id: consumerKafkaGroup
       auto-offset-reset: latest
       topic: news.json
-      properties:
-        concurrency: 2
+    listener:
+      concurrency: 2
 
 management:
   endpoints:
     web:
-      exposure.include: "*"
+      exposure.include: beans, env, health, info, metrics, mappings
   endpoint:
     health:
       show-details: always

@@ -10,8 +10,8 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 @Component
 @EnableBinding(Source.class)
 public class NewsProducer {
