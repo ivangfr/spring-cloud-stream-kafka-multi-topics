@@ -5,7 +5,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 ## Applications
 
-- **producer-kafka**
+- ### producer-kafka
 
   `Spring Boot` Web Java application that exposes one endpoint at which users can post `news`. Once a request is made, `producer-kafka` pushes a message about the `news` to Kafka.
 
@@ -14,7 +14,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   POST /api/news {"source": "...", "title": "..."}
   ```
 
-- **consumer-kafka**
+- ### consumer-kafka
 
   `Spring Boot` Web Java application that listens to messages (published by the `producer-kafka`) and logs it.
 

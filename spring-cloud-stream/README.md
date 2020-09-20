@@ -5,7 +5,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 ## Applications
 
-- **producer-cloud-stream**
+- ### producer-cloud-stream
 
   `Spring Boot` Web Java application that exposes one endpoint at which users can post `news`. Once a request is made, `producer-cloud-stream` pushes a message about the `news` to Kafka.
 
@@ -14,7 +14,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   POST /api/news {"source": "...", "title": "..."}
   ```
 
-- **consumer-cloud-stream**
+- ### consumer-cloud-stream
 
   `Spring Boot` Web Java application that listens to messages (published by the `producer-cloud-stream`) and logs it.
 
