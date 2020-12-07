@@ -20,7 +20,8 @@ management:
 
 ---
 spring:
-  profiles: cloudkarafka
+  config:
+    activate.on-profile: cloudkarafka
   kafka:
     bootstrap-servers: ${KAFKA_URL:ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094}
     consumer:

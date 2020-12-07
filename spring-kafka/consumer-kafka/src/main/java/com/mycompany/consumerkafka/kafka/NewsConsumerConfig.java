@@ -23,24 +23,20 @@ public class NewsConsumerConfig {
     private final KafkaProperties kafkaProperties;
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, News> kafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, News> kafkaListenerContainerFactory(
+            ConsumerFactory<String, News> consumerFactory) {
         ConcurrentKafkaListenerContainerFactory<String, News> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(consumerFactory);
         factory.setConcurrency(kafkaProperties.getListener().getConcurrency());
         return factory;
     }
 
     @Bean
     ConsumerFactory<String, News> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(), new JsonDeserializer<>(News.class));
-    }
-
-    @Bean
-    Map<String, Object> consumerConfigs() {
         Map<String, Object> props = kafkaProperties.buildConsumerProperties();
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        return props;
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(News.class));
     }
 
 }

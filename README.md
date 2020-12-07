@@ -46,7 +46,7 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
   > docker-compose down -v
   > ```
 
-- Wait a until all containers are Up (healthy). You can check their status by running
+- Wait until all containers are Up (healthy). You can check their status by running
   ```
   docker-compose ps
   ```
