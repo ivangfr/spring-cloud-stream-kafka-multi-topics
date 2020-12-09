@@ -87,9 +87,16 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
 - Build **producer-cloud-stream** Docker image
-  ```
-  ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-cloud-stream/producer-cloud-stream
-  ```
+
+  - `JVM`
+    ```
+    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-cloud-stream/producer-cloud-stream
+    ```
+
+  - `Native`
+    ```
+    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-cloud-stream/producer-cloud-stream
+    ```
   
   | Environment Variable     | Description |
   | -----------------------  | ----------- |
@@ -99,9 +106,16 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
 
 - Build **consumer-cloud-stream** Docker image
-  ```
-  ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-cloud-stream/consumer-cloud-stream
-  ```
+
+  - `JVM`
+    ```
+    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-cloud-stream/consumer-cloud-stream
+    ```
+
+  - `Native`
+    ```
+    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-cloud-stream/consumer-cloud-stream
+    ```
 
   | Environment Variable     | Description |
   | ------------------------ | ----------- |
@@ -195,4 +209,138 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 - If they were started as Docker containers, run the command below
   ```
   docker stop producer-cloud-stream consumer-cloud-stream
+  ```
+
+## Issues
+
+- After building the `producer-cloud-stream` Docker Native Image, when running it, it's throwing the following exception.
+  ```
+    .   ____          _            __ _ _
+   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+    '  |____| .__|_| |_|_| |_\__, | / / / /
+   =========|_|==============|___/=/_/_/_/
+   :: Spring Boot ::                (v2.4.0)
+  
+  2020-12-09 18:44:16.355  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : Starting ProducerCloudStreamApplication using Java 11.0.9 on ee2279b450ee with PID 1 (/workspace/com.mycompany.producercloudstream.ProducerCloudStreamApplication started by cnb in /workspace)
+  2020-12-09 18:44:16.355  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : The following profiles are active: cloudkarafka
+  2020-12-09 18:44:16.402  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  2020-12-09 18:44:16.403  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  
+  Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+  2020-12-09 18:44:16.406 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:610) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.access$800(ConfigurationClassParser.java:111) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.lambda$processGroupImports$1(ConfigurationClassParser.java:812) ~[na:na]
+  	at java.util.ArrayList.forEach(ArrayList.java:1541) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.processGroupImports(ConfigurationClassParser.java:809) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorHandler.process(ConfigurationClassParser.java:780) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:193) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.1]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.1]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[na:na]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[na:na]
+  	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[na:na]
+  	at com.mycompany.producercloudstream.ProducerCloudStreamApplication.main(ProducerCloudStreamApplication.java:10) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+  Caused by: java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.adapt(TypeMappedAnnotation.java:446) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.getValue(TypeMappedAnnotation.java:369) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.asMap(TypeMappedAnnotation.java:284) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.adaptValueForMapOptions(TypeMappedAnnotation.java:315) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.asMap(TypeMappedAnnotation.java:287) ~[na:na]
+  	at org.springframework.core.annotation.AbstractMergedAnnotation.asAnnotationAttributes(AbstractMergedAnnotation.java:193) ~[na:na]
+  	at org.springframework.core.type.AnnotatedTypeMetadata.getAnnotationAttributes(AnnotatedTypeMetadata.java:106) ~[na:na]
+  	at org.springframework.context.annotation.AnnotationConfigUtils.attributesForRepeatable(AnnotationConfigUtils.java:301) ~[na:na]
+  	at org.springframework.context.annotation.AnnotationConfigUtils.attributesForRepeatable(AnnotationConfigUtils.java:291) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:289) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processMemberClasses(ConfigurationClassParser.java:372) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:272) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:600) ~[na:na]
+  	... 20 common frames omitted
+  Caused by: java.lang.ClassNotFoundException: java.util.function.Function
+  	at com.oracle.svm.core.hub.ClassForNameSupport.forName(ClassForNameSupport.java:60) ~[na:na]
+  	at java.lang.Class.forName(DynamicHub.java:1292) ~[na:na]
+  	at org.springframework.util.ClassUtils.forName(ClassUtils.java:284) ~[na:na]
+  	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:324) ~[na:na]
+  	... 35 common frames omitted
+  ```
+
+- After building the `consumer-cloud-stream` Docker Native Image, when running it, it's throwing the following exception.
+  ```
+    .   ____          _            __ _ _
+   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+    '  |____| .__|_| |_|_| |_\__, | / / / /
+   =========|_|==============|___/=/_/_/_/
+   :: Spring Boot ::                (v2.4.0)
+  
+  2020-12-09 19:22:19.124  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : Starting ConsumerCloudStreamApplication using Java 11.0.9 on 9711c8998d5b with PID 1 (/workspace/com.mycompany.consumercloudstream.ConsumerCloudStreamApplication started by cnb in /workspace)
+  2020-12-09 19:22:19.124  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : The following profiles are active: cloudkarafka
+  2020-12-09 19:22:19.154  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  2020-12-09 19:22:19.155  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  
+  Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+  2020-12-09 19:22:19.157 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:610) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.access$800(ConfigurationClassParser.java:111) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.lambda$processGroupImports$1(ConfigurationClassParser.java:812) ~[na:na]
+  	at java.util.ArrayList.forEach(ArrayList.java:1541) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.processGroupImports(ConfigurationClassParser.java:809) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorHandler.process(ConfigurationClassParser.java:780) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:193) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.1]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.1]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[na:na]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[na:na]
+  	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[na:na]
+  	at com.mycompany.consumercloudstream.ConsumerCloudStreamApplication.main(ConsumerCloudStreamApplication.java:10) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
+  Caused by: java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.adapt(TypeMappedAnnotation.java:446) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.getValue(TypeMappedAnnotation.java:369) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.asMap(TypeMappedAnnotation.java:284) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.adaptValueForMapOptions(TypeMappedAnnotation.java:315) ~[na:na]
+  	at org.springframework.core.annotation.TypeMappedAnnotation.asMap(TypeMappedAnnotation.java:287) ~[na:na]
+  	at org.springframework.core.annotation.AbstractMergedAnnotation.asAnnotationAttributes(AbstractMergedAnnotation.java:193) ~[na:na]
+  	at org.springframework.core.type.AnnotatedTypeMetadata.getAnnotationAttributes(AnnotatedTypeMetadata.java:106) ~[na:na]
+  	at org.springframework.context.annotation.AnnotationConfigUtils.attributesForRepeatable(AnnotationConfigUtils.java:301) ~[na:na]
+  	at org.springframework.context.annotation.AnnotationConfigUtils.attributesForRepeatable(AnnotationConfigUtils.java:291) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:289) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processMemberClasses(ConfigurationClassParser.java:372) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:272) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:600) ~[na:na]
+  	... 20 common frames omitted
+  Caused by: java.lang.ClassNotFoundException: java.util.function.Function
+  	at com.oracle.svm.core.hub.ClassForNameSupport.forName(ClassForNameSupport.java:60) ~[na:na]
+  	at java.lang.Class.forName(DynamicHub.java:1292) ~[na:na]
+  	at org.springframework.util.ClassUtils.forName(ClassUtils.java:284) ~[na:na]
+  	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:324) ~[na:na]
+  	... 35 common frames omitted
   ```

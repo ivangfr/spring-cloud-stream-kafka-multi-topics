@@ -87,9 +87,16 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
 - Build **producer-kafka** Docker image
-  ```
-  ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/producer-kafka
-  ```
+
+  - `JVM`
+    ```
+    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/producer-kafka
+    ```
+
+  - `Native`
+    ```
+    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/producer-kafka
+    ```
   
   | Environment Variable     | Description |
   | -----------------------  | ----------- |
@@ -99,9 +106,16 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
 
 - Build **consumer-kafka** Docker image
-  ```
-  ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/consumer-kafka
-  ```
+
+  - `JVM`
+    ```
+    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/consumer-kafka
+    ```
+
+  - `Native`
+    ```
+    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/consumer-kafka
+    ```
 
   | Environment Variable     | Description |
   | ------------------------ | ----------- |
@@ -195,4 +209,126 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 - If they were started as Docker containers, run the command below
   ```
   docker stop producer-kafka consumer-kafka
+  ```
+
+## Issues
+
+- After building the `producer-kafka` Docker Native Image, when running it, it's throwing the following exception. It's related to this [issue](https://github.com/spring-projects-experimental/spring-graalvm-native/issues/297)
+  ```
+    .   ____          _            __ _ _
+   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+    '  |____| .__|_| |_|_| |_\__, | / / / /
+   =========|_|==============|___/=/_/_/_/
+   :: Spring Boot ::
+  
+  2020-12-09 18:29:51.414  INFO 1 --- [           main] c.m.p.ProducerKafkaApplication           : Starting ProducerKafkaApplication using Java 11.0.9 on 9974f64933f3 with PID 1 (/workspace/com.mycompany.producerkafka.ProducerKafkaApplication started by cnb in /workspace)
+  2020-12-09 18:29:51.414  INFO 1 --- [           main] c.m.p.ProducerKafkaApplication           : The following profiles are active: cloudkarafka
+  2020-12-09 18:29:51.638  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultValidator' defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Invocation of init method failed; nested exception is java.lang.ExceptionInInitializerError
+  2020-12-09 18:29:51.648  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  
+  Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+  2020-12-09 18:29:51.651 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultValidator' defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Invocation of init method failed; nested exception is java.lang.ExceptionInInitializerError
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1788) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:609) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:531) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[na:na]
+  	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[na:na]
+  	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:944) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:925) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:588) ~[na:na]
+  	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[na:na]
+  	at com.mycompany.producerkafka.ProducerKafkaApplication.main(ProducerKafkaApplication.java:10) ~[com.mycompany.producerkafka.ProducerKafkaApplication:na]
+  Caused by: java.lang.ExceptionInInitializerError: null
+  	at com.oracle.svm.core.classinitialization.ClassInitializationInfo.initialize(ClassInitializationInfo.java:291) ~[na:na]
+  	at org.hibernate.validator.internal.engine.ValidatorFactoryConfigurationHelper.determineGetterPropertySelectionStrategy(ValidatorFactoryConfigurationHelper.java:286) ~[na:na]
+  	at org.hibernate.validator.internal.engine.ValidatorFactoryImpl.<init>(ValidatorFactoryImpl.java:176) ~[na:na]
+  	at org.hibernate.validator.HibernateValidator.buildValidatorFactory(HibernateValidator.java:38) ~[com.mycompany.producerkafka.ProducerKafkaApplication:6.1.6.Final]
+  	at org.hibernate.validator.internal.engine.AbstractConfigurationImpl.buildValidatorFactory(AbstractConfigurationImpl.java:448) ~[na:na]
+  	at org.springframework.validation.beanvalidation.LocalValidatorFactoryBean.afterPropertiesSet(LocalValidatorFactoryBean.java:310) ~[com.mycompany.producerkafka.ProducerKafkaApplication:5.3.1]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1847) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1784) ~[na:na]
+  	... 17 common frames omitted
+  Caused by: java.lang.IllegalStateException: java.lang.InstantiationException: Type `org.apache.logging.log4j.message.ReusableMessageFactory` can not be instantiated reflectively as it does not have a no-parameter constructor or the no-parameter constructor has not been added explicitly to the native image.
+  	at org.apache.logging.log4j.spi.AbstractLogger.createDefaultMessageFactory(AbstractLogger.java:231) ~[na:na]
+  	at org.apache.logging.log4j.spi.AbstractLogger.<init>(AbstractLogger.java:132) ~[na:na]
+  	at org.apache.logging.slf4j.SLF4JLogger.<init>(SLF4JLogger.java:44) ~[na:na]
+  	at org.apache.logging.slf4j.SLF4JLoggerContext.getLogger(SLF4JLoggerContext.java:39) ~[na:na]
+  	at org.apache.logging.log4j.LogManager.getLogger(LogManager.java:669) ~[na:na]
+  	at org.jboss.logging.Log4j2Logger.<init>(Log4j2Logger.java:36) ~[na:na]
+  	at org.jboss.logging.Log4j2LoggerProvider.getLogger(Log4j2LoggerProvider.java:30) ~[na:na]
+  	at org.jboss.logging.Log4j2LoggerProvider.getLogger(Log4j2LoggerProvider.java:26) ~[na:na]
+  	at org.jboss.logging.Logger.getLogger(Logger.java:2465) ~[na:na]
+  	at org.jboss.logging.Logger.doGetMessageLogger(Logger.java:2573) ~[na:na]
+  	at org.jboss.logging.Logger.getMessageLogger(Logger.java:2530) ~[na:na]
+  	at org.jboss.logging.Logger.getMessageLogger(Logger.java:2516) ~[na:na]
+  	at org.hibernate.validator.internal.util.logging.LoggerFactory.make(LoggerFactory.java:22) ~[na:na]
+  	at org.hibernate.validator.internal.properties.DefaultGetterPropertySelectionStrategy.<clinit>(DefaultGetterPropertySelectionStrategy.java:26) ~[na:na]
+  	at com.oracle.svm.core.classinitialization.ClassInitializationInfo.invokeClassInitializer(ClassInitializationInfo.java:351) ~[na:na]
+  	at com.oracle.svm.core.classinitialization.ClassInitializationInfo.initialize(ClassInitializationInfo.java:271) ~[na:na]
+  	... 24 common frames omitted
+  Caused by: java.lang.InstantiationException: Type `org.apache.logging.log4j.message.ReusableMessageFactory` can not be instantiated reflectively as it does not have a no-parameter constructor or the no-parameter constructor has not been added explicitly to the native image.
+  	at java.lang.Class.newInstance(DynamicHub.java:915) ~[na:na]
+  	at org.apache.logging.log4j.spi.AbstractLogger.createDefaultMessageFactory(AbstractLogger.java:228) ~[na:na]
+  	... 39 common frames omitted
+  ```
+
+- After building the `consumer-kafka` Docker Native Image, when running it, it's throwing the following exception.
+  ```
+    .   ____          _            __ _ _
+   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+    '  |____| .__|_| |_|_| |_\__, | / / / /
+   =========|_|==============|___/=/_/_/_/
+   :: Spring Boot ::                (v2.4.0)
+  
+  2020-12-09 19:19:05.654  INFO 1 --- [           main] c.m.c.ConsumerKafkaApplication           : Starting ConsumerKafkaApplication using Java 11.0.9 on c13b226a27ca with PID 1 (/workspace/com.mycompany.consumerkafka.ConsumerKafkaApplication started by cnb in /workspace)
+  2020-12-09 19:19:05.654  INFO 1 --- [           main] c.m.c.ConsumerKafkaApplication           : The following profiles are active: cloudkarafka
+  2020-12-09 19:19:05.866  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'newsConsumer' defined in class path resource [com/mycompany/consumerkafka/kafka/NewsConsumer.class]: Initialization of bean failed; nested exception is java.lang.NullPointerException
+  2020-12-09 19:19:05.872  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  
+  Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+  2020-12-09 19:19:05.877 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'newsConsumer' defined in class path resource [com/mycompany/consumerkafka/kafka/NewsConsumer.class]: Initialization of bean failed; nested exception is java.lang.NullPointerException
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:617) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:531) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[na:na]
+  	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[na:na]
+  	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:944) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:925) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:588) ~[na:na]
+  	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[na:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[na:na]
+  	at com.mycompany.consumerkafka.ConsumerKafkaApplication.main(ConsumerKafkaApplication.java:10) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  Caused by: java.lang.NullPointerException: null
+  	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.resolveExpression(KafkaListenerAnnotationBeanPostProcessor.java:751) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.3]
+  	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.resolveExpressionAsString(KafkaListenerAnnotationBeanPostProcessor.java:705) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.3]
+  	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.getEndpointGroupId(KafkaListenerAnnotationBeanPostProcessor.java:504) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.3]
+  	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.processListener(KafkaListenerAnnotationBeanPostProcessor.java:426) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.3]
+  	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.processKafkaListener(KafkaListenerAnnotationBeanPostProcessor.java:379) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.3]
+  	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.postProcessAfterInitialization(KafkaListenerAnnotationBeanPostProcessor.java:307) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.3]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:444) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1792) ~[na:na]
+  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:609) ~[na:na]
+  	... 16 common frames omitted
   ```
