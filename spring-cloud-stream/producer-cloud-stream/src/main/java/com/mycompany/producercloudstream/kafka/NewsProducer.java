@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewsProducer {
 
-    @Value("${spring.cloud.stream.bindings.stream-out-0.destination}")
+    @Value("${spring.cloud.stream.bindings.news-out-0.destination}")
     private String kafkaTopic;
 
     private final StreamBridge streamBridge;
@@ -25,6 +25,6 @@ public class NewsProducer {
         Message<News> message = MessageBuilder.withPayload(news)
                 .setHeader("partitionKey", news.getId())
                 .build();
-        streamBridge.send("stream-out-0", message);
+        streamBridge.send("news-out-0", message);
     }
 }

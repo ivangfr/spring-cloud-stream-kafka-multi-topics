@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 public class NewsConsumer {
 
     @Bean
-    public Consumer<Message<News>> listen() {
+    public Consumer<Message<News>> news() {
         return message -> {
             News news = message.getPayload();
             MessageHeaders messageHeaders = message.getHeaders();

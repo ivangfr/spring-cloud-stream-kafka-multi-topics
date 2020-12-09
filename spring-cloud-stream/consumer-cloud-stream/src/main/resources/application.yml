@@ -8,7 +8,7 @@ spring:
           brokers: ${KAFKA_URL:localhost:29092}
           min-partition-count: 5
       bindings:
-        listen-in-0:
+        news-in-0:
           destination: news.json
           content-type: application/json
           group: consumerCloudStreamGroup
@@ -41,5 +41,5 @@ spring:
               mechanism: SCRAM-SHA-256
               jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUDKARAFKA_USERNAME}" password="${CLOUDKARAFKA_PASSWORD}";
       bindings:
-        listen-in-0:
+        news-in-0:
           destination: ${CLOUDKARAFKA_USERNAME}-news.json
