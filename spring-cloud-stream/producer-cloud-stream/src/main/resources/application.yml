@@ -7,7 +7,7 @@ spring:
         binder:
           brokers: ${KAFKA_URL:localhost:29092}
       bindings:
-        output:
+        stream-out-0:
           destination: news.json
           content-type: application/json
           producer:
@@ -39,5 +39,5 @@ spring:
               mechanism: SCRAM-SHA-256
               jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUDKARAFKA_USERNAME}" password="${CLOUDKARAFKA_PASSWORD}";
       bindings:
-        output:
+        stream-out-0:
           destination: ${CLOUDKARAFKA_USERNAME}-news.json
