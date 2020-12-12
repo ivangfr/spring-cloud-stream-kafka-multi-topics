@@ -82,22 +82,24 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 ## Running applications as Docker containers
 
-### Build applications Docker images
+### Build application's Docker image
 
 - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
-- Build **producer-kafka** Docker image
+- Run the following script to build the Docker images
+  - JVM
+    ```
+    ./build-spring-kafka-apps.sh
+    ```
+  - Native
+    ```
+    ./build-spring-kafka-apps.sh native
+    ```
 
-  - `JVM`
-    ```
-    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/producer-kafka
-    ```
+### Application's Environment Variables
 
-  - `Native`
-    ```
-    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/producer-kafka
-    ```
-  
+- **producer-kafka** and **consumer-kafka**
+
   | Environment Variable     | Description |
   | -----------------------  | ----------- |
   | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
@@ -105,71 +107,32 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
   | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
 
-- Build **consumer-kafka** Docker image
-
-  - `JVM`
-    ```
-    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-kafka/consumer-kafka
-    ```
-
-  - `Native`
-    ```
-    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-kafka/consumer-kafka
-    ```
-
-  | Environment Variable     | Description |
-  | ------------------------ | ----------- |
-  | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` will use local `Kafka` |
-  | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `karafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
-  | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
-  | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
-
-### Starting applications Docker containers
+### Starting application's Docker container
 
 #### Using CloudKarafka
 
-- In a terminal, export your `CloudKarafka` credentials to those environment variables
+- In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+
+- Export your `CloudKarafka` credentials to these environment variables
   ```
   export CLOUDKARAFKA_USERNAME=...
   export CLOUDKARAFKA_PASSWORD=...
   ```
 
-- Run **producer-kafka**
+- Run the script below to start the docker containers
   ```
-  docker run -d --rm --name producer-kafka -p 9080:8080 \
-    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
-    -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-    docker.mycompany.com/producer-kafka:1.0.0
-  ```
-
-- Run **consumer-kafka**
-  ```
-  docker run -d --rm --name consumer-kafka -p 9081:8080 \
-    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
-    -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-    docker.mycompany.com/consumer-kafka:1.0.0
+  ./start-spring-kafka-apps.sh cloudkarafka
   ```
 
 #### Using Kafka running locally
 
 > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)
 
-- Run **producer-kafka**
-  ```
-  docker run -d --rm --name producer-kafka \
-    -p 9080:8080 -e KAFKA_URL=kafka:9092 \
-    --network springboot-cloudkarafka_default \
-    docker.mycompany.com/producer-kafka:1.0.0
-  ```
+- In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
-- Run **consumer-kafka**
+- Run the script below to start the docker containers
   ```
-  docker run -d --rm --name consumer-kafka \
-    -p 9081:8080 -e KAFKA_URL=kafka:9092 \
-    --network springboot-cloudkarafka_default \
-    docker.mycompany.com/consumer-kafka:1.0.0
+  ./start-spring-kafka-apps.sh
   ```
 
 ## Applications URLs
@@ -206,9 +169,9 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
 
-- If they were started as Docker containers, run the command below
+- If they were started as Docker containers, run the script below
   ```
-  docker stop producer-kafka consumer-kafka
+  ./stop-spring-kafka-apps.sh
   ```
 
 ## Issues

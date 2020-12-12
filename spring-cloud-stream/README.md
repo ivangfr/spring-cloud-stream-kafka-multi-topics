@@ -1,7 +1,7 @@
 # springboot-cloudkarafka
 ## `> spring-cloud-stream`
 
-In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/) library to implement the configuration between `Spring Boot` applications and `Kafka`.
+In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/) library to implement the configuration between `Spring Boot` applications and `Kafka`.
 
 ## Applications
 
@@ -82,22 +82,24 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 ## Running applications as Docker containers
 
-### Build applications Docker images
+### Build application's Docker image
 
 - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
-- Build **producer-cloud-stream** Docker image
+- Run the following script to build the Docker images
+  - JVM
+    ```
+    ./build-spring-cloud-stream-apps.sh
+    ```
+  - Native
+    ```
+    ./build-spring-cloud-stream-apps.sh native
+    ```
 
-  - `JVM`
-    ```
-    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-cloud-stream/producer-cloud-stream
-    ```
+### Application's Environment Variables
 
-  - `Native`
-    ```
-    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-cloud-stream/producer-cloud-stream
-    ```
-  
+- **producer-cloud-stream** and **consumer-cloud-stream**
+
   | Environment Variable     | Description |
   | -----------------------  | ----------- |
   | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
@@ -105,71 +107,32 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
   | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
 
-- Build **consumer-cloud-stream** Docker image
-
-  - `JVM`
-    ```
-    ./mvnw clean compile jib:dockerBuild -DskipTests --projects spring-cloud-stream/consumer-cloud-stream
-    ```
-
-  - `Native`
-    ```
-    ./mvnw clean spring-boot:build-image -DskipTests --projects spring-cloud-stream/consumer-cloud-stream
-    ```
-
-  | Environment Variable     | Description |
-  | ------------------------ | ----------- |
-  | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` will use local `Kafka` |
-  | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `karafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
-  | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
-  | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
-
-### Starting applications Docker containers
+### Starting application's Docker container
 
 #### Using CloudKarafka
 
-- In a terminal, export your `CloudKarafka` credentials to those environment variables
+- In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+
+- Export your `CloudKarafka` credentials to these environment variables
   ```
   export CLOUDKARAFKA_USERNAME=...
   export CLOUDKARAFKA_PASSWORD=...
   ```
 
-- Run **producer-cloud-stream**
+- Run the script below to start the docker containers
   ```
-  docker run -d --rm --name producer-cloud-stream -p 9082:8080 \
-    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
-    -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-    docker.mycompany.com/producer-cloud-stream:1.0.0
-  ```
-
-- Run **consumer-cloud-stream**
-  ```
-  docker run -d --rm --name consumer-cloud-stream -p 9083:8080 \
-    -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-    -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
-    -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-    docker.mycompany.com/consumer-cloud-stream:1.0.0
+  ./start-spring-cloud-stream-apps.sh cloudkarafka
   ```
 
 #### Using Kafka running locally
 
 > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)
 
-- Run **producer-cloud-stream**
-  ```
-  docker run -d --rm --name producer-cloud-stream \
-    -p 9082:8080 -e KAFKA_URL=kafka:9092 \
-    --network springboot-cloudkarafka_default \
-    docker.mycompany.com/producer-cloud-stream:1.0.0
-  ```
+- In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
-- Run **consumer-cloud-stream**
+- Run the script below to start the docker containers
   ```
-  docker run -d --rm --name consumer-cloud-stream \
-    -p 9083:8080 -e KAFKA_URL=kafka:9092 \
-    --network springboot-cloudkarafka_default \
-    docker.mycompany.com/consumer-cloud-stream:1.0.0
+  ./start-spring-cloud-stream-apps.sh
   ```
 
 ## Applications URLs
@@ -206,9 +169,9 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 - If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
 
-- If they were started as Docker containers, run the command below
+- If they were started as Docker containers, run the script below
   ```
-  docker stop producer-cloud-stream consumer-cloud-stream
+  ./stop-spring-cloud-stream-apps.sh
   ```
 
 ## Issues
