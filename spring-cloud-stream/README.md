@@ -184,15 +184,15 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
    \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
     '  |____| .__|_| |_|_| |_\__, | / / / /
    =========|_|==============|___/=/_/_/_/
-   :: Spring Boot ::                (v2.4.0)
+   :: Spring Boot ::                (v2.4.3)
   
-  2020-12-09 18:44:16.355  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : Starting ProducerCloudStreamApplication using Java 11.0.9 on ee2279b450ee with PID 1 (/workspace/com.mycompany.producercloudstream.ProducerCloudStreamApplication started by cnb in /workspace)
-  2020-12-09 18:44:16.355  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : The following profiles are active: cloudkarafka
-  2020-12-09 18:44:16.402  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
-  2020-12-09 18:44:16.403  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  2021-02-27 13:07:11.045  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : Starting ProducerCloudStreamApplication using Java 11.0.10 on e6c594c07ad9 with PID 1 (/workspace/com.mycompany.producercloudstream.ProducerCloudStreamApplication started by cnb in /workspace)
+  2021-02-27 13:07:11.046  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : No active profile set, falling back to default profiles: default
+  2021-02-27 13:07:11.101  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  2021-02-27 13:07:11.102  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
   
   Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-  2020-12-09 18:44:16.406 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  2021-02-27 13:07:11.125 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
   org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:610) ~[na:na]
@@ -202,19 +202,19 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.processGroupImports(ConfigurationClassParser.java:809) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorHandler.process(ConfigurationClassParser.java:780) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:193) ~[na:na]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.1]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.1]
-  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[na:na]
-  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:330) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.4]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:246) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.4]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[na:na]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:563) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[na:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[na:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[na:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
   	at com.mycompany.producercloudstream.ProducerCloudStreamApplication.main(ProducerCloudStreamApplication.java:10) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   Caused by: java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334) ~[na:na]
@@ -236,7 +236,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	... 20 common frames omitted
   Caused by: java.lang.ClassNotFoundException: java.util.function.Function
   	at com.oracle.svm.core.hub.ClassForNameSupport.forName(ClassForNameSupport.java:60) ~[na:na]
-  	at java.lang.Class.forName(DynamicHub.java:1292) ~[na:na]
+  	at java.lang.Class.forName(DynamicHub.java:1260) ~[na:na]
   	at org.springframework.util.ClassUtils.forName(ClassUtils.java:284) ~[na:na]
   	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:324) ~[na:na]
   	... 35 common frames omitted
@@ -250,15 +250,15 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
    \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
     '  |____| .__|_| |_|_| |_\__, | / / / /
    =========|_|==============|___/=/_/_/_/
-   :: Spring Boot ::                (v2.4.0)
+   :: Spring Boot ::                (v2.4.3)
   
-  2020-12-09 19:22:19.124  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : Starting ConsumerCloudStreamApplication using Java 11.0.9 on 9711c8998d5b with PID 1 (/workspace/com.mycompany.consumercloudstream.ConsumerCloudStreamApplication started by cnb in /workspace)
-  2020-12-09 19:22:19.124  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : The following profiles are active: cloudkarafka
-  2020-12-09 19:22:19.154  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
-  2020-12-09 19:22:19.155  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  2021-02-27 13:07:31.871  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : Starting ConsumerCloudStreamApplication using Java 11.0.10 on 78d83dbf0669 with PID 1 (/workspace/com.mycompany.consumercloudstream.ConsumerCloudStreamApplication started by cnb in /workspace)
+  2021-02-27 13:07:31.873  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : No active profile set, falling back to default profiles: default
+  2021-02-27 13:07:31.957  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  2021-02-27 13:07:31.958  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
   
   Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-  2020-12-09 19:22:19.157 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  2021-02-27 13:07:31.960 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
   org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:610) ~[na:na]
@@ -268,19 +268,19 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.processGroupImports(ConfigurationClassParser.java:809) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorHandler.process(ConfigurationClassParser.java:780) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:193) ~[na:na]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.1]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.1]
-  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[na:na]
-  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[na:na]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:330) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.4]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:246) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.4]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[na:na]
+  	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:563) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[na:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[na:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[na:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[na:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
   	at com.mycompany.consumercloudstream.ConsumerCloudStreamApplication.main(ConsumerCloudStreamApplication.java:10) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
   Caused by: java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334) ~[na:na]
@@ -302,7 +302,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	... 20 common frames omitted
   Caused by: java.lang.ClassNotFoundException: java.util.function.Function
   	at com.oracle.svm.core.hub.ClassForNameSupport.forName(ClassForNameSupport.java:60) ~[na:na]
-  	at java.lang.Class.forName(DynamicHub.java:1292) ~[na:na]
+  	at java.lang.Class.forName(DynamicHub.java:1260) ~[na:na]
   	at org.springframework.util.ClassUtils.forName(ClassUtils.java:284) ~[na:na]
   	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:324) ~[na:na]
   	... 35 common frames omitted
