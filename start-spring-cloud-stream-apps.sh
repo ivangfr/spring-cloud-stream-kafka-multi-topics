@@ -23,13 +23,13 @@ then
 
 else
 
-  docker run -d --rm --name producer-cloud-stream \
-    -p 9082:8080 -e KAFKA_URL=kafka:9092 \
+  docker run -d --rm --name producer-cloud-stream -p 9082:8080 \
+    -e KAFKA_URL=kafka:9092 \
     --network springboot-cloudkarafka_default \
     docker.mycompany.com/producer-cloud-stream:1.0.0
 
-  docker run -d --rm --name consumer-cloud-stream \
-    -p 9083:8080 -e KAFKA_URL=kafka:9092 \
+  docker run -d --rm --name consumer-cloud-stream -p 9083:8080 \
+    -e KAFKA_URL=kafka:9092 \
     --network springboot-cloudkarafka_default \
     docker.mycompany.com/consumer-cloud-stream:1.0.0
 

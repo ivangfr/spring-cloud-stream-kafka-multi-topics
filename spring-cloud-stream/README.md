@@ -20,120 +20,120 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 ## Running applications using Maven
 
-#### Using CloudKarafka
+- #### Using CloudKarafka
 
-- **producer-cloud-stream**
+  - **producer-cloud-stream**
 
-  - Open a terminal and navigate to `springboot-cloudkarafka` root folder
+    - Open a terminal and navigate to `springboot-cloudkarafka` root folder
 
-  - Export your `CloudKarafka` credentials to those environment variables
-    ```
-    export CLOUDKARAFKA_USERNAME=...
-    export CLOUDKARAFKA_PASSWORD=...
-    ```
+    - Export your `CloudKarafka` credentials to those environment variables
+      ```
+      export CLOUDKARAFKA_USERNAME=...
+      export CLOUDKARAFKA_PASSWORD=...
+      ```
     
-  - Run application
-    ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
-      -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
-      -Dspring-boot.run.profiles=cloudkarafka
-    ```
+    - Run application
+      ```
+      ./mvnw clean spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
+        -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
+        -Dspring-boot.run.profiles=cloudkarafka
+      ```
 
-- **consumer-cloud-stream**
+  - **consumer-cloud-stream**
 
-  - Open another terminal and make sure you are in `springboot-cloudkarafka` root folder
+    - Open another terminal and make sure you are in `springboot-cloudkarafka` root folder
   
-  - Export your `CloudKarafka` credentials to those environment variables
-    ```
-    export CLOUDKARAFKA_USERNAME=...
-    export CLOUDKARAFKA_PASSWORD=...
-    ```
+    - Export your `CloudKarafka` credentials to those environment variables
+      ```
+      export CLOUDKARAFKA_USERNAME=...
+      export CLOUDKARAFKA_PASSWORD=...
+      ```
   
-  - Run application
-    ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
-      -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
-      -Dspring-boot.run.profiles=cloudkarafka
-    ```
+    - Run application
+      ```
+      ./mvnw clean spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
+        -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
+        -Dspring-boot.run.profiles=cloudkarafka
+      ```
 
-#### Using Kafka running locally
+- #### Using Kafka running locally
 
-> **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)  
+  > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)  
 
-- **producer-cloud-stream**
+  - **producer-cloud-stream**
 
-  - Open a terminal and navigate to `springboot-cloudkarafka` root folder
+    - Open a terminal and navigate to `springboot-cloudkarafka` root folder
   
-  - Run application
-    ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
-      -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
-    ```
+    - Run application
+      ```
+      ./mvnw clean spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
+        -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
+      ```
 
-- **consumer-cloud-stream**
+  - **consumer-cloud-stream**
 
-  - Open another terminal and make sure you are in `springboot-cloudkarafka` root folder
+    - Open another terminal and make sure you are in `springboot-cloudkarafka` root folder
   
-  - Run application
-    ```
-    ./mvnw spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
-      -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
-    ```
+    - Run application
+      ```
+      ./mvnw clean spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
+        -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
+      ```
 
 ## Running applications as Docker containers
 
-### Build application's Docker image
+- ### Build application's Docker image
 
-- In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+  - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
-- Run the following script to build the Docker images
-  - JVM
-    ```
-    ./build-spring-cloud-stream-apps.sh
-    ```
-  - Native
-    ```
-    ./build-spring-cloud-stream-apps.sh native
-    ```
+  - Run the following script to build the Docker images
+    - JVM
+      ```
+      ./docker-build-spring-cloud-stream.sh
+      ```
+    - Native
+      ```
+      ./docker-build-spring-cloud-stream.sh native
+      ```
 
-### Application's Environment Variables
+- ### Application's Environment Variables
 
-- **producer-cloud-stream** and **consumer-cloud-stream**
+  - **producer-cloud-stream** and **consumer-cloud-stream**
 
-  | Environment Variable     | Description |
-  | -----------------------  | ----------- |
-  | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
-  | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `cloudkarafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
-  | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
-  | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
+    | Environment Variable     | Description |
+    | -----------------------  | ----------- |
+    | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
+    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `cloudkarafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
+    | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
+    | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
 
-### Starting application's Docker container
+- ### Starting application's Docker container
 
-#### Using CloudKarafka
+  - #### Using CloudKarafka
 
-- In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+    - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
-- Export your `CloudKarafka` credentials to these environment variables
-  ```
-  export CLOUDKARAFKA_USERNAME=...
-  export CLOUDKARAFKA_PASSWORD=...
-  ```
+    - Export your `CloudKarafka` credentials to these environment variables
+      ```
+      export CLOUDKARAFKA_USERNAME=...
+      export CLOUDKARAFKA_PASSWORD=...
+      ```
 
-- Run the script below to start the docker containers
-  ```
-  ./start-spring-cloud-stream-apps.sh cloudkarafka
-  ```
+    - Run the script below to start the docker containers
+      ```
+      ./start-spring-cloud-stream-apps.sh cloudkarafka
+      ```
 
-#### Using Kafka running locally
+  - #### Using Kafka running locally
 
-> **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)
+    > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)
 
-- In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+    - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
 
-- Run the script below to start the docker containers
-  ```
-  ./start-spring-cloud-stream-apps.sh
-  ```
+    - Run the script below to start the docker containers
+      ```
+      ./start-spring-cloud-stream-apps.sh
+      ```
 
 ## Applications URLs
 
@@ -184,15 +184,15 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
    \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
     '  |____| .__|_| |_|_| |_\__, | / / / /
    =========|_|==============|___/=/_/_/_/
-   :: Spring Boot ::                (v2.4.3)
+   :: Spring Boot ::                (v2.4.5)
   
-  2021-02-27 13:07:11.045  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : Starting ProducerCloudStreamApplication using Java 11.0.10 on e6c594c07ad9 with PID 1 (/workspace/com.mycompany.producercloudstream.ProducerCloudStreamApplication started by cnb in /workspace)
-  2021-02-27 13:07:11.046  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : No active profile set, falling back to default profiles: default
-  2021-02-27 13:07:11.101  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
-  2021-02-27 13:07:11.102  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  2021-04-25 20:07:17.568  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : Starting ProducerCloudStreamApplication using Java 11.0.10 on 020a746ba64f with PID 1 (/workspace/com.mycompany.producercloudstream.ProducerCloudStreamApplication started by cnb in /workspace)
+  2021-04-25 20:07:17.571  INFO 1 --- [           main] c.m.p.ProducerCloudStreamApplication     : No active profile set, falling back to default profiles: default
+  2021-04-25 20:07:17.656  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  2021-04-25 20:07:17.659  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
   
   Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-  2021-02-27 13:07:11.125 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  2021-04-25 20:07:17.663 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
   org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.producercloudstream.ProducerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:610) ~[na:na]
@@ -202,19 +202,19 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.processGroupImports(ConfigurationClassParser.java:809) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorHandler.process(ConfigurationClassParser.java:780) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:193) ~[na:na]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:330) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.4]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:246) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.4]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.6]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:5.3.6]
   	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[na:na]
   	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:563) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:2.4.5]
   	at com.mycompany.producercloudstream.ProducerCloudStreamApplication.main(ProducerCloudStreamApplication.java:10) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   Caused by: java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334) ~[na:na]
@@ -250,15 +250,15 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
    \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
     '  |____| .__|_| |_|_| |_\__, | / / / /
    =========|_|==============|___/=/_/_/_/
-   :: Spring Boot ::                (v2.4.3)
+   :: Spring Boot ::                (v2.4.5)
   
-  2021-02-27 13:07:31.871  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : Starting ConsumerCloudStreamApplication using Java 11.0.10 on 78d83dbf0669 with PID 1 (/workspace/com.mycompany.consumercloudstream.ConsumerCloudStreamApplication started by cnb in /workspace)
-  2021-02-27 13:07:31.873  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : No active profile set, falling back to default profiles: default
-  2021-02-27 13:07:31.957  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
-  2021-02-27 13:07:31.958  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
+  2021-04-25 20:07:48.481  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : Starting ConsumerCloudStreamApplication using Java 11.0.10 on 726b3c200216 with PID 1 (/workspace/com.mycompany.consumercloudstream.ConsumerCloudStreamApplication started by cnb in /workspace)
+  2021-04-25 20:07:48.482  INFO 1 --- [           main] c.m.c.ConsumerCloudStreamApplication     : No active profile set, falling back to default profiles: default
+  2021-04-25 20:07:48.508  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
+  2021-04-25 20:07:48.509  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
   
   Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-  2021-02-27 13:07:31.960 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  2021-04-25 20:07:48.510 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
   org.springframework.beans.factory.BeanDefinitionStoreException: Failed to process import candidates for configuration class [com.mycompany.consumercloudstream.ConsumerCloudStreamApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.context.annotation.ConfigurationClassParser.processImports(ConfigurationClassParser.java:610) ~[na:na]
@@ -268,19 +268,19 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorGroupingHandler.processGroupImports(ConfigurationClassParser.java:809) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser$DeferredImportSelectorHandler.process(ConfigurationClassParser.java:780) ~[na:na]
   	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:193) ~[na:na]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:330) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.4]
-  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:246) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.4]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.6]
+  	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:5.3.6]
   	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[na:na]
   	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[na:na]
-  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:563) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[na:na]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.3]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.5]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.4.5]
   	at com.mycompany.consumercloudstream.ConsumerCloudStreamApplication.main(ConsumerCloudStreamApplication.java:10) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
   Caused by: java.lang.IllegalArgumentException: Could not find class [java.util.function.Function]
   	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334) ~[na:na]
