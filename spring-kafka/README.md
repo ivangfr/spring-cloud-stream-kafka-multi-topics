@@ -91,7 +91,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
       ```
       ./docker-build-spring-kafka.sh
       ```
-    - Native
+    - Native (it's not working, [see Issues](#issues)
       ```
       ./docker-build-spring-kafka.sh native
       ```
@@ -176,237 +176,33 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 ## Issues
 
-- After building the `producer-kafka` Docker Native Image and starting it successfully, when sending the first request, it's throwing the following exception.
+- After building the `producer-kafka` Docker Native Image and starting it successfully, when sending the first request, the exception below is thrown
+  > **Note:** It can be fixed by adding `@TypeHint(types = News.class)` in `ProducerKafkaApplication` as explained in this [issue #659](https://github.com/spring-projects-experimental/spring-native/issues/659). However, `spring-native` dependency (together with `spring-aot-maven-plugin`) is defined inside `native` profile. This way `@TypeHint` annotation is not available.
   ```
-    .   ____          _            __ _ _
-   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
-   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-    '  |____| .__|_| |_|_| |_\__, | / / / /
-   =========|_|==============|___/=/_/_/_/
-   :: Spring Boot ::                (v2.4.5)
+  ERROR 1 --- [ctor-http-nio-2] a.w.r.e.AbstractErrorWebExceptionHandler : [63d5385d-1]  500 Server Error for HTTP POST "/api/news"
   
-  2021-04-25 19:31:06.680  INFO 1 --- [           main] c.m.p.ProducerKafkaApplication           : Starting ProducerKafkaApplication using Java 11.0.10 on 202f6cf2b8eb with PID 1 (/workspace/com.mycompany.producerkafka.ProducerKafkaApplication started by cnb in /workspace)
-  2021-04-25 19:31:06.680  INFO 1 --- [           main] c.m.p.ProducerKafkaApplication           : No active profile set, falling back to default profiles: default
-  2021-04-25 19:31:06.773  WARN 1 --- [           main] i.m.c.i.binder.jvm.JvmGcMetrics          : GC notifications will not be available because MemoryPoolMXBeans are not provided by the JVM
-  2021-04-25 19:31:06.777  INFO 1 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 6 endpoint(s) beneath base path '/actuator'
-  2021-04-25 19:31:06.790  INFO 1 --- [           main] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values:
-  	bootstrap.servers = [kafka:9092]
-  	client.dns.lookup = use_all_dns_ips
-  	client.id =
-  	connections.max.idle.ms = 300000
-  	default.api.timeout.ms = 60000
-  	metadata.max.age.ms = 300000
-  	metric.reporters = []
-  	metrics.num.samples = 2
-  	metrics.recording.level = INFO
-  	metrics.sample.window.ms = 30000
-  	receive.buffer.bytes = 65536
-  	reconnect.backoff.max.ms = 1000
-  	reconnect.backoff.ms = 50
-  	request.timeout.ms = 30000
-  	retries = 2147483647
-  	retry.backoff.ms = 100
-  	sasl.client.callback.handler.class = null
-  	sasl.jaas.config = null
-  	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-  	sasl.kerberos.min.time.before.relogin = 60000
-  	sasl.kerberos.service.name = null
-  	sasl.kerberos.ticket.renew.jitter = 0.05
-  	sasl.kerberos.ticket.renew.window.factor = 0.8
-  	sasl.login.callback.handler.class = null
-  	sasl.login.class = null
-  	sasl.login.refresh.buffer.seconds = 300
-  	sasl.login.refresh.min.period.seconds = 60
-  	sasl.login.refresh.window.factor = 0.8
-  	sasl.login.refresh.window.jitter = 0.05
-  	sasl.mechanism = GSSAPI
-  	security.protocol = PLAINTEXT
-  	security.providers = null
-  	send.buffer.bytes = 131072
-  	ssl.cipher.suites = null
-  	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
-  	ssl.endpoint.identification.algorithm = https
-  	ssl.engine.factory.class = null
-  	ssl.key.password = null
-  	ssl.keymanager.algorithm = SunX509
-  	ssl.keystore.location = null
-  	ssl.keystore.password = null
-  	ssl.keystore.type = JKS
-  	ssl.protocol = TLSv1.3
-  	ssl.provider = null
-  	ssl.secure.random.implementation = null
-  	ssl.trustmanager.algorithm = PKIX
-  	ssl.truststore.location = null
-  	ssl.truststore.password = null
-  	ssl.truststore.type = JKS
-  
-  2021-04-25 19:31:06.794  WARN 1 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Error while loading kafka-version.properties: inStream parameter is null
-  2021-04-25 19:31:06.794  INFO 1 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version: unknown
-  2021-04-25 19:31:06.794  INFO 1 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: unknown
-  2021-04-25 19:31:06.795  INFO 1 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1619379066794
-  2021-04-25 19:31:06.820  INFO 1 --- [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080
-  2021-04-25 19:31:06.822  INFO 1 --- [           main] c.m.p.ProducerKafkaApplication           : Started ProducerKafkaApplication in 0.154 seconds (JVM running for 0.157)
-  Apr 25, 2021 7:34:26 PM com.fasterxml.jackson.databind.ext.Java7Handlers <clinit>
-  WARNING: Unable to load JDK7 types (java.nio.file.Path): no Java7 type support added
-  2021-04-25 19:34:26.488  INFO 1 --- [ctor-http-nio-2] c.m.producerkafka.kafka.NewsProducer     : Sending News 'News(id=cda58d50-de0d-49b7-8110-b6e69071770c, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)' to topic 'news.json'
-  2021-04-25 19:34:26.490  INFO 1 --- [ctor-http-nio-2] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-  	acks = 1
-  	batch.size = 16384
-  	bootstrap.servers = [kafka:9092]
-  	buffer.memory = 33554432
-  	client.dns.lookup = use_all_dns_ips
-  	client.id = producer-1
-  	compression.type = none
-  	connections.max.idle.ms = 540000
-  	delivery.timeout.ms = 120000
-  	enable.idempotence = false
-  	interceptor.classes = []
-  	internal.auto.downgrade.txn.commit = true
-  	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
-  	linger.ms = 0
-  	max.block.ms = 60000
-  	max.in.flight.requests.per.connection = 5
-  	max.request.size = 1048576
-  	metadata.max.age.ms = 300000
-  	metadata.max.idle.ms = 300000
-  	metric.reporters = []
-  	metrics.num.samples = 2
-  	metrics.recording.level = INFO
-  	metrics.sample.window.ms = 30000
-  	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-  	receive.buffer.bytes = 32768
-  	reconnect.backoff.max.ms = 1000
-  	reconnect.backoff.ms = 50
-  	request.timeout.ms = 30000
-  	retries = 2147483647
-  	retry.backoff.ms = 100
-  	sasl.client.callback.handler.class = null
-  	sasl.jaas.config = null
-  	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-  	sasl.kerberos.min.time.before.relogin = 60000
-  	sasl.kerberos.service.name = null
-  	sasl.kerberos.ticket.renew.jitter = 0.05
-  	sasl.kerberos.ticket.renew.window.factor = 0.8
-  	sasl.login.callback.handler.class = null
-  	sasl.login.class = null
-  	sasl.login.refresh.buffer.seconds = 300
-  	sasl.login.refresh.min.period.seconds = 60
-  	sasl.login.refresh.window.factor = 0.8
-  	sasl.login.refresh.window.jitter = 0.05
-  	sasl.mechanism = GSSAPI
-  	security.protocol = PLAINTEXT
-  	security.providers = null
-  	send.buffer.bytes = 131072
-  	ssl.cipher.suites = null
-  	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
-  	ssl.endpoint.identification.algorithm = https
-  	ssl.engine.factory.class = null
-  	ssl.key.password = null
-  	ssl.keymanager.algorithm = SunX509
-  	ssl.keystore.location = null
-  	ssl.keystore.password = null
-  	ssl.keystore.type = JKS
-  	ssl.protocol = TLSv1.3
-  	ssl.provider = null
-  	ssl.secure.random.implementation = null
-  	ssl.trustmanager.algorithm = PKIX
-  	ssl.truststore.location = null
-  	ssl.truststore.password = null
-  	ssl.truststore.type = JKS
-  	transaction.timeout.ms = 60000
-  	transactional.id = null
-  	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
-  
-  2021-04-25 19:34:26.494  INFO 1 --- [ctor-http-nio-2] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 0 ms.
-  2021-04-25 19:34:26.508 ERROR 1 --- [ctor-http-nio-2] a.w.r.e.AbstractErrorWebExceptionHandler : [a83db33d-1]  500 Server Error for HTTP POST "/api/news"
-  
-  org.apache.kafka.common.KafkaException: Failed to construct kafka producer
-  	at org.apache.kafka.clients.producer.KafkaProducer.<init>(KafkaProducer.java:441) ~[na:na]
+  org.apache.kafka.common.errors.SerializationException: Can't serialize data [News(id=70424098-ca76-4876-8520-8a0a5c6a294d, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)] for topic [news.json]
   	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException:
   Error has been observed at the following site(s):
   	|_ checkpoint ? org.springframework.boot.actuate.metrics.web.reactive.server.MetricsWebFilter [DefaultWebFilterChain]
   	|_ checkpoint ? HTTP POST "/api/news" [ExceptionHandlingWebHandler]
   Stack trace:
-  		at org.apache.kafka.clients.producer.KafkaProducer.<init>(KafkaProducer.java:441) ~[na:na]
-  		at org.apache.kafka.clients.producer.KafkaProducer.<init>(KafkaProducer.java:290) ~[na:na]
-  		at org.springframework.kafka.core.DefaultKafkaProducerFactory.createRawProducer(DefaultKafkaProducerFactory.java:743) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at org.springframework.kafka.core.DefaultKafkaProducerFactory.createKafkaProducer(DefaultKafkaProducerFactory.java:584) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at org.springframework.kafka.core.DefaultKafkaProducerFactory.doCreateProducer(DefaultKafkaProducerFactory.java:544) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at org.springframework.kafka.core.DefaultKafkaProducerFactory.createProducer(DefaultKafkaProducerFactory.java:519) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at org.springframework.kafka.core.DefaultKafkaProducerFactory.createProducer(DefaultKafkaProducerFactory.java:513) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at org.springframework.kafka.core.KafkaTemplate.getTheProducer(KafkaTemplate.java:666) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at org.springframework.kafka.core.KafkaTemplate.doSend(KafkaTemplate.java:552) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at org.springframework.kafka.core.KafkaTemplate.send(KafkaTemplate.java:369) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  		at com.mycompany.producerkafka.kafka.NewsProducer.send(NewsProducer.java:21) ~[com.mycompany.producerkafka.ProducerKafkaApplication:na]
-  		at com.mycompany.producerkafka.rest.NewsController.publishNews(NewsController.java:25) ~[com.mycompany.producerkafka.ProducerKafkaApplication:na]
-  		at java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
-  		at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:146) ~[na:na]
-  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producerkafka.ProducerKafkaApplication:3.4.5]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producerkafka.ProducerKafkaApplication:3.4.5]
-  		at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producerkafka.ProducerKafkaApplication:3.4.5]
-  		at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producerkafka.ProducerKafkaApplication:3.4.5]
-  		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[na:na]
-  		at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:100) ~[na:na]
-  		at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:199) ~[na:na]
-  		at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:73) ~[na:na]
-  		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[na:na]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producerkafka.ProducerKafkaApplication:3.4.5]
-  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producerkafka.ProducerKafkaApplication:3.4.5]
-  		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[na:na]
-  		at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:295) ~[na:na]
-  		at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[na:na]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producerkafka.ProducerKafkaApplication:3.4.5]
-  		at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:159) ~[na:na]
-  		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
-  		at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:259) ~[na:na]
-  		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
-  		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:401) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
-  		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:416) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
-  		at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:556) ~[na:na]
-  		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:94) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:253) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[na:na]
-  		at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:324) ~[na:na]
-  		at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:296) ~[na:na]
-  		at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  		at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[na:na]
-  		at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:719) ~[na:na]
-  		at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:655) ~[na:na]
-  		at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:581) ~[na:na]
-  		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493) ~[na:na]
-  		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[na:na]
-  		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[na:na]
-  		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[na:na]
-  		at java.lang.Thread.run(Thread.java:834) ~[na:na]
-  		at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519) ~[na:na]
-  		at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
-  Caused by: org.apache.kafka.common.KafkaException: Could not find a public no-argument constructor for org.springframework.kafka.support.serializer.JsonSerializer
-  	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:349) ~[na:na]
-  	at org.apache.kafka.common.config.AbstractConfig.getConfiguredInstance(AbstractConfig.java:377) ~[na:na]
-  	at org.apache.kafka.common.config.AbstractConfig.getConfiguredInstance(AbstractConfig.java:399) ~[na:na]
-  	at org.apache.kafka.clients.producer.KafkaProducer.<init>(KafkaProducer.java:374) ~[na:na]
-  	at org.apache.kafka.clients.producer.KafkaProducer.<init>(KafkaProducer.java:290) ~[na:na]
-  	at org.springframework.kafka.core.DefaultKafkaProducerFactory.createRawProducer(DefaultKafkaProducerFactory.java:743) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  	at org.springframework.kafka.core.DefaultKafkaProducerFactory.createKafkaProducer(DefaultKafkaProducerFactory.java:584) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  	at org.springframework.kafka.core.DefaultKafkaProducerFactory.doCreateProducer(DefaultKafkaProducerFactory.java:544) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  	at org.springframework.kafka.core.DefaultKafkaProducerFactory.createProducer(DefaultKafkaProducerFactory.java:519) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  	at org.springframework.kafka.core.DefaultKafkaProducerFactory.createProducer(DefaultKafkaProducerFactory.java:513) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  	at org.springframework.kafka.core.KafkaTemplate.getTheProducer(KafkaTemplate.java:666) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
-  	at org.springframework.kafka.core.KafkaTemplate.doSend(KafkaTemplate.java:552) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class com.mycompany.producerkafka.domain.News and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS)
+  	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1277) ~[na:na]
+  	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:400) ~[na:na]
+  	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:71) ~[na:na]
+  	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:33) ~[na:na]
+  	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480) ~[na:na]
+  	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319) ~[na:na]
+  	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1516) ~[na:na]
+  	at com.fasterxml.jackson.databind.ObjectWriter._writeValueAndClose(ObjectWriter.java:1217) ~[na:na]
+  	at com.fasterxml.jackson.databind.ObjectWriter.writeValueAsBytes(ObjectWriter.java:1110) ~[na:na]
+  	at org.springframework.kafka.support.serializer.JsonSerializer.serialize(JsonSerializer.java:195) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  	at org.springframework.kafka.support.serializer.JsonSerializer.serialize(JsonSerializer.java:185) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  	at org.apache.kafka.clients.producer.KafkaProducer.doSend(KafkaProducer.java:910) ~[na:na]
+  	at org.apache.kafka.clients.producer.KafkaProducer.send(KafkaProducer.java:870) ~[na:na]
+  	at org.springframework.kafka.core.DefaultKafkaProducerFactory$CloseSafeProducer.send(DefaultKafkaProducerFactory.java:862) ~[na:na]
+  	at org.springframework.kafka.core.KafkaTemplate.doSend(KafkaTemplate.java:563) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
   	at org.springframework.kafka.core.KafkaTemplate.send(KafkaTemplate.java:369) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
   	at com.mycompany.producerkafka.kafka.NewsProducer.send(NewsProducer.java:21) ~[com.mycompany.producerkafka.ProducerKafkaApplication:na]
   	at com.mycompany.producerkafka.rest.NewsController.publishNews(NewsController.java:25) ~[com.mycompany.producerkafka.ProducerKafkaApplication:na]
@@ -434,25 +230,25 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:401) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
   	at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:416) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
   	at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:556) ~[na:na]
-  	at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:94) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:253) ~[com.mycompany.producerkafka.ProducerKafkaApplication:1.0.6]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
+  	at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:94) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[na:na]
+  	at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:253) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[na:na]
   	at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[na:na]
   	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:324) ~[na:na]
   	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:296) ~[na:na]
-  	at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
-  	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[com.mycompany.producerkafka.ProducerKafkaApplication:4.1.63.Final]
+  	at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[na:na]
+  	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
+  	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
+  	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[na:na]
   	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[na:na]
   	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:719) ~[na:na]
   	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:655) ~[na:na]
@@ -464,30 +260,11 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at java.lang.Thread.run(Thread.java:834) ~[na:na]
   	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519) ~[na:na]
   	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
-  Caused by: java.lang.NoSuchMethodException: org.springframework.kafka.support.serializer.JsonSerializer.<init>()
-  	at java.lang.Class.getConstructor0(DynamicHub.java:3349) ~[na:na]
-  	at java.lang.Class.getDeclaredConstructor(DynamicHub.java:2553) ~[na:na]
-  	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:347) ~[na:na]
-  	... 68 common frames omitted
   ```
 
-- After building the `consumer-kafka` Docker Native Image successfully, when starting it, it's throwing the following exception.
+- After building the `consumer-kafka` Docker Native Image successfully, the following exception is thrown at runtime
   ```
-    .   ____          _            __ _ _
-   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
-   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-    '  |____| .__|_| |_|_| |_\__, | / / / /
-   =========|_|==============|___/=/_/_/_/
-   :: Spring Boot ::                (v2.4.5)
-  
-  2021-04-25 19:31:26.526  INFO 1 --- [           main] c.m.c.ConsumerKafkaApplication           : Starting ConsumerKafkaApplication using Java 11.0.10 on 439f11873949 with PID 1 (/workspace/com.mycompany.consumerkafka.ConsumerKafkaApplication started by cnb in /workspace)
-  2021-04-25 19:31:26.527  INFO 1 --- [           main] c.m.c.ConsumerKafkaApplication           : No active profile set, falling back to default profiles: default
-  2021-04-25 19:31:26.588  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'newsConsumer' defined in class path resource [com/mycompany/consumerkafka/kafka/NewsConsumer.class]: Initialization of bean failed; nested exception is java.lang.NullPointerException
-  2021-04-25 19:31:26.591  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener :
-  
-  Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-  2021-04-25 19:31:26.592 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
   org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'newsConsumer' defined in class path resource [com/mycompany/consumerkafka/kafka/NewsConsumer.class]: Initialization of bean failed; nested exception is java.lang.NullPointerException
   	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:610) ~[na:na]
@@ -500,13 +277,13 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[na:na]
   	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.4.5]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.4.5]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.4.5]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.4.5]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.4.5]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.4.5]
-  	at com.mycompany.consumerkafka.ConsumerKafkaApplication.main(ConsumerKafkaApplication.java:16) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
+  	at com.mycompany.consumerkafka.ConsumerKafkaApplication.main(ConsumerKafkaApplication.java:10) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:na]
   Caused by: java.lang.NullPointerException: null
   	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.resolveExpression(KafkaListenerAnnotationBeanPostProcessor.java:735) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.7]
   	at org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor.resolveExpressionAsString(KafkaListenerAnnotationBeanPostProcessor.java:689) ~[com.mycompany.consumerkafka.ConsumerKafkaApplication:2.6.7]
