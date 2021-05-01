@@ -34,7 +34,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
     
     - Run application
       ```
-      ./mvnw clean spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
+      ./mvnw clean package spring-boot:run --projects spring-cloud-stream/producer-cloud-stream -DskipTests \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
         -Dspring-boot.run.profiles=cloudkarafka
       ```
@@ -51,7 +51,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
     - Run application
       ```
-      ./mvnw clean spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
+      ./mvnw clean package spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream -DskipTests \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
         -Dspring-boot.run.profiles=cloudkarafka
       ```
@@ -66,7 +66,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
     - Run application
       ```
-      ./mvnw clean spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
+      ./mvnw clean package spring-boot:run --projects spring-cloud-stream/producer-cloud-stream -DskipTests \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
       ```
 
@@ -76,7 +76,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
     - Run application
       ```
-      ./mvnw clean spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
+      ./mvnw clean package spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream -DskipTests \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
       ```
 
@@ -101,7 +101,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - **producer-cloud-stream** and **consumer-cloud-stream**
 
     | Environment Variable     | Description |
-    | -----------------------  | ----------- |
+    | ------------------------ | ----------- |
     | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
     | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `cloudkarafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
     | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
@@ -176,7 +176,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 ## Issues
 
-- After building the `producer-cloud-stream` Docker Native Image, the following exception is thrown at runtime
+- After building the `producer-cloud-stream` Docker Native Image, the following exception is thrown at runtime. It's related to this [issue #693](https://github.com/spring-projects-experimental/spring-native/issues/693)
   ```
   ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
@@ -213,7 +213,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at com.mycompany.producercloudstream.ProducerCloudStreamApplication.main(ProducerCloudStreamApplication.java:10) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   ```
 
-- After building the `consumer-cloud-stream` Docker Native Image, when running it, the following exception is thrown at runtime
+- After building the `consumer-cloud-stream` Docker Native Image, the following exception is thrown at runtime. It's related to this [issue #693](https://github.com/spring-projects-experimental/spring-native/issues/693)
   ```
   ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
   
