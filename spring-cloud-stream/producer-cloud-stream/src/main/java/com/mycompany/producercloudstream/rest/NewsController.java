@@ -1,7 +1,9 @@
 package com.mycompany.producercloudstream.rest;
 
+import com.mycompany.producercloudstream.domain.Alert;
 import com.mycompany.producercloudstream.domain.News;
-import com.mycompany.producercloudstream.kafka.NewsProducer;
+import com.mycompany.producercloudstream.kafka.MessageProducer;
+import com.mycompany.producercloudstream.rest.dto.CreateAlertDto;
 import com.mycompany.producercloudstream.rest.dto.CreateNewsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,15 +16,22 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/news")
+@RequestMapping("/api")
 public class NewsController {
 
-    private final NewsProducer newsProducer;
+    private final MessageProducer messageProducer;
 
-    @PostMapping
+    @PostMapping("/news")
     public String publishNews(@Valid @RequestBody CreateNewsDto createNewsDto) {
         String id = UUID.randomUUID().toString();
-        newsProducer.send(new News(id, createNewsDto.getSource(), createNewsDto.getTitle()));
+        messageProducer.send(new News(id, createNewsDto.getSource(), createNewsDto.getTitle()));
+        return id;
+    }
+
+    @PostMapping("/alert")
+    public String publishAlert(@Valid @RequestBody CreateAlertDto createAlertDto) {
+        String id = UUID.randomUUID().toString();
+        messageProducer.send(new Alert(id, createAlertDto.getLevel(), createAlertDto.getMessage()));
         return id;
     }
 

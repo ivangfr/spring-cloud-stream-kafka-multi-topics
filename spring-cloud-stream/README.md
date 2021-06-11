@@ -7,16 +7,17 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 - ### producer-cloud-stream
 
-  `Spring Boot` Web Java application that exposes one endpoint at which users can post `news`. Once a request is made, `producer-cloud-stream` pushes a message about the `news` to Kafka.
+  `Spring Boot` Web Java application that exposes one endpoint at which users can post `news` or `alert`. Once a request is made, `producer-cloud-stream` pushes a message related to the `news` or `alert` to Kafka.
 
-  Endpoint
+  Endpoints
   ```
   POST /api/news {"source": "...", "title": "..."}
+  POST /api/alert {"level": "...", "message": "..."}
   ```
 
 - ### consumer-cloud-stream
 
-  `Spring Boot` Web Java application that listens to messages (published by the `producer-cloud-stream`) and logs it.
+  `Spring Boot` Web Java application that listens to the messages (published by `producer-cloud-stream`) and logs it.
 
 ## Running applications using Maven
 
@@ -146,22 +147,41 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 > **Note:** In the call below, I am using [HTTPie](https://httpie.org/)
 
-- In a terminal, post a news
+- In a terminal, the following command will post a news
   ```
   http :9082/api/news source="Spring Boot Blog" title="Spring Boot and CloudKarafka"
   ```
 
   **producer-cloud-stream** logs
   ```
-  INFO 5090 --- [nio-9082-exec-1] c.m.p.kafka.NewsProducer : Sending News 'News(id=04253f40-ff8e-4293-91ba-a570febda5e1, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)' to topic '2gxxxxxx-news.json'
+  INFO c.m.p.kafka.NewsProducer : Sending News 'News(id=04253f40-ff8e-4293-91ba-a570febda5e1, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)' to topic '2gxxxxxx-news.json'
   ```
 
   **consumer-cloud-stream** logs
   ```
-  INFO 5066 --- [container-0-C-1] c.m.c.kafka.NewsConsumer : Received message
+  INFO c.m.c.kafka.NewsConsumer : Received message
   ---
-  TOPIC: 2gxxxxxx-news.json; PARTITION: 0; OFFSET: 1;
+  TOPIC: 2gxxxxxx-news.json; PARTITION: 0; OFFSET: 2;
   PAYLOAD: News(id=04253f40-ff8e-4293-91ba-a570febda5e1, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)
+  ---
+  ```
+
+- In a terminal, the following command will post an `alert`
+  ```
+  http :9082/api/alert level=4 message="Tsunami is comming"
+  ```
+
+  **producer-kafka** logs
+  ```
+  INFO c.m.producerkafka.kafka.AlertProducer    : Sending Alert 'Alert(id=756a8dc8-21ca-4856-9a4d-a0b34c158b43, level=4, message=Tsunami is comming)' to topic '2gxxxxxx-alert.json'
+  ```
+
+  **consumer-kafka** logs
+  ```
+  INFO c.m.consumerkafka.kafka.NewsConsumer     : Received message
+  ---
+  TOPIC: 2gxxxxxx-alert.json; PARTITION: 0; OFFSET: 2;
+  PAYLOAD: Alert(id=756a8dc8-21ca-4856-9a4d-a0b34c158b43, level=4, message=Tsunami is comming)
   ---
   ```
 

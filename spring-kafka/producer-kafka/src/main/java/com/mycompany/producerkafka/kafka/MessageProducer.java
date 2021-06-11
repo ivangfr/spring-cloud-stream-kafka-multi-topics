@@ -1,5 +1,6 @@
 package com.mycompany.producerkafka.kafka;
 
+import com.mycompany.producerkafka.domain.Alert;
 import com.mycompany.producerkafka.domain.News;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,15 +11,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class NewsProducer {
+public class MessageProducer {
 
     private final KafkaProperties kafkaProperties;
-    private final KafkaTemplate<String, News> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(News news) {
-        String kafkaTopic = kafkaProperties.getProducer().getProperties().get("topic");
+        String kafkaTopic = kafkaProperties.getProducer().getProperties().get("news-topic");
         log.info("Sending News '{}' to topic '{}'", news, kafkaTopic);
         kafkaTemplate.send(kafkaTopic, news.getId(), news);
+    }
+
+    public void send(Alert alert) {
+        String kafkaTopic = kafkaProperties.getProducer().getProperties().get("alert-topic");
+        log.info("Sending Alert '{}' to topic '{}'", alert, kafkaTopic);
+        kafkaTemplate.send(kafkaTopic, alert.getId(), alert);
     }
 
 }

@@ -33,7 +33,7 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
   ![cloudkarafka-topics](images/cloudkarafka-topics.png)
 
-- You can use the default topic or create a new one. In my case, I created a new one with suffix `news.json`
+- You can use the topic with suffix `default` or create new ones. In my case, I created two: one with suffix `news.json` and another with suffix `alert.json`.
 
 ## Using Kafka running locally
 
