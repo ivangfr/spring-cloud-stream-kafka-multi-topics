@@ -31,7 +31,6 @@ public class MessageConsumerConfig {
         return factory;
     }
 
-    @Bean
     ConsumerFactory<String, News> newsConsumerFactory() {
         Map<String, Object> props = kafkaProperties.buildConsumerProperties();
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -47,7 +46,6 @@ public class MessageConsumerConfig {
         return factory;
     }
 
-    @Bean
     ConsumerFactory<String, Alert> alertConsumerFactory() {
         Map<String, Object> props = kafkaProperties.buildConsumerProperties();
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);

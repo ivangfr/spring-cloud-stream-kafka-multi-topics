@@ -13,24 +13,24 @@ then
     -e SPRING_PROFILES_ACTIVE=cloudkarafka \
     -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
     -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-    docker.mycompany.com/producer-kafka:1.0.0
+    ivanfranchin/producer-kafka:1.0.0
 
   docker run -d --rm --name consumer-kafka -p 9081:8080 \
     -e SPRING_PROFILES_ACTIVE=cloudkarafka \
     -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
     -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-    docker.mycompany.com/consumer-kafka:1.0.0
+    ivanfranchin/consumer-kafka:1.0.0
 
 else
 
   docker run -d --rm --name producer-kafka -p 9080:8080 \
     -e KAFKA_URL=kafka:9092 \
     --network springboot-cloudkarafka_default \
-    docker.mycompany.com/producer-kafka:1.0.0
+    ivanfranchin/producer-kafka:1.0.0
 
   docker run -d --rm --name consumer-kafka -p 9081:8080 \
     -e KAFKA_URL=kafka:9092 \
     --network springboot-cloudkarafka_default \
-    docker.mycompany.com/consumer-kafka:1.0.0
+    ivanfranchin/consumer-kafka:1.0.0
 
 fi

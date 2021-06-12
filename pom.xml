@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
+        <version>2.5.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -18,9 +18,9 @@
 
     <properties>
         <java.version>11</java.version>
-        <spring-native.version>0.9.2</spring-native.version>
-        <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
-        <docker-image.prefix>docker.mycompany.com</docker-image.prefix>
+        <spring-native.version>0.10.0-SNAPSHOT</spring-native.version>
+        <jib-maven-plugin.version>3.1.1</jib-maven-plugin.version>
+        <docker-image.prefix>ivanfranchin</docker-image.prefix>
     </properties>
 
     <modules>
@@ -59,14 +59,12 @@
                         <builder>paketobuildpacks/builder:tiny</builder>
                         <name>${docker-image.prefix}/${project.artifactId}:${project.version}</name>
                         <env>
-                            <BP_BOOT_NATIVE_IMAGE>1</BP_BOOT_NATIVE_IMAGE>
-                            <BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                -Dspring.native.remove-yaml-support=true
+                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                 --enable-all-security-services
                                 --enable-https
-                                -Dspring.native.debug-proxies=true
-                                -H:IncludeResourceBundles=sun.security.util.Resources
-                            </BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                -H:IncludeResourceBundles=sun.security.util.Resources <!-- 5 -->
+                            </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                         </env>
                     </image>
                 </configuration>
@@ -108,23 +106,20 @@
 
     <repositories>
         <repository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
                 <enabled>false</enabled>
-            </snapshots>
+            </releases>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
         </pluginRepository>
     </pluginRepositories>
 
