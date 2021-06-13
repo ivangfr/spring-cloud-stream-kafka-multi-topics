@@ -2,7 +2,7 @@
 
 The goal of this project is to implement a [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that _produces_ messages to a [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot` application that _consumes_ those messages.
 
-Similar projects are: [`springboot-spring-kafka`](https://github.com/ivangfr/springboot-spring-kafka) and [`spring-cloud-stream-elasticsearch`](https://github.com/ivangfr/spring-cloud-stream-elasticsearch).
+Similar projects are: [`spring-kafka-de-serialization-types`](https://github.com/ivangfr/spring-kafka-de-serialization-types) and [`spring-cloud-stream-kafka-elasticsearch`](https://github.com/ivangfr/spring-cloud-stream-kafka-elasticsearch).
 
 However, in this one, when the Spring Profile `cloudkarafka` is used, `producer` and `consumer` will connect to a `Kafka` that is located in a cloud-based messaging service called [`CloudKarafka`](https://www.cloudkarafka.com/). When running the applications with `default` profile, `producer` and `consumer` will connect to `Kafka` that is running locally in a `Docker` container.
 
