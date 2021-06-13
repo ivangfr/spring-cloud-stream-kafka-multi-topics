@@ -25,12 +25,12 @@ else
 
   docker run -d --rm --name producer-cloud-stream -p 9082:8080 \
     -e KAFKA_URL=kafka:9092 \
-    --network springboot-cloudkarafka_default \
+    --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
     ivanfranchin/producer-cloud-stream:1.0.0
 
   docker run -d --rm --name consumer-cloud-stream -p 9083:8080 \
     -e KAFKA_URL=kafka:9092 \
-    --network springboot-cloudkarafka_default \
+    --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
     ivanfranchin/consumer-cloud-stream:1.0.0
 
 fi

@@ -1,4 +1,4 @@
-# springboot-cloudkarafka
+# spring-cloud-stream-kafka-multi-topics-cloudkarafka
 ## `> spring-kafka`
 
 In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the configuration between `Spring Boot` applications and `Kafka`.
@@ -25,7 +25,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **producer-kafka**
 
-    - Open a terminal and navigate to `springboot-cloudkarafka` root folder
+    - Open a terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
 
     - Export your `CloudKarafka` credentials to those environment variables
       ```
@@ -42,7 +42,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **consumer-kafka**
 
-    - Open another terminal and make sure you are in `springboot-cloudkarafka` root folder
+    - Open another terminal and make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
     - Export your `CloudKarafka` credentials to those environment variables
       ```
@@ -59,11 +59,11 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - #### Using Kafka running locally
 
-  > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)  
+  > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)  
 
   - **producer-kafka**
 
-    - Open a terminal and navigate to `springboot-cloudkarafka` root folder
+    - Open a terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
     - Run application
       ```
@@ -73,7 +73,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **consumer-kafka**
 
-    - Open another terminal and make sure you are in `springboot-cloudkarafka` root folder
+    - Open another terminal and make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
     - Run application
       ```
@@ -85,7 +85,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - ### Build application's Docker image
 
-  - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+  - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
 
   - Run the following script to build the Docker images
     - JVM
@@ -112,7 +112,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - #### Using CloudKarafka
 
-    - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
 
     - Export your `CloudKarafka` credentials to these environment variables
       ```
@@ -127,9 +127,9 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - #### Using Kafka running locally
 
-    > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/springboot-cloudkarafka#running-kafka-locally)
+    > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
 
-    - In a terminal, make sure you are in `springboot-cloudkarafka` root folder
+    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
 
     - Run the script below to start the docker containers
       ```

@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.mycompany</groupId>
-    <artifactId>springboot-cloudkarafka</artifactId>
+    <artifactId>spring-cloud-stream-kafka-multi-topics-cloudkarafka</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>springboot-cloudkarafka</name>
+    <name>spring-cloud-stream-kafka-multi-topics-cloudkarafka</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

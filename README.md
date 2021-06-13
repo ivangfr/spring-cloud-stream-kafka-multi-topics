@@ -1,4 +1,4 @@
-# springboot-cloudkarafka
+# spring-cloud-stream-kafka-multi-topics-cloudkarafka
 
 The goal of this project is to implement a [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that _produces_ messages to a [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot` application that _consumes_ those messages.
 
@@ -8,8 +8,8 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 ## Examples
 
-- ### [spring-kafka](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-kafka#springboot-cloudkarafka)
-- ### [spring-cloud-stream](https://github.com/ivangfr/springboot-cloudkarafka/tree/master/spring-cloud-stream#springboot-cloudkarafka)
+- ### [spring-kafka](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka/tree/master/spring-kafka#spring-cloud-stream-kafka-multi-topics-cloudkarafka)
+- ### [spring-cloud-stream](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka/tree/master/spring-cloud-stream#spring-cloud-stream-kafka-multi-topics-cloudkarafka)
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 ## Using Kafka running locally
 
-- Open a terminal and inside `springboot-cloudkarafka` root folder run
+- Open a terminal and inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder run
   ```
   docker-compose up -d
   ```
