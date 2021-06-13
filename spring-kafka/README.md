@@ -67,7 +67,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   
     - Run application
       ```
-      ./mvnw clean package spring-boot:run --projects spring-kafka/producer-kafka -DskipTests \
+      ./mvnw clean spring-boot:run --projects spring-kafka/producer-kafka \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
       ```
 
@@ -77,7 +77,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   
     - Run application
       ```
-      ./mvnw clean package spring-boot:run --projects spring-kafka/consumer-kafka -DskipTests \
+      ./mvnw clean spring-boot:run --projects spring-kafka/consumer-kafka \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
       ```
 
@@ -92,7 +92,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
       ```
       ./docker-build-spring-kafka.sh
       ```
-    - Native (it's not working, [see Issues](#issues)
+    - Native
       ```
       ./docker-build-spring-kafka.sh native
       ```
@@ -196,9 +196,11 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 ## Issues
 
-`producer-kafka` and `consumer-kafka` Docker native images are not working when running with `cloudkarafka` profile
+### Profile `cloudkarafka` 
 
-- `producer-api`
+- `producer-kafka`
+
+  After building and starting the application in Native mode, the following exception is thrown the first `news` or `alert` is submitted
   ```
   WARN 1 --- [ad | producer-1] o.apache.kafka.common.network.Selector   : [Producer clientId=producer-1] Unexpected error from ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx; closing connection
   
@@ -228,10 +230,11 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   
   WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node -2 (ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx:xxxx) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
   WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Bootstrap broker ark-02.srvs.cloudkafka.com:9094 (id: -2 rack: null) disconnected
-  WARN 1 --- [ad | producer-1] o.apache.kafka.common.network.Selector   : [Producer clientId=producer-1] Unexpected error from ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx; closing connection
   ```
 
-- `consumer-api`
+- `consumer-kafka`
+
+  After building the application in Native mode, the following exception is thrown at startup time
   ```
   WARN 1 --- [ntainer#1-0-C-1] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Unexpected error from ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx; closing connection
   
@@ -271,6 +274,5 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
   
   WARN 1 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Connection to node -2 (ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx:xxxx) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Bootstrap broker ark-02.srvs.cloudkafka.com:9094 (id: -2 rack: null) disconnected
-  WARN 1 --- [ntainer#0-1-C-1] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerKafkaGroup-2, groupId=consumerKafkaGroup] Unexpected error from ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx; closing connection  
+  WARN 1 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Bootstrap broker ark-02.srvs.cloudkafka.com:9094 (id: -2 rack: null) disconnected  
   ```

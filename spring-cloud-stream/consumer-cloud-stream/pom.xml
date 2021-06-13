@@ -4,18 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mycompany</groupId>
-        <artifactId>springboot-cloudkarafka</artifactId>
+        <artifactId>spring-cloud-stream</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>consumer-cloud-stream</artifactId>
     <name>consumer-cloud-stream</name>
     <description>Demo project for Spring Boot</description>
-
-    <properties>
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -62,17 +58,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
 </project>
