@@ -68,8 +68,8 @@ services:
       start_period: 30s
 
   kafka-manager:
-    container_name: kafka-manager
     image: hlebalbau/kafka-manager:3.0.0.5
+    container_name: kafka-manager
     restart: unless-stopped
     depends_on:
       - zookeeper

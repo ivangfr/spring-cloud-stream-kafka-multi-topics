@@ -25,7 +25,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - **producer-cloud-stream**
 
-    - Open a terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
 
     - Export your `CloudKarafka` credentials to those environment variables
       ```
@@ -33,7 +33,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
       export CLOUDKARAFKA_PASSWORD=...
       ```
     
-    - Run application
+    - Run the Maven command below to start the application
       ```
       ./mvnw clean spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9082" \
@@ -42,7 +42,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - **consumer-cloud-stream**
 
-    - Open another terminal and make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
     - Export your `CloudKarafka` credentials to those environment variables
       ```
@@ -50,7 +50,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
       export CLOUDKARAFKA_PASSWORD=...
       ```
   
-    - Run application
+    - Run the Maven command below to start the application
       ```
       ./mvnw clean spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9083" \
@@ -63,9 +63,9 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - **producer-cloud-stream**
 
-    - Open a terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
-    - Run application
+    - Run the Maven command below to start the application
       ```
       ./mvnw clean spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
@@ -73,9 +73,9 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - **consumer-cloud-stream**
 
-    - Open another terminal and make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
-    - Run application
+    - Run the Maven command below to start the application
       ```
       ./mvnw clean spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
@@ -112,28 +112,62 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - #### Using CloudKarafka
 
-    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - **producer-kafka**
+      
+      - In a terminal, export your `CloudKarafka` credentials to these environment variables
+        ```
+        export CLOUDKARAFKA_USERNAME=...
+        export CLOUDKARAFKA_PASSWORD=...
+        ```
 
-    - Export your `CloudKarafka` credentials to these environment variables
-      ```
-      export CLOUDKARAFKA_USERNAME=...
-      export CLOUDKARAFKA_PASSWORD=...
-      ```
+      - Run the command below to start the Docker container
+        ```
+        docker run --rm --name producer-cloud-stream -p 9082:8080 \
+          -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+          -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
+          -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+          ivanfranchin/producer-cloud-stream:1.0.0
+        ```
 
-    - Run the script below to start the docker containers
-      ```
-      ./start-spring-cloud-stream-apps.sh cloudkarafka
-      ```
+    - **consumer-kafka**
+
+      - Open a new terminal and export your `CloudKarafka` credentials to these environment variables
+        ```
+        export CLOUDKARAFKA_USERNAME=...
+        export CLOUDKARAFKA_PASSWORD=...
+        ```
+
+      - Run the command below to start the Docker container
+        ```
+        docker run --rm --name consumer-cloud-stream -p 9083:8080 \
+          -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+          -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
+          -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+          ivanfranchin/consumer-cloud-stream:1.0.0
+        ```
 
   - #### Using Kafka running locally
 
     > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
 
-    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - **producer-kafka**
 
-    - Run the script below to start the docker containers
+      In a terminal, run the command below to start the Docker container
       ```
-      ./start-spring-cloud-stream-apps.sh
+      docker run --rm --name producer-cloud-stream -p 9082:8080 \
+        -e KAFKA_URL=kafka:9092 \
+        --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
+        ivanfranchin/producer-cloud-stream:1.0.0
+      ```
+
+    - **consumer-kafka**
+
+      Open a new terminal and run the command below to start the Docker container
+      ```
+      docker run --rm --name consumer-cloud-stream -p 9083:8080 \
+        -e KAFKA_URL=kafka:9092 \
+        --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
+        ivanfranchin/consumer-cloud-stream:1.0.0
       ```
 
 ## Applications URLs
@@ -188,11 +222,18 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 ## Stop applications
 
 - If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
+- If they were started as Docker containers, go to a terminal and run the command below
+  ```
+  docker stop producer-cloud-stream consumer-cloud-stream
+  ```
 
-- If they were started as Docker containers, run the script below
-  ```
-  ./stop-spring-cloud-stream-apps.sh
-  ```
+## Cleanup
+
+To remove the Docker images created by this example, go to a terminal and run the following commands
+```
+docker rmi ivanfranchin/producer-cloud-stream:1.0.0
+docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
+```
 
 ## Issues
 
@@ -201,9 +242,9 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 - `producer-cloud-stream`
 
   After building and starting the application in Native mode, the following exception is thrown when it pushes a `news` or an `alert`. As there is a problem with the Message Converters, the message cannot be serialized. See https://github.com/spring-projects-experimental/spring-native/issues/816
-
+  
   ```
-  WARN 1 --- [ctor-http-nio-2] o.s.c.s.binder.DefaultBinderFactory      : Failed to add additional Message Converters from child context
+   WARN 1 --- [ctor-http-nio-2] o.s.c.s.binder.DefaultBinderFactory      : Failed to add additional Message Converters from child context
   
   java.lang.NullPointerException: null
   	at org.springframework.cloud.stream.binder.DefaultBinderFactory.getBinderInstance(DefaultBinderFactory.java:277) ~[na:na]
@@ -215,32 +256,32 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:202) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   	at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:156) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   	at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:136) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-  	at com.mycompany.producercloudstream.kafka.MessageProducer.send(MessageProducer.java:41) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-  	at com.mycompany.producercloudstream.rest.NewsController.publishAlert(NewsController.java:34) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+  	at com.mycompany.producercloudstream.kafka.MessageProducer.send(MessageProducer.java:32) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+  	at com.mycompany.producercloudstream.rest.NewsController.publishNews(NewsController.java:27) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   	at java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
   	at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:146) ~[na:na]
-  	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  	at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  	at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
+  	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  	at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  	at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
   	at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[na:na]
   	at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:100) ~[na:na]
   	at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:199) ~[na:na]
   	at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:73) ~[na:na]
   	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[na:na]
-  	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
+  	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
   	at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[na:na]
   	at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:295) ~[na:na]
   	at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[na:na]
-  	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
+  	at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
   	at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:159) ~[na:na]
   	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
   	at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:259) ~[na:na]
   	at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
-  	at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:401) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.7]
-  	at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:416) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.7]
-  	at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:556) ~[na:na]
+  	at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:401) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.8]
+  	at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:420) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.8]
+  	at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:563) ~[na:na]
   	at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:94) ~[na:na]
   	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
   	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
@@ -268,14 +309,14 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[na:na]
   	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[na:na]
   	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[na:na]
-  	at java.lang.Thread.run(Thread.java:834) ~[na:na]
-  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519) ~[na:na]
+  	at java.lang.Thread.run(Thread.java:829) ~[na:na]
+  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:553) ~[na:na]
   	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
   
-  INFO 1 --- [ctor-http-nio-2] o.s.c.s.binder.DefaultBinderFactory      : Caching the binder: kafka
-  INFO 1 --- [ctor-http-nio-2] o.s.c.s.binder.DefaultBinderFactory      : Retrieving cached binder: kafka
-  INFO 1 --- [ctor-http-nio-2] o.s.c.s.b.k.p.KafkaTopicProvisioner      : Using kafka topic for outbound: alert.json
-  INFO 1 --- [ctor-http-nio-2] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values:
+   INFO 1 --- [ctor-http-nio-2] o.s.c.s.binder.DefaultBinderFactory      : Caching the binder: kafka
+   INFO 1 --- [ctor-http-nio-2] o.s.c.s.binder.DefaultBinderFactory      : Retrieving cached binder: kafka
+   INFO 1 --- [ctor-http-nio-2] o.s.c.s.b.k.p.KafkaTopicProvisioner      : Using kafka topic for outbound: news.json
+   INFO 1 --- [ctor-http-nio-2] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values:
   	bootstrap.servers = [kafka:9092]
   	client.dns.lookup = use_all_dns_ips
   	client.id =
@@ -331,14 +372,14 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	ssl.truststore.password = null
   	ssl.truststore.type = JKS
   
-  INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.7.1
-  INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 61dbce85d0d41457
-  INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1623512235143
-  INFO 1 --- [| adminclient-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.admin.client for adminclient-1 unregistered
-  INFO 1 --- [| adminclient-1] org.apache.kafka.common.metrics.Metrics  : Metrics scheduler closed
-  INFO 1 --- [| adminclient-1] org.apache.kafka.common.metrics.Metrics  : Closing reporter org.apache.kafka.common.metrics.JmxReporter
-  INFO 1 --- [| adminclient-1] org.apache.kafka.common.metrics.Metrics  : Metrics reporters closed
-  INFO 1 --- [ctor-http-nio-2] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
+   INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.7.1
+   INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 61dbce85d0d41457
+   INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1625041594881
+   INFO 1 --- [| adminclient-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.admin.client for adminclient-1 unregistered
+   INFO 1 --- [| adminclient-1] org.apache.kafka.common.metrics.Metrics  : Metrics scheduler closed
+   INFO 1 --- [| adminclient-1] org.apache.kafka.common.metrics.Metrics  : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+   INFO 1 --- [| adminclient-1] org.apache.kafka.common.metrics.Metrics  : Metrics reporters closed
+   INFO 1 --- [ctor-http-nio-2] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
   	acks = 1
   	batch.size = 16384
   	bootstrap.servers = [kafka:9092]
@@ -413,22 +454,22 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
    INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.7.1
    INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 61dbce85d0d41457
-   INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1623512235158
-   INFO 1 --- [ad | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: -P0GVXdJRGe539p8SEzbQg
+   INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1625041595252
+   INFO 1 --- [ad | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: Hlfx3tGZTkWRgtxG2nIjhg
    INFO 1 --- [ctor-http-nio-2] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
    INFO 1 --- [ctor-http-nio-2] org.apache.kafka.common.metrics.Metrics  : Metrics scheduler closed
    INFO 1 --- [ctor-http-nio-2] org.apache.kafka.common.metrics.Metrics  : Closing reporter org.apache.kafka.common.metrics.JmxReporter
    INFO 1 --- [ctor-http-nio-2] org.apache.kafka.common.metrics.Metrics  : Metrics reporters closed
    INFO 1 --- [ctor-http-nio-2] o.a.kafka.common.utils.AppInfoParser     : App info kafka.producer for producer-1 unregistered
    INFO 1 --- [ctor-http-nio-2] o.s.c.s.m.DirectWithAttributesChannel    : Channel 'unknown.channel.name' has 1 subscriber(s).
-  ERROR 1 --- [ctor-http-nio-2] a.w.r.e.AbstractErrorWebExceptionHandler : [2384230a-1]  500 Server Error for HTTP POST "/api/alert"
+  ERROR 1 --- [ctor-http-nio-2] a.w.r.e.AbstractErrorWebExceptionHandler : [a2bff62e-1]  500 Server Error for HTTP POST "/api/news"
   
   org.springframework.expression.spel.SpelEvaluationException: EL1008E: Property or field 'headers' cannot be found on object of type 'org.springframework.messaging.support.GenericMessage' - maybe not public or not valid?
   	at org.springframework.expression.spel.ast.PropertyOrFieldReference.readProperty(PropertyOrFieldReference.java:217) ~[na:na]
   	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException:
   Error has been observed at the following site(s):
   	|_ checkpoint ? org.springframework.boot.actuate.metrics.web.reactive.server.MetricsWebFilter [DefaultWebFilterChain]
-  	|_ checkpoint ? HTTP POST "/api/alert" [ExceptionHandlingWebHandler]
+  	|_ checkpoint ? HTTP POST "/api/news" [ExceptionHandlingWebHandler]
   Stack trace:
   		at org.springframework.expression.spel.ast.PropertyOrFieldReference.readProperty(PropertyOrFieldReference.java:217) ~[na:na]
   		at org.springframework.expression.spel.ast.PropertyOrFieldReference.getValueInternal(PropertyOrFieldReference.java:104) ~[na:na]
@@ -446,32 +487,32 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   		at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:214) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   		at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:156) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   		at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:136) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-  		at com.mycompany.producercloudstream.kafka.MessageProducer.send(MessageProducer.java:41) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-  		at com.mycompany.producercloudstream.rest.NewsController.publishAlert(NewsController.java:34) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+  		at com.mycompany.producercloudstream.kafka.MessageProducer.send(MessageProducer.java:32) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+  		at com.mycompany.producercloudstream.rest.NewsController.publishNews(NewsController.java:27) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   		at java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
   		at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:146) ~[na:na]
-  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  		at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  		at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
+  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  		at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  		at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
   		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[na:na]
   		at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:100) ~[na:na]
   		at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:199) ~[na:na]
   		at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:73) ~[na:na]
   		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[na:na]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
-  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
+  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
+  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
   		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[na:na]
   		at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:295) ~[na:na]
   		at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[na:na]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.6]
+  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1815) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.7]
   		at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:159) ~[na:na]
   		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
   		at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:259) ~[na:na]
   		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
-  		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:401) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.7]
-  		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:416) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.7]
-  		at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:556) ~[na:na]
+  		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:401) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.8]
+  		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:420) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.8]
+  		at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:563) ~[na:na]
   		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:94) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
@@ -499,8 +540,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[na:na]
   		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[na:na]
   		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[na:na]
-  		at java.lang.Thread.run(Thread.java:834) ~[na:na]
-  		at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519) ~[na:na]
+  		at java.lang.Thread.run(Thread.java:829) ~[na:na]
+  		at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:553) ~[na:na]
   		at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
   ```
 
@@ -520,7 +561,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.apache.kafka.common.security.scram.internals.ScramFormatter.saslName(ScramFormatter.java:106) ~[na:na]
   	at org.apache.kafka.common.security.scram.internals.ScramSaslClient.evaluateChallenge(ScramSaslClient.java:115) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.lambda$createSaslToken$1(SaslClientAuthenticator.java:524) ~[na:na]
-  	at java.security.AccessController.doPrivileged(AccessController.java:147) ~[na:na]
+  	at java.security.AccessController.doPrivileged(AccessController.java:145) ~[na:na]
   	at javax.security.auth.Subject.doAs(Subject.java:423) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.createSaslToken(SaslClientAuthenticator.java:524) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendSaslClientToken(SaslClientAuthenticator.java:431) ~[na:na]
@@ -532,19 +573,19 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:563) ~[na:na]
   	at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:325) ~[na:na]
   	at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:240) ~[na:na]
-  	at java.lang.Thread.run(Thread.java:834) ~[na:na]
-  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519) ~[na:na]
+  	at java.lang.Thread.run(Thread.java:829) ~[na:na]
+  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:553) ~[na:na]
   	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
   
-  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node -1 (ark-01.srvs.cloudkafka.com/xx.xxx.xxx.xxx:xxxx) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Bootstrap broker ark-01.srvs.cloudkafka.com:9094 (id: -1 rack: null) disconnected
+  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node -1 (ark-01.srvs.cloudkafka.com/xx.xxx.xxx.xxx:9094) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
+  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Bootstrap broker ark-01.srvs.cloudkafka.com:9094 (id: -1 rack: null) disconnected  
   ```
 
 - `consumer-cloud-stream`
 
   After building the application in Native mode, the following exception is thrown at startup time
   ```
-  WARN 1 --- [           main] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerCloudStreamGroup-1, groupId=consumerCloudStreamGroup] Unexpected error from ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx; closing connection
+  WARN 1 --- [           main] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerCloudStreamGroup-1, groupId=consumerCloudStreamGroup] Unexpected error from ark-01.srvs.cloudkafka.com/xx.xxx.xxx.xxx; closing connection
   
   java.lang.NullPointerException: null
   	at java.util.regex.Matcher.getTextLength(Matcher.java:1770) ~[na:na]
@@ -554,7 +595,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.apache.kafka.common.security.scram.internals.ScramFormatter.saslName(ScramFormatter.java:106) ~[na:na]
   	at org.apache.kafka.common.security.scram.internals.ScramSaslClient.evaluateChallenge(ScramSaslClient.java:115) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.lambda$createSaslToken$1(SaslClientAuthenticator.java:524) ~[na:na]
-  	at java.security.AccessController.doPrivileged(AccessController.java:147) ~[na:na]
+  	at java.security.AccessController.doPrivileged(AccessController.java:145) ~[na:na]
   	at javax.security.auth.Subject.doAs(Subject.java:423) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.createSaslToken(SaslClientAuthenticator.java:524) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendSaslClientToken(SaslClientAuthenticator.java:431) ~[na:na]
@@ -573,7 +614,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
   	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344) ~[na:na]
   	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:208) ~[na:na]
-  	at com.sun.proxy.$Proxy297.partitionsFor(Unknown Source) ~[na:na]
+  	at com.sun.proxy.$Proxy300.partitionsFor(Unknown Source) ~[na:na]
   	at org.springframework.cloud.stream.binder.kafka.KafkaMessageChannelBinder.lambda$getPartitionInfo$4(KafkaMessageChannelBinder.java:1124) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:3.1.3]
   	at org.springframework.cloud.stream.binder.kafka.provisioning.KafkaTopicProvisioner.lambda$getPartitionsForTopic$6(KafkaTopicProvisioner.java:535) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:3.1.3]
   	at org.springframework.retry.support.RetryTemplate.doExecute(RetryTemplate.java:329) ~[na:na]
@@ -602,13 +643,13 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935) ~[na:na]
   	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:64) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.1]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.1]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.1]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.1]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.1]
-  	at com.mycompany.consumercloudstream.ConsumerCloudStreamApplication.main(ConsumerCloudStreamApplication.java:28) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.2]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.5.2]
+  	at com.mycompany.consumercloudstream.ConsumerCloudStreamApplication.main(ConsumerCloudStreamApplication.java:30) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
   
-  WARN 1 --- [           main] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerCloudStreamGroup-1, groupId=consumerCloudStreamGroup] Connection to node -2 (ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx:xxx) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [           main] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerCloudStreamGroup-1, groupId=consumerCloudStreamGroup] Bootstrap broker ark-02.srvs.cloudkafka.com:9094 (id: -2 rack: null) disconnected
+  WARN 1 --- [           main] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerCloudStreamGroup-1, groupId=consumerCloudStreamGroup] Connection to node -1 (ark-01.srvs.cloudkafka.com/xx.xxx.xxx.xxx:9094) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
+  WARN 1 --- [           main] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerCloudStreamGroup-1, groupId=consumerCloudStreamGroup] Bootstrap broker ark-01.srvs.cloudkafka.com:9094 (id: -1 rack: null) disconnected
   ```

@@ -7,6 +7,7 @@ import org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler;
 import org.apache.kafka.common.security.scram.ScramLoginModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.nativex.hint.NativeHint;
 import org.springframework.nativex.hint.TypeHint;
 
 @TypeHint(
@@ -18,9 +19,10 @@ import org.springframework.nativex.hint.TypeHint;
         },
         typeNames = {
                 "org.apache.kafka.common.security.authenticator.AbstractLogin$DefaultLoginCallbackHandler", // 4
-                "org.apache.kafka.common.security.scram.internals.ScramSaslClient$ScramSaslClientFactory" // 8
+                "org.apache.kafka.common.security.scram.internals.ScramSaslClient$ScramSaslClientFactory" // 7
         }
 )
+@NativeHint(options = "-H:IncludeResourceBundles=sun.security.util.Resources") // 6
 @SpringBootApplication
 public class ConsumerCloudStreamApplication {
 

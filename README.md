@@ -37,14 +37,12 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 ## Using Kafka running locally
 
+### Start environment
+
 - Open a terminal and inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder run
   ```
   docker-compose up -d
   ```
-  > To stop and remove docker-compose containers, networks and volumes run
-  > ```
-  > docker-compose down -v
-  > ```
 
 - Wait until all containers are Up (healthy). You can check their status by running
   ```
@@ -68,3 +66,17 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
   - Type `zookeeper:2181` in `Cluster Zookeeper Hosts` field
   - Enable checkbox `Poll consumer information (Not recommended for large # of consumers if ZK is used for offsets tracking on older Kafka versions)`
   - Click on `Save` button at the bottom of the page.
+
+### Shutdown
+
+To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka`, run the command below
+```
+docker-compose down -v
+```
+
+## Cleanup
+
+To remove the Docker images created by this project, go to a terminal and, inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder, run the following script
+```
+./remove-docker-images.sh
+```

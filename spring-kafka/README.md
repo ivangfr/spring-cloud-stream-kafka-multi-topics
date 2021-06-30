@@ -25,7 +25,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **producer-kafka**
 
-    - Open a terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
 
     - Export your `CloudKarafka` credentials to those environment variables
       ```
@@ -33,7 +33,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
       export CLOUDKARAFKA_PASSWORD=...
       ```
     
-    - Run application
+    - Run the Maven command below to start the application
       ```
       ./mvnw clean spring-boot:run --projects spring-kafka/producer-kafka \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9080" \
@@ -42,7 +42,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **consumer-kafka**
 
-    - Open another terminal and make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
     - Export your `CloudKarafka` credentials to those environment variables
       ```
@@ -50,7 +50,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
       export CLOUDKARAFKA_PASSWORD=...
       ```
   
-    - Run application
+    - Run the Maven command below to start the application
       ```
       ./mvnw clean spring-boot:run --projects spring-kafka/consumer-kafka \
         -Dspring-boot.run.jvmArguments="-Dserver.port=9081" \
@@ -63,7 +63,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **producer-kafka**
 
-    - Open a terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
     - Run application
       ```
@@ -73,7 +73,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **consumer-kafka**
 
-    - Open another terminal and make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
   
     - Run application
       ```
@@ -112,28 +112,62 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - #### Using CloudKarafka
 
-    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - **producer-kafka**
+      
+      - In a terminal, export your `CloudKarafka` credentials to these environment variables
+        ```
+        export CLOUDKARAFKA_USERNAME=...
+        export CLOUDKARAFKA_PASSWORD=...
+        ```
 
-    - Export your `CloudKarafka` credentials to these environment variables
-      ```
-      export CLOUDKARAFKA_USERNAME=...
-      export CLOUDKARAFKA_PASSWORD=...
-      ```
+      - Run the command below to start the Docker container
+        ```
+        docker run --rm --name producer-kafka -p 9080:8080 \
+          -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+          -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
+          -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+          ivanfranchin/producer-kafka:1.0.0
+        ```
 
-    - Run the script below to start the docker containers
-      ```
-      ./start-spring-kafka-apps.sh cloudkarafka
-      ```
+    - **consumer-kafka**
+
+      - Open a new terminal and export your `CloudKarafka` credentials to these environment variables
+        ```
+        export CLOUDKARAFKA_USERNAME=...
+        export CLOUDKARAFKA_PASSWORD=...
+        ```
+
+      - Run the command below to start the Docker container
+        ```
+        docker run --rm --name consumer-kafka -p 9081:8080 \
+          -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+          -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
+          -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
+          ivanfranchin/consumer-kafka:1.0.0
+        ```
 
   - #### Using Kafka running locally
 
     > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
 
-    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+    - **producer-kafka**
 
-    - Run the script below to start the docker containers
+      In a terminal, run the command below to start the Docker container
       ```
-      ./start-spring-kafka-apps.sh
+      docker run --rm --name producer-kafka -p 9080:8080 \
+        -e KAFKA_URL=kafka:9092 \
+        --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
+        ivanfranchin/producer-kafka:1.0.0
+      ```
+
+    - **consumer-kafka**
+
+      Open a new terminal and run the command below to start the Docker container
+      ```
+      docker run --rm --name consumer-kafka -p 9081:8080 \
+        -e KAFKA_URL=kafka:9092 \
+        --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
+        ivanfranchin/consumer-kafka:1.0.0
       ```
 
 ## Applications URLs
@@ -188,11 +222,18 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 ## Stop applications
 
 - If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
+- If they were started as Docker containers, go to a terminal and run the command below
+  ```
+  docker stop producer-kafka consumer-kafka
+  ```
 
-- If they were started as Docker containers, run the script below
-  ```
-  ./stop-spring-kafka-apps.sh
-  ```
+## Cleanup
+
+To remove the Docker images created by this example, go to a terminal and run the following commands
+```
+docker rmi ivanfranchin/producer-kafka:1.0.0
+docker rmi ivanfranchin/consumer-kafka:1.0.0
+```
 
 ## Issues
 
@@ -202,7 +243,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   After building and starting the application in Native mode, the following exception is thrown the first `news` or `alert` is submitted
   ```
-  WARN 1 --- [ad | producer-1] o.apache.kafka.common.network.Selector   : [Producer clientId=producer-1] Unexpected error from ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx; closing connection
+  WARN 1 --- [ad | producer-1] o.apache.kafka.common.network.Selector   : [Producer clientId=producer-1] Unexpected error from ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx; closing connection
   
   java.lang.NullPointerException: null
   	at java.util.regex.Matcher.getTextLength(Matcher.java:1770) ~[na:na]
@@ -212,7 +253,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at org.apache.kafka.common.security.scram.internals.ScramFormatter.saslName(ScramFormatter.java:106) ~[na:na]
   	at org.apache.kafka.common.security.scram.internals.ScramSaslClient.evaluateChallenge(ScramSaslClient.java:115) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.lambda$createSaslToken$1(SaslClientAuthenticator.java:524) ~[na:na]
-  	at java.security.AccessController.doPrivileged(AccessController.java:147) ~[na:na]
+  	at java.security.AccessController.doPrivileged(AccessController.java:145) ~[na:na]
   	at javax.security.auth.Subject.doAs(Subject.java:423) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.createSaslToken(SaslClientAuthenticator.java:524) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendSaslClientToken(SaslClientAuthenticator.java:431) ~[na:na]
@@ -224,19 +265,19 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:563) ~[na:na]
   	at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:325) ~[na:na]
   	at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:240) ~[na:na]
-  	at java.lang.Thread.run(Thread.java:834) ~[na:na]
-  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519) ~[na:na]
+  	at java.lang.Thread.run(Thread.java:829) ~[na:na]
+  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:553) ~[na:na]
   	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
   
-  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node -2 (ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx:xxxx) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Bootstrap broker ark-02.srvs.cloudkafka.com:9094 (id: -2 rack: null) disconnected
+  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node -3 (ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx:9094) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
+  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Bootstrap broker ark-03.srvs.cloudkafka.com:9094 (id: -3 rack: null) disconnected
   ```
 
 - `consumer-kafka`
 
   After building the application in Native mode, the following exception is thrown at startup time
   ```
-  WARN 1 --- [ntainer#1-0-C-1] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Unexpected error from ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx; closing connection
+  WARN 1 --- [ntainer#1-1-C-1] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerKafkaGroup-4, groupId=consumerKafkaGroup] Unexpected error from ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx; closing connection
   
   java.lang.NullPointerException: null
   	at java.util.regex.Matcher.getTextLength(Matcher.java:1770) ~[na:na]
@@ -246,7 +287,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at org.apache.kafka.common.security.scram.internals.ScramFormatter.saslName(ScramFormatter.java:106) ~[na:na]
   	at org.apache.kafka.common.security.scram.internals.ScramSaslClient.evaluateChallenge(ScramSaslClient.java:115) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.lambda$createSaslToken$1(SaslClientAuthenticator.java:524) ~[na:na]
-  	at java.security.AccessController.doPrivileged(AccessController.java:147) ~[na:na]
+  	at java.security.AccessController.doPrivileged(AccessController.java:145) ~[na:na]
   	at javax.security.auth.Subject.doAs(Subject.java:423) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.createSaslToken(SaslClientAuthenticator.java:524) ~[na:na]
   	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendSaslClientToken(SaslClientAuthenticator.java:431) ~[na:na]
@@ -258,8 +299,9 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:563) ~[na:na]
   	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:265) ~[na:na]
   	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:236) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:215) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureCoordinatorReady(AbstractCoordinator.java:245) ~[na:na]
+  	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:227) ~[na:na]
+  	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.awaitMetadataUpdate(ConsumerNetworkClient.java:164) ~[na:na]
+  	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureCoordinatorReady(AbstractCoordinator.java:257) ~[na:na]
   	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.poll(ConsumerCoordinator.java:480) ~[na:na]
   	at org.apache.kafka.clients.consumer.KafkaConsumer.updateAssignmentMetadataIfNeeded(KafkaConsumer.java:1257) ~[na:na]
   	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1226) ~[na:na]
@@ -269,10 +311,10 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:1161) ~[na:na]
   	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515) ~[na:na]
   	at java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
-  	at java.lang.Thread.run(Thread.java:834) ~[na:na]
-  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519) ~[na:na]
+  	at java.lang.Thread.run(Thread.java:829) ~[na:na]
+  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:553) ~[na:na]
   	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
   
-  WARN 1 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Connection to node -2 (ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx:xxxx) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Bootstrap broker ark-02.srvs.cloudkafka.com:9094 (id: -2 rack: null) disconnected  
+  WARN 1 --- [ntainer#1-1-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-4, groupId=consumerKafkaGroup] Connection to node -2 (ark-02.srvs.cloudkafka.com/x.xxx.xxx.xx:9094) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
+  WARN 1 --- [ntainer#1-1-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-4, groupId=consumerKafkaGroup] Bootstrap broker ark-02.srvs.cloudkafka.com:9094 (id: -2 rack: null) disconnected
   ```
