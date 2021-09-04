@@ -1,4 +1,4 @@
-package com.mycompany.producercloudstream.rest.dto;
+package com.mycompany.producerkafka.rest.dto;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class CreateAlertDto {
+public class CreateAlertRequest {
 
     @Min(1)
     @Max(5)
@@ -15,5 +15,4 @@ public class CreateAlertDto {
 
     @NotBlank
     private String message;
-
 }

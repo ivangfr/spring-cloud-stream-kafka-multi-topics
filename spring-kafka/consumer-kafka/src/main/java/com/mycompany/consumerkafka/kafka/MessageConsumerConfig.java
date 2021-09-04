@@ -1,7 +1,7 @@
 package com.mycompany.consumerkafka.kafka;
 
-import com.mycompany.consumerkafka.domain.Alert;
-import com.mycompany.consumerkafka.domain.News;
+import com.mycompany.consumerkafka.kafka.event.Alert;
+import com.mycompany.consumerkafka.kafka.event.News;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -52,5 +52,4 @@ public class MessageConsumerConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(Alert.class));
     }
-
 }

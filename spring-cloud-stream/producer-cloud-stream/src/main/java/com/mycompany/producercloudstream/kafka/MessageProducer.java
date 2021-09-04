@@ -1,7 +1,7 @@
 package com.mycompany.producercloudstream.kafka;
 
-import com.mycompany.producercloudstream.domain.Alert;
-import com.mycompany.producercloudstream.domain.News;
+import com.mycompany.producercloudstream.kafka.event.Alert;
+import com.mycompany.producercloudstream.kafka.event.News;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

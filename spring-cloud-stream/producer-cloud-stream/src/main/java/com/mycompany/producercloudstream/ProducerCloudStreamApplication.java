@@ -1,7 +1,7 @@
 package com.mycompany.producercloudstream;
 
-import com.mycompany.producercloudstream.domain.Alert;
-import com.mycompany.producercloudstream.domain.News;
+import com.mycompany.producercloudstream.kafka.event.Alert;
+import com.mycompany.producercloudstream.kafka.event.News;
 import org.apache.kafka.common.security.authenticator.DefaultLogin;
 import org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler;
 import org.apache.kafka.common.security.scram.ScramLoginModule;

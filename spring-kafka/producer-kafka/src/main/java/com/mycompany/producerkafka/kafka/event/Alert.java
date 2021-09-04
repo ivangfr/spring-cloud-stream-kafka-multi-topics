@@ -1,12 +1,11 @@
-package com.mycompany.producerkafka.domain;
+package com.mycompany.producerkafka.kafka.event;
 
 import lombok.Value;
 
-@Value
+@Value(staticConstructor = "of")
 public class Alert {
 
     String id;
     Integer level;
     String message;
-
 }

@@ -179,7 +179,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 ## Example of execution using CloudKarafka
 
-> **Note:** In the call below, I am using [HTTPie](https://httpie.org/)
+> **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow 
 
 - In a terminal, the following command will post a `news`
   ```
@@ -241,7 +241,7 @@ docker rmi ivanfranchin/consumer-kafka:1.0.0
 
 - `producer-kafka`
 
-  After building and starting the application in Native mode, the following exception is thrown the first `news` or `alert` is submitted
+  After building and starting the application in Native mode, the following exception is thrown when the first `news` or `alert` is submitted
   ```
   WARN 1 --- [ad | producer-1] o.apache.kafka.common.network.Selector   : [Producer clientId=producer-1] Unexpected error from ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx; closing connection
   

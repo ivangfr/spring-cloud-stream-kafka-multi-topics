@@ -1,7 +1,7 @@
 package com.mycompany.producerkafka.kafka;
 
-import com.mycompany.producerkafka.domain.Alert;
-import com.mycompany.producerkafka.domain.News;
+import com.mycompany.producerkafka.kafka.event.Alert;
+import com.mycompany.producerkafka.kafka.event.News;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -27,5 +27,4 @@ public class MessageProducer {
         log.info("Sending Alert '{}' to topic '{}'", alert, kafkaTopic);
         kafkaTemplate.send(kafkaTopic, alert.getId(), alert);
     }
-
 }

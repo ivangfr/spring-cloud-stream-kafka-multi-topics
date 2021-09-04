@@ -1,7 +1,7 @@
 package com.mycompany.consumercloudstream.kafka;
 
-import com.mycompany.consumercloudstream.domain.Alert;
-import com.mycompany.consumercloudstream.domain.News;
+import com.mycompany.consumercloudstream.kafka.event.Alert;
+import com.mycompany.consumercloudstream.kafka.event.News;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -40,5 +40,4 @@ public class MessageConsumer {
                     alert);
         };
     }
-
 }

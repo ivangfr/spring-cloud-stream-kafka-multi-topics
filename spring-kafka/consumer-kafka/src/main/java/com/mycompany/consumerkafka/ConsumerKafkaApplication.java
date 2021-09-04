@@ -1,7 +1,7 @@
 package com.mycompany.consumerkafka;
 
-import com.mycompany.consumerkafka.domain.Alert;
-import com.mycompany.consumerkafka.domain.News;
+import com.mycompany.consumerkafka.kafka.event.Alert;
+import com.mycompany.consumerkafka.kafka.event.News;
 import org.apache.kafka.common.security.authenticator.DefaultLogin;
 import org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler;
 import org.apache.kafka.common.security.scram.ScramLoginModule;

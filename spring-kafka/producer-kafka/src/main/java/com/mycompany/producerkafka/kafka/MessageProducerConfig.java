@@ -1,6 +1,5 @@
 package com.mycompany.producerkafka.kafka;
 
-import com.mycompany.producerkafka.domain.News;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -63,5 +62,4 @@ public class MessageProducerConfig {
         Map<String, String> producerProperties = kafkaProperties.getProducer().getProperties();
         return new NewTopic(producerProperties.get("alert-topic"), Integer.parseInt(producerProperties.get("num-partitions")), (short) 1);
     }
-
 }

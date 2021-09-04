@@ -1,7 +1,7 @@
 package com.mycompany.producerkafka;
 
-import com.mycompany.producerkafka.domain.Alert;
-import com.mycompany.producerkafka.domain.News;
+import com.mycompany.producerkafka.kafka.event.Alert;
+import com.mycompany.producerkafka.kafka.event.News;
 import org.apache.kafka.common.security.authenticator.DefaultLogin;
 import org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler;
 import org.apache.kafka.common.security.scram.ScramLoginModule;
