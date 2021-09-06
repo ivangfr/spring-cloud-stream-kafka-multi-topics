@@ -6,9 +6,11 @@ import com.mycompany.producercloudstream.kafka.event.News;
 import com.mycompany.producercloudstream.rest.dto.CreateAlertRequest;
 import com.mycompany.producercloudstream.rest.dto.CreateNewsRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -22,17 +24,23 @@ public class NewsController {
 
     private final MessageProducer messageProducer;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/news")
-    public Mono<String> publishNews(@Valid @RequestBody CreateNewsRequest createNewsRequest) {
-        String id = UUID.randomUUID().toString();
-        messageProducer.send(News.of(id, createNewsRequest.getSource(), createNewsRequest.getTitle()));
-        return Mono.just(id);
+    public Mono<News> publishNews(@Valid @RequestBody CreateNewsRequest createNewsRequest) {
+        News news = News.of(getId(), createNewsRequest.getSource(), createNewsRequest.getTitle());
+        messageProducer.send(news);
+        return Mono.just(news);
     }
 
-    @PostMapping("/alert")
-    public Mono<String> publishAlert(@Valid @RequestBody CreateAlertRequest createAlertRequest) {
-        String id = UUID.randomUUID().toString();
-        messageProducer.send(Alert.of(id, createAlertRequest.getLevel(), createAlertRequest.getMessage()));
-        return Mono.just(id);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/alerts")
+    public Mono<Alert> publishAlert(@Valid @RequestBody CreateAlertRequest createAlertRequest) {
+        Alert alert = Alert.of(getId(), createAlertRequest.getLevel(), createAlertRequest.getMessage());
+        messageProducer.send(alert);
+        return Mono.just(alert);
+    }
+
+    private String getId() {
+        return UUID.randomUUID().toString();
     }
 }

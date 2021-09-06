@@ -12,7 +12,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   Endpoints
   ```
   POST /api/news {"source": "...", "title": "..."}
-  POST /api/alert {"level": "...", "message": "..."}
+  POST /api/alerts {"level": "...", "message": "..."}
   ```
 
 - ### consumer-kafka
@@ -202,7 +202,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - In a terminal, the following command will post an `alert`
   ```
-  http :9080/api/alert level=4 message="Tsunami is coming"
+  http :9080/api/alerts level=4 message="Tsunami is coming"
   ```
 
   **producer-kafka** logs
@@ -234,6 +234,20 @@ To remove the Docker images created by this example, go to a terminal and run th
 docker rmi ivanfranchin/producer-kafka:1.0.0
 docker rmi ivanfranchin/consumer-kafka:1.0.0
 ```
+
+## Running Test Cases
+
+In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+
+- **producer-kafka**
+  ```
+  ./mvnw clean test --projects spring-kafka/producer-kafka
+  ```
+
+- **consumer-kafka**
+  ```
+  ./mvnw clean test --projects spring-kafka/consumer-kafka
+  ```
 
 ## Issues
 

@@ -12,7 +12,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   Endpoints
   ```
   POST /api/news {"source": "...", "title": "..."}
-  POST /api/alert {"level": "...", "message": "..."}
+  POST /api/alerts {"level": "...", "message": "..."}
   ```
 
 - ### consumer-cloud-stream
@@ -202,15 +202,15 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 - In a terminal, the following command will post an `alert`
   ```
-  http :9082/api/alert level=4 message="Tsunami is coming"
+  http :9082/api/alerts level=4 message="Tsunami is coming"
   ```
 
-  **producer-kafka** logs
+  **producer-cloud-stream** logs
   ```
   INFO c.m.producerkafka.kafka.AlertProducer    : Sending Alert 'Alert(id=756a8dc8-21ca-4856-9a4d-a0b34c158b43, level=4, message=Tsunami is coming)' to topic '2gxxxxxx-alert.json'
   ```
 
-  **consumer-kafka** logs
+  **consumer-cloud-stream** logs
   ```
   INFO c.m.consumerkafka.kafka.NewsConsumer     : Received message
   ---
@@ -234,6 +234,20 @@ To remove the Docker images created by this example, go to a terminal and run th
 docker rmi ivanfranchin/producer-cloud-stream:1.0.0
 docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
 ```
+
+## Running Test Cases
+
+In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+
+- **producer-cloud-stream**
+  ```
+  ./mvnw clean test --projects spring-cloud-stream/producer-cloud-stream
+  ```
+
+- **consumer-cloud-stream**
+  ```
+  ./mvnw clean test --projects spring-cloud-stream/consumer-cloud-stream
+  ```
 
 ## Issues
 

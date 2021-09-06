@@ -80,3 +80,8 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ```
 ./remove-docker-images.sh
 ```
+
+## References
+
+- https://docs.spring.io/spring-kafka/reference/html/
+- https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/spring-cloud-stream.html
