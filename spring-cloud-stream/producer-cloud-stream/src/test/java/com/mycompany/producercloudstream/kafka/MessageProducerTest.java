@@ -1,6 +1,5 @@
 package com.mycompany.producercloudstream.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.producercloudstream.ProducerCloudStreamApplication;
 import com.mycompany.producercloudstream.kafka.event.Alert;
@@ -15,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,8 +37,7 @@ class MessageProducerTest {
 
             Message<byte[]> outputMessage = outputDestination.receive(0, "news.json");
             MessageHeaders headers = outputMessage.getHeaders();
-            News payload = deserializeFromString(
-                    objectMapper, new String(outputMessage.getPayload(), StandardCharsets.UTF_8), News.class);
+            News payload = deserialize(objectMapper, outputMessage.getPayload(), News.class);
 
             assertThat(headers.get(MessageHeaders.CONTENT_TYPE)).isEqualTo(MediaType.APPLICATION_JSON_VALUE);
             assertThat(payload).isNotNull();
@@ -66,8 +64,7 @@ class MessageProducerTest {
 
             Message<byte[]> outputMessage = outputDestination.receive(0, "alert.json");
             MessageHeaders headers = outputMessage.getHeaders();
-            Alert payload = deserializeFromString(
-                    objectMapper, new String(outputMessage.getPayload(), StandardCharsets.UTF_8), Alert.class);
+            Alert payload = deserialize(objectMapper, outputMessage.getPayload(), Alert.class);
 
             assertThat(headers.get(MessageHeaders.CONTENT_TYPE)).isEqualTo(MediaType.APPLICATION_JSON_VALUE);
             assertThat(payload).isNotNull();
@@ -77,10 +74,10 @@ class MessageProducerTest {
         }
     }
 
-    private <T> T deserializeFromString(ObjectMapper objectMapper, String s, Class<T> clazz) {
+    private <T> T deserialize(ObjectMapper objectMapper, byte[] bytes, Class<T> clazz) {
         try {
-            return objectMapper.readValue(s, clazz);
-        } catch (JsonProcessingException e) {
+            return objectMapper.readValue(bytes, clazz);
+        } catch (IOException e) {
             return null;
         }
     }
