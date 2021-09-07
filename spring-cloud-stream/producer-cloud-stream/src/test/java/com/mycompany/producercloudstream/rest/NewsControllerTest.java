@@ -2,6 +2,8 @@ package com.mycompany.producercloudstream.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.producercloudstream.kafka.MessageProducer;
+import com.mycompany.producercloudstream.kafka.event.Alert;
+import com.mycompany.producercloudstream.kafka.event.News;
 import com.mycompany.producercloudstream.rest.dto.CreateAlertRequest;
 import com.mycompany.producercloudstream.rest.dto.CreateNewsRequest;
 import org.junit.jupiter.api.Test;
@@ -13,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
-
-import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,11 +44,11 @@ class NewsControllerTest {
                 .body(Mono.just(request), CreateNewsRequest.class)
                 .exchange()
                 .expectStatus().isCreated()
-                .expectBody(HashMap.class)
-                .value(map -> {
-                    assertThat(map.get("id")).isNotNull();
-                    assertThat(map.get("source")).isEqualTo(request.getSource());
-                    assertThat(map.get("title")).isEqualTo(request.getTitle());
+                .expectBody(News.class)
+                .value(news -> {
+                    assertThat(news.getId()).isNotNull();
+                    assertThat(news.getSource()).isEqualTo(request.getSource());
+                    assertThat(news.getTitle()).isEqualTo(request.getTitle());
                 });
     }
 
@@ -62,11 +62,11 @@ class NewsControllerTest {
                 .body(Mono.just(request), CreateAlertRequest.class)
                 .exchange()
                 .expectStatus().isCreated()
-                .expectBody(HashMap.class)
-                .value(map -> {
-                    assertThat(map.get("id")).isNotNull();
-                    assertThat(map.get("level")).isEqualTo(request.getLevel());
-                    assertThat(map.get("message")).isEqualTo(request.getMessage());
+                .expectBody(Alert.class)
+                .value(alert -> {
+                    assertThat(alert.getId()).isNotNull();
+                    assertThat(alert.getLevel()).isEqualTo(request.getLevel());
+                    assertThat(alert.getMessage()).isEqualTo(request.getMessage());
                 });
     }
 

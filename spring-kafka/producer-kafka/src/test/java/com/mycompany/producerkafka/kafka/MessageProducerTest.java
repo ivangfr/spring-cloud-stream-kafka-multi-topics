@@ -63,7 +63,7 @@ class MessageProducerTest {
 
     @Test
     void testSendNews() throws JsonProcessingException, InterruptedException {
-        News news = News.of("id", "source", "title");
+        News news = new News("id", "source", "title");
 
         messageProducer.send(news);
         ConsumerRecord<String, String> message = queue.poll(500, TimeUnit.MILLISECONDS);
@@ -78,7 +78,7 @@ class MessageProducerTest {
 
     @Test
     void testSendAlert() throws JsonProcessingException, InterruptedException {
-        Alert alert = Alert.of("id", 1, "message");
+        Alert alert = new Alert("id", 1, "message");
 
         messageProducer.send(alert);
         ConsumerRecord<String, String> message = queue.poll(500, TimeUnit.MILLISECONDS);

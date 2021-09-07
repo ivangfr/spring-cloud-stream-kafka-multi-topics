@@ -2,7 +2,7 @@ package com.mycompany.producercloudstream.kafka.event;
 
 import lombok.Value;
 
-@Value(staticConstructor = "of")
+@Value
 public class Alert {
 
     String id;

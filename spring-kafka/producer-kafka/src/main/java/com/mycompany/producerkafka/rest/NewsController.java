@@ -27,7 +27,7 @@ public class NewsController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/news")
     public Mono<News> publishNews(@Valid @RequestBody CreateNewsRequest createNewsRequest) {
-        News news = News.of(getId(), createNewsRequest.getSource(), createNewsRequest.getTitle());
+        News news = new News(getId(), createNewsRequest.getSource(), createNewsRequest.getTitle());
         messageProducer.send(news);
         return Mono.just(news);
     }
@@ -35,7 +35,7 @@ public class NewsController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/alerts")
     public Mono<Alert> publishAlert(@Valid @RequestBody CreateAlertRequest createAlertRequest) {
-        Alert alert = Alert.of(getId(), createAlertRequest.getLevel(), createAlertRequest.getMessage());
+        Alert alert = new Alert(getId(), createAlertRequest.getLevel(), createAlertRequest.getMessage());
         messageProducer.send(alert);
         return Mono.just(alert);
     }

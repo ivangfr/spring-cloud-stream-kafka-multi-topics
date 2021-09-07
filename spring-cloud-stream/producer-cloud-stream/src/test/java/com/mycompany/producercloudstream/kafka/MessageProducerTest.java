@@ -29,7 +29,7 @@ class MessageProducerTest {
                 .run("--spring.jmx.enabled=false")) {
 
             MessageProducer messageProducer = context.getBean(MessageProducer.class);
-            News news = News.of("id", "source", "title");
+            News news = new News("id", "source", "title");
             messageProducer.send(news);
 
             ObjectMapper objectMapper = context.getBean(ObjectMapper.class);
@@ -56,7 +56,7 @@ class MessageProducerTest {
                 .run("--spring.jmx.enabled=false")) {
 
             MessageProducer messageProducer = context.getBean(MessageProducer.class);
-            Alert alert = Alert.of("id", 1, "message");
+            Alert alert = new Alert("id", 1, "message");
             messageProducer.send(alert);
 
             ObjectMapper objectMapper = context.getBean(ObjectMapper.class);

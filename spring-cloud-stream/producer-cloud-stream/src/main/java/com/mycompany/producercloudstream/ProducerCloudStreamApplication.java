@@ -20,8 +20,7 @@ import org.springframework.nativex.hint.TypeHint;
         typeNames = {
                 "org.apache.kafka.common.security.authenticator.AbstractLogin$DefaultLoginCallbackHandler", // 4
                 "org.apache.kafka.common.security.scram.internals.ScramSaslClient$ScramSaslClientFactory" // 7
-        }
-)
+        })
 @NativeHint(options = "-H:IncludeResourceBundles=sun.security.util.Resources") // 6
 @SpringBootApplication
 public class ProducerCloudStreamApplication {
