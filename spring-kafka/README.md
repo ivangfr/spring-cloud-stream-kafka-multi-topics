@@ -177,46 +177,20 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 | producer-kafka | http://localhost:9080 |
 | consumer-kafka | http://localhost:9081 |
 
-## Example of execution using CloudKarafka
+## Playing around
+
+In a terminal, submit the following POST requests to `producer-kafka` and check its logs and `consumer-kafka` logs
 
 > **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow 
 
-- In a terminal, the following command will post a `news`
+- **news**
   ```
   http :9080/api/news source="Spring Boot Blog" title="Spring Boot and CloudKarafka"
   ```
 
-  **producer-kafka** logs
-  ```
-  INFO c.m.producerkafka.kafka.NewsProducer     : Sending News 'News(id=f631e9ca-497a-4d17-9e17-07e5a1ce28a9, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)' to topic '2gxxxxxx-news.json'
-  ```
-
-  **consumer-kafka** logs
-  ```
-  INFO c.m.consumerkafka.kafka.NewsConsumer     : Received message
-  ---
-  TOPIC: 2gxxxxxx-news.json; PARTITION: 0; OFFSET: 1;
-  PAYLOAD: News(id=f631e9ca-497a-4d17-9e17-07e5a1ce28a9, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)
-  ---
-  ```
-
-- In a terminal, the following command will post an `alert`
+- **alerts**
   ```
   http :9080/api/alerts level=4 message="Tsunami is coming"
-  ```
-
-  **producer-kafka** logs
-  ```
-  INFO c.m.producerkafka.kafka.AlertProducer    : Sending Alert 'Alert(id=756a8dc8-21ca-4856-9a4d-a0b34c158b43, level=4, message=Tsunami is coming)' to topic '2gxxxxxx-alert.json'
-  ```
-
-  **consumer-kafka** logs
-  ```
-  INFO c.m.consumerkafka.kafka.NewsConsumer     : Received message
-  ---
-  TOPIC: 2gxxxxxx-alert.json; PARTITION: 0; OFFSET: 1;
-  PAYLOAD: Alert(id=756a8dc8-21ca-4856-9a4d-a0b34c158b43, level=4, message=Tsunami is coming)
-  ---
   ```
 
 ## Stop applications
@@ -226,14 +200,6 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   ```
   docker stop producer-kafka consumer-kafka
   ```
-
-## Cleanup
-
-To remove the Docker images created by this example, go to a terminal and run the following commands
-```
-docker rmi ivanfranchin/producer-kafka:1.0.0
-docker rmi ivanfranchin/consumer-kafka:1.0.0
-```
 
 ## Running Test Cases
 
@@ -248,6 +214,14 @@ In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-
   ```
   ./mvnw clean test --projects spring-kafka/consumer-kafka
   ```
+
+## Cleanup
+
+To remove the Docker images created by this example, go to a terminal and run the following commands
+```
+docker rmi ivanfranchin/producer-kafka:1.0.0
+docker rmi ivanfranchin/consumer-kafka:1.0.0
+```
 
 ## Issues
 

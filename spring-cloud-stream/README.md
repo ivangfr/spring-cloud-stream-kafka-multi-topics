@@ -177,46 +177,20 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 | producer-cloud-stream | http://localhost:9082 |
 | consumer-cloud-stream | http://localhost:9083 |
 
-## Example of execution using CloudKarafka
+## Playing around
+
+In a terminal, submit the following POST requests to `producer-cloud-stream` and check its logs and `consumer-cloud-stream` logs
 
 > **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow
 
-- In a terminal, the following command will post a news
+- **news**
   ```
   http :9082/api/news source="Spring Boot Blog" title="Spring Boot and CloudKarafka"
   ```
-
-  **producer-cloud-stream** logs
-  ```
-  INFO c.m.p.kafka.NewsProducer : Sending News 'News(id=04253f40-ff8e-4293-91ba-a570febda5e1, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)' to topic '2gxxxxxx-news.json'
-  ```
-
-  **consumer-cloud-stream** logs
-  ```
-  INFO c.m.c.kafka.NewsConsumer : Received message
-  ---
-  TOPIC: 2gxxxxxx-news.json; PARTITION: 0; OFFSET: 2;
-  PAYLOAD: News(id=04253f40-ff8e-4293-91ba-a570febda5e1, source=Spring Boot Blog, title=Spring Boot and CloudKarafka)
-  ---
-  ```
-
-- In a terminal, the following command will post an `alert`
+  
+- **alerts**
   ```
   http :9082/api/alerts level=4 message="Tsunami is coming"
-  ```
-
-  **producer-cloud-stream** logs
-  ```
-  INFO c.m.producerkafka.kafka.AlertProducer    : Sending Alert 'Alert(id=756a8dc8-21ca-4856-9a4d-a0b34c158b43, level=4, message=Tsunami is coming)' to topic '2gxxxxxx-alert.json'
-  ```
-
-  **consumer-cloud-stream** logs
-  ```
-  INFO c.m.consumerkafka.kafka.NewsConsumer     : Received message
-  ---
-  TOPIC: 2gxxxxxx-alert.json; PARTITION: 0; OFFSET: 2;
-  PAYLOAD: Alert(id=756a8dc8-21ca-4856-9a4d-a0b34c158b43, level=4, message=Tsunami is coming)
-  ---
   ```
 
 ## Stop applications
@@ -226,14 +200,6 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   ```
   docker stop producer-cloud-stream consumer-cloud-stream
   ```
-
-## Cleanup
-
-To remove the Docker images created by this example, go to a terminal and run the following commands
-```
-docker rmi ivanfranchin/producer-cloud-stream:1.0.0
-docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
-```
 
 ## Running Test Cases
 
@@ -248,6 +214,14 @@ In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-
   ```
   ./mvnw clean test --projects spring-cloud-stream/consumer-cloud-stream
   ```
+
+## Cleanup
+
+To remove the Docker images created by this example, go to a terminal and run the following commands
+```
+docker rmi ivanfranchin/producer-cloud-stream:1.0.0
+docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
+```
 
 ## Issues
 
@@ -270,7 +244,7 @@ In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-
   	at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:156) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.1.3]
   	at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:136) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.1.3]
   	at com.mycompany.producercloudstream.kafka.MessageProducer.send(MessageProducer.java:32) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-  	at com.mycompany.producercloudstream.rest.NewsController.publishNews(NewsController.java:27) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+  	at com.mycompany.producercloudstream.rest.news.NewsController.publishNews(NewsController.java:27) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   	at java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
   	at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:146) ~[na:na]
   	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.9]

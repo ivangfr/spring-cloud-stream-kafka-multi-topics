@@ -37,19 +37,19 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 ## Using Kafka running locally
 
-### Start environment
+### Start Environment
 
 - Open a terminal and inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder run
   ```
   docker-compose up -d
   ```
 
-- Wait until all containers are Up (healthy). You can check their status by running
+- Wait until all containers are `running (healthy)`. You can check their status by running
   ```
   docker-compose ps
   ```
 
-### Useful links
+### Useful Links
 
 - **Kafka Topics UI**
    
