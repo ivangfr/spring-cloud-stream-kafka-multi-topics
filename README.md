@@ -13,7 +13,7 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
@@ -27,11 +27,11 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 - Once you log into `CloudKarafka`, click on `Details` menu. You should see something like the picture below. In this page you have all the credentials and the URLs of the `Kafka` brokers
 
-  ![cloudkarafka-details](images/cloudkarafka-details.png)
+  ![cloudkarafka-details](documentation/cloudkarafka-details.png)
 
 - In order to get information about the topic you will use, click on the `Topics` menu
 
-  ![cloudkarafka-topics](images/cloudkarafka-topics.png)
+  ![cloudkarafka-topics](documentation/cloudkarafka-topics.png)
 
 - You can use the topic with suffix `default` or create new ones. In my case, I created two: one with suffix `news.json` and another with suffix `alert.json`.
 
@@ -44,7 +44,7 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
   docker-compose up -d
   ```
 
-- Wait until all containers are `running (healthy)`. You can check their status by running
+- Wait for Docker containers to be up and running. To check it, run
   ```
   docker-compose ps
   ```

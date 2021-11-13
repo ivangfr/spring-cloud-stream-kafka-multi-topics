@@ -14,7 +14,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <awaitility.version>4.1.0</awaitility.version>
+        <awaitility.version>4.1.1</awaitility.version>
     </properties>
 
     <dependencies>

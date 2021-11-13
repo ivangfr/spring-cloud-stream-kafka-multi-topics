@@ -22,7 +22,8 @@ import org.springframework.nativex.hint.TypeHint;
                 typeNames = {
                         "org.apache.kafka.common.security.authenticator.AbstractLogin$DefaultLoginCallbackHandler", // 4
                         "org.apache.kafka.common.security.scram.internals.ScramSaslClient$ScramSaslClientFactory" // 7
-                })
+                }
+        )
 )
 @SpringBootApplication
 public class ProducerCloudStreamApplication {
@@ -30,5 +31,4 @@ public class ProducerCloudStreamApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProducerCloudStreamApplication.class, args);
     }
-
 }

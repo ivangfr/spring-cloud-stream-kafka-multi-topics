@@ -66,6 +66,6 @@ class AlertEventConsumerTest {
         });
     }
 
-    public static final Duration AT_MOST_DURATION = Duration.ofSeconds(5);
-    public static final Duration POLL_INTERVAL_DURATION = Duration.ofSeconds(1);
+    private static final Duration AT_MOST_DURATION = Duration.ofSeconds(5);
+    private static final Duration POLL_INTERVAL_DURATION = Duration.ofSeconds(1);
 }
