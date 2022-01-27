@@ -225,13 +225,15 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
 
 ## Issues
 
-Unable to build `producer-cloud-stream` and `consumer-cloud-stream` Docker native images. It's throwing the following error
-```
-[INFO] -------------------------------------------------------------
-[ERROR] COMPILATION ERROR :
-[INFO] -------------------------------------------------------------
-[ERROR] /Users/ivan.franchin/github-projects/spring-cloud-stream-kafka-multi-topics-cloudkarafka/spring-cloud-stream/producer-cloud-stream/target/generated-runtime-sources/spring-aot/src/main/java/org/springframework/cloud/stream/config/ContextBootstrapInitializer.java:[72,111] org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration.BindersHealthContributor has private access in org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration
-[ERROR] /Users/ivan.franchin/github-projects/spring-cloud-stream-kafka-multi-topics-cloudkarafka/spring-cloud-stream/producer-cloud-stream/target/generated-runtime-sources/spring-aot/src/main/java/org/springframework/cloud/stream/config/ContextBootstrapInitializer.java:[78,253] org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration.BindersHealthContributor has private access in org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration
-[INFO] 2 errors
-[INFO] -------------------------------------------------------------
-```
+- Unable to run `producer-cloud-stream` and `consumer-cloud-stream` tests as **Mockito** is still not supported in AOT. See `spring-native` issues [#1343](https://github.com/spring-projects-experimental/spring-native/issues/1343) and [#1063](https://github.com/spring-projects-experimental/spring-native/issues/1063)
+
+- Unable to build `producer-cloud-stream` and `consumer-cloud-stream` Docker native images. It's throwing the following error
+  ```
+  [INFO] -------------------------------------------------------------
+  [ERROR] COMPILATION ERROR :
+  [INFO] -------------------------------------------------------------
+  [ERROR] /Users/ivan.franchin/github-projects/spring-cloud-stream-kafka-multi-topics-cloudkarafka/spring-cloud-stream/producer-cloud-stream/target/generated-runtime-sources/spring-aot/src/main/java/org/springframework/cloud/stream/config/ContextBootstrapInitializer.java:[72,111] org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration.BindersHealthContributor has private access in org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration
+  [ERROR] /Users/ivan.franchin/github-projects/spring-cloud-stream-kafka-multi-topics-cloudkarafka/spring-cloud-stream/producer-cloud-stream/target/generated-runtime-sources/spring-aot/src/main/java/org/springframework/cloud/stream/config/ContextBootstrapInitializer.java:[78,253] org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration.BindersHealthContributor has private access in org.springframework.cloud.stream.config.BindersHealthIndicatorAutoConfiguration
+  [INFO] 2 errors
+  [INFO] -------------------------------------------------------------
+  ```

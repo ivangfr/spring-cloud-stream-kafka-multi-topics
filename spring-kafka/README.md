@@ -222,3 +222,7 @@ To remove the Docker images created by this example, go to a terminal and run th
 docker rmi ivanfranchin/producer-kafka:1.0.0
 docker rmi ivanfranchin/consumer-kafka:1.0.0
 ```
+
+## Issues
+
+- Unable to run `producer-kafka` and `consumer-kafka` tests as **Mockito** is still not supported in AOT. See `spring-native` issues [#1343](https://github.com/spring-projects-experimental/spring-native/issues/1343) and [#1063](https://github.com/spring-projects-experimental/spring-native/issues/1063)
