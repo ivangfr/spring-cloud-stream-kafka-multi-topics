@@ -102,7 +102,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
   - **producer-kafka** and **consumer-kafka**
 
     | Environment Variable     | Description |
-    | ------------------------ | ----------- |
+    |--------------------------|-------------|
     | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
     | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `cloudkarafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
     | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
@@ -173,7 +173,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 ## Applications URLs
 
 | Application    | URL                   |
-| -------------- | --------------------- |
+|----------------|-----------------------|
 | producer-kafka | http://localhost:9080 |
 | consumer-kafka | http://localhost:9081 |
 
@@ -222,87 +222,3 @@ To remove the Docker images created by this example, go to a terminal and run th
 docker rmi ivanfranchin/producer-kafka:1.0.0
 docker rmi ivanfranchin/consumer-kafka:1.0.0
 ```
-
-## Issues
-
-### Profile `cloudkarafka` 
-
-- `producer-kafka`
-
-  After building and starting the application in Native mode, the following exception is thrown when the first `news` or `alert` is submitted
-  ```
-  WARN 1 --- [ad | producer-1] o.apache.kafka.common.network.Selector   : [Producer clientId=producer-1] Unexpected error from ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx; closing connection
-  
-  java.lang.NullPointerException: null
-  	at java.util.regex.Matcher.getTextLength(Matcher.java:1770) ~[na:na]
-  	at java.util.regex.Matcher.reset(Matcher.java:416) ~[na:na]
-  	at java.util.regex.Matcher.<init>(Matcher.java:253) ~[na:na]
-  	at java.util.regex.Pattern.matcher(Pattern.java:1133) ~[na:na]
-  	at org.apache.kafka.common.security.scram.internals.ScramFormatter.saslName(ScramFormatter.java:106) ~[na:na]
-  	at org.apache.kafka.common.security.scram.internals.ScramSaslClient.evaluateChallenge(ScramSaslClient.java:115) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.lambda$createSaslToken$1(SaslClientAuthenticator.java:524) ~[na:na]
-  	at java.security.AccessController.doPrivileged(AccessController.java:150) ~[na:na]
-  	at javax.security.auth.Subject.doAs(Subject.java:423) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.createSaslToken(SaslClientAuthenticator.java:524) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendSaslClientToken(SaslClientAuthenticator.java:431) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendInitialToken(SaslClientAuthenticator.java:330) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.authenticate(SaslClientAuthenticator.java:271) ~[na:na]
-  	at org.apache.kafka.common.network.KafkaChannel.prepare(KafkaChannel.java:176) ~[na:na]
-  	at org.apache.kafka.common.network.Selector.pollSelectionKeys(Selector.java:543) ~[na:na]
-  	at org.apache.kafka.common.network.Selector.poll(Selector.java:481) ~[na:na]
-  	at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:563) ~[na:na]
-  	at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:325) ~[na:na]
-  	at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:240) ~[na:na]
-  	at java.lang.Thread.run(Thread.java:829) ~[na:na]
-  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:567) ~[na:na]
-  	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
-  
-  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node -3 (ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx:9094) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Bootstrap broker ark-03.srvs.cloudkafka.com:9094 (id: -3 rack: null) disconnected  
-  ```
-
-- `consumer-kafka`
-
-  After building the application in Native mode, the following exception is thrown at startup time
-  ```
-  WARN 1 --- [ntainer#0-1-C-1] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerKafkaGroup-2, groupId=consumerKafkaGroup] Unexpected error from ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx; closing connection
-  
-  java.lang.NullPointerException: null
-  	at java.util.regex.Matcher.getTextLength(Matcher.java:1770) ~[na:na]
-  	at java.util.regex.Matcher.reset(Matcher.java:416) ~[na:na]
-  	at java.util.regex.Matcher.<init>(Matcher.java:253) ~[na:na]
-  	at java.util.regex.Pattern.matcher(Pattern.java:1133) ~[na:na]
-  	at org.apache.kafka.common.security.scram.internals.ScramFormatter.saslName(ScramFormatter.java:106) ~[na:na]
-  	at org.apache.kafka.common.security.scram.internals.ScramSaslClient.evaluateChallenge(ScramSaslClient.java:115) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.lambda$createSaslToken$1(SaslClientAuthenticator.java:524) ~[na:na]
-  	at java.security.AccessController.doPrivileged(AccessController.java:150) ~[na:na]
-  	at javax.security.auth.Subject.doAs(Subject.java:423) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.createSaslToken(SaslClientAuthenticator.java:524) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendSaslClientToken(SaslClientAuthenticator.java:431) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.sendInitialToken(SaslClientAuthenticator.java:330) ~[na:na]
-  	at org.apache.kafka.common.security.authenticator.SaslClientAuthenticator.authenticate(SaslClientAuthenticator.java:271) ~[na:na]
-  	at org.apache.kafka.common.network.KafkaChannel.prepare(KafkaChannel.java:176) ~[na:na]
-  	at org.apache.kafka.common.network.Selector.pollSelectionKeys(Selector.java:543) ~[na:na]
-  	at org.apache.kafka.common.network.Selector.poll(Selector.java:481) ~[na:na]
-  	at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:563) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:265) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:236) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:227) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.awaitMetadataUpdate(ConsumerNetworkClient.java:164) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureCoordinatorReady(AbstractCoordinator.java:257) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.poll(ConsumerCoordinator.java:480) ~[na:na]
-  	at org.apache.kafka.clients.consumer.KafkaConsumer.updateAssignmentMetadataIfNeeded(KafkaConsumer.java:1257) ~[na:na]
-  	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1226) ~[na:na]
-  	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1206) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doPoll(KafkaMessageListenerContainer.java:1412) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollAndInvoke(KafkaMessageListenerContainer.java:1249) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:1161) ~[na:na]
-  	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515) ~[na:na]
-  	at java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
-  	at java.lang.Thread.run(Thread.java:829) ~[na:na]
-  	at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:567) ~[na:na]
-  	at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192) ~[na:na]
-  
-  WARN 1 --- [ntainer#0-1-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-2, groupId=consumerKafkaGroup] Connection to node -3 (ark-03.srvs.cloudkafka.com/xx.xxx.xxx.xx:9094) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [ntainer#0-1-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-2, groupId=consumerKafkaGroup] Bootstrap broker ark-03.srvs.cloudkafka.com:9094 (id: -3 rack: null) disconnected
-  ```
