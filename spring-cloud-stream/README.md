@@ -29,6 +29,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
     - Export your `CloudKarafka` credentials to those environment variables
       ```
+      export KAFKA_URL=...
       export CLOUDKARAFKA_USERNAME=...
       export CLOUDKARAFKA_PASSWORD=...
       ```
@@ -46,6 +47,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   
     - Export your `CloudKarafka` credentials to those environment variables
       ```
+      export KAFKA_URL=...
       export CLOUDKARAFKA_USERNAME=...
       export CLOUDKARAFKA_PASSWORD=...
       ```
@@ -104,7 +106,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
     | Environment Variable     | Description |
     |--------------------------|-------------|
     | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
-    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value for `cloudkarafka` profile is `ark-01.srvs.cloudkafka.com:9094, ark-02.srvs.cloudkafka.com:9094, ark-03.srvs.cloudkafka.com:9094`. Using the `default` profile, the default value is `localhost:29092` |
+    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value is `localhost:29092` |
     | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
     | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
 
@@ -116,6 +118,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
       
       - In a terminal, export your `CloudKarafka` credentials to these environment variables
         ```
+        export KAFKA_URL=...
         export CLOUDKARAFKA_USERNAME=...
         export CLOUDKARAFKA_PASSWORD=...
         ```
@@ -124,6 +127,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
         ```
         docker run --rm --name producer-cloud-stream -p 9082:8080 \
           -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+          -e KAFKA_URL=$KAFKA_URL \
           -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
           -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
           ivanfranchin/producer-cloud-stream:1.0.0
@@ -133,6 +137,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
       - Open a new terminal and export your `CloudKarafka` credentials to these environment variables
         ```
+        export KAFKA_URL=...
         export CLOUDKARAFKA_USERNAME=...
         export CLOUDKARAFKA_PASSWORD=...
         ```
@@ -141,6 +146,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
         ```
         docker run --rm --name consumer-cloud-stream -p 9083:8080 \
           -e SPRING_PROFILES_ACTIVE=cloudkarafka \
+          -e KAFKA_URL=$KAFKA_URL \
           -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
           -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
           ivanfranchin/consumer-cloud-stream:1.0.0
@@ -225,8 +231,8 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
 
 ## Issues
 
-- Unable to run `producer-cloud-stream` and `consumer-cloud-stream` tests as **Mockito** is still not supported in AOT. See `spring-native` issues [#1343](https://github.com/spring-projects-experimental/spring-native/issues/1343) and [#1063](https://github.com/spring-projects-experimental/spring-native/issues/1063)
-
+- Unable to run `producer-cloud-stream` tests as **Mockito** is still not supported in AOT. See `spring-native` issues [#1343](https://github.com/spring-projects-experimental/spring-native/issues/1343) and [#1063](https://github.com/spring-projects-experimental/spring-native/issues/1063)
+- Unable to run `consumer-cloud-stream` due to the following issue [#1427](https://github.com/spring-projects-experimental/spring-native/issues/1427)
 - Unable to build `producer-cloud-stream` and `consumer-cloud-stream` Docker native images. It's throwing the following error
   ```
   [INFO] -------------------------------------------------------------
