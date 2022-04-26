@@ -11,8 +11,8 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   Endpoints
   ```
-  POST /api/news {"source": "...", "title": "..."}
-  POST /api/alerts {"level": "...", "message": "..."}
+  POST /api/news {"source":"...", "title":"..."}
+  POST /api/alerts {"level":"...", "message":"..."}
   ```
 
 - ### consumer-cloud-stream
@@ -235,7 +235,7 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
 - Unable to run `consumer-cloud-stream` tests due to the following issue [#1427](https://github.com/spring-projects-experimental/spring-native/issues/1427)
 - `producer-service` Docker native image is built successfully. However, the following exception is thrown when a `news` or an `alert` is submitted
   ```
-  ERROR 1 --- [ctor-http-nio-2] a.w.r.e.AbstractErrorWebExceptionHandler : [fd4a6ba0-1]  500 Server Error for HTTP POST "/api/news"
+  ERROR 1 --- [ctor-http-nio-2] a.w.r.e.AbstractErrorWebExceptionHandler : [6ba692e6-1]  500 Server Error for HTTP POST "/api/news"
   
   java.lang.IllegalArgumentException: Attribute 'value' not found in attributes for annotation [org.springframework.context.annotation.Role]
   	at org.springframework.util.Assert.notNull(Assert.java:219) ~[na:na]
@@ -268,33 +268,33 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
   		at com.mycompany.producercloudstream.rest.news.NewsController.publish(NewsController.java:29) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
   		at java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
   		at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:144) ~[na:na]
-  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.15]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.15]
-  		at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.15]
-  		at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.15]
+  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.17]
+  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.17]
+  		at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.17]
+  		at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.17]
   		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[na:na]
   		at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:101) ~[na:na]
   		at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:200) ~[na:na]
   		at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:74) ~[na:na]
   		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[na:na]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.15]
-  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.15]
+  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.17]
+  		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.17]
   		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[na:na]
   		at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:295) ~[na:na]
   		at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[na:na]
-  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.15]
+  		at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.17]
   		at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:159) ~[na:na]
   		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
   		at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:260) ~[na:na]
   		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:142) ~[na:na]
-  		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:400) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.16]
-  		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:419) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.16]
+  		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:400) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.18]
+  		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:419) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.18]
   		at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:600) ~[na:na]
   		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:93) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[na:na]
-  		at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:264) ~[na:na]
+  		at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:266) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[na:na]
   		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[na:na]
@@ -321,7 +321,6 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
   		at com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:597) ~[na:na]
   		at com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:194) ~[na:na]
   ```
-
 - `consumer-service` Docker native images is built successfully. However, the following exception is thrown at startup
   ```
   ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
@@ -336,12 +335,12 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
   	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935) ~[na:na]
   	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:64) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
-  	at com.mycompany.consumercloudstream.ConsumerCloudStreamApplication.main(ConsumerCloudStreamApplication.java:32) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:2.6.7]
+  	at com.mycompany.consumercloudstream.ConsumerCloudStreamApplication.main(ConsumerCloudStreamApplication.java:34) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
   Caused by: java.lang.IllegalArgumentException: Attribute 'value' not found in attributes for annotation [org.springframework.context.annotation.Role]
   	at org.springframework.util.Assert.notNull(Assert.java:219) ~[na:na]
   	at org.springframework.core.annotation.AnnotationAttributes.assertAttributePresence(AnnotationAttributes.java:366) ~[na:na]
@@ -362,7 +361,7 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
   	at org.springframework.cloud.stream.binding.AbstractBindableProxyFactory.createAndBindInputs(AbstractBindableProxyFactory.java:118) ~[na:na]
   	at org.springframework.cloud.stream.binding.InputBindingLifecycle.doStartWithBindable(InputBindingLifecycle.java:58) ~[na:na]
   	at java.util.LinkedHashMap$LinkedValues.forEach(LinkedHashMap.java:608) ~[na:na]
-  	at org.springframework.cloud.stream.binding.AbstractBindingLifecycle.start(AbstractBindingLifecycle.java:57) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:3.2.2]
+  	at org.springframework.cloud.stream.binding.AbstractBindingLifecycle.start(AbstractBindingLifecycle.java:57) ~[com.mycompany.consumercloudstream.ConsumerCloudStreamApplication:na]
   	at org.springframework.cloud.stream.binding.InputBindingLifecycle.start(InputBindingLifecycle.java:34) ~[na:na]
   	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178) ~[na:na]
   	... 14 common frames omitted

@@ -8,6 +8,7 @@ import org.apache.kafka.common.security.scram.ScramLoginModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.nativex.hint.NativeHint;
+import org.springframework.nativex.hint.TypeAccess;
 import org.springframework.nativex.hint.TypeHint;
 
 @NativeHint(
@@ -22,7 +23,8 @@ import org.springframework.nativex.hint.TypeHint;
                 typeNames = {
                         "org.apache.kafka.common.security.authenticator.AbstractLogin$DefaultLoginCallbackHandler", // 4
                         "org.apache.kafka.common.security.scram.internals.ScramSaslClient$ScramSaslClientFactory" // 7
-                }
+                },
+                access = { TypeAccess.PUBLIC_CONSTRUCTORS, TypeAccess.PUBLIC_METHODS } // 8
         )
 )
 @SpringBootApplication

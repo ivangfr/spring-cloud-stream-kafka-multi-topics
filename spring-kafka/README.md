@@ -11,8 +11,8 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   Endpoints
   ```
-  POST /api/news {"source": "...", "title": "..."}
-  POST /api/alerts {"level": "...", "message": "..."}
+  POST /api/news {"source":"...", "title":"..."}
+  POST /api/alerts {"level":"...", "message":"..."}
   ```
 
 - ### consumer-kafka
@@ -238,34 +238,34 @@ docker rmi ivanfranchin/consumer-kafka:1.0.0
   ERROR 1 --- [           main] o.springframework.kafka.core.KafkaAdmin  : Could not configure topics
   
   org.springframework.kafka.KafkaException: Timed out waiting to get existing topics; nested exception is java.util.concurrent.TimeoutException
-  	at org.springframework.kafka.core.KafkaAdmin.lambda$checkPartitions$5(KafkaAdmin.java:275) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.3]
+  	at org.springframework.kafka.core.KafkaAdmin.lambda$checkPartitions$5(KafkaAdmin.java:275) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.5]
   	at java.util.HashMap.forEach(HashMap.java:1337) ~[na:na]
-  	at org.springframework.kafka.core.KafkaAdmin.checkPartitions(KafkaAdmin.java:254) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.3]
-  	at org.springframework.kafka.core.KafkaAdmin.addOrModifyTopicsIfNeeded(KafkaAdmin.java:240) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.3]
-  	at org.springframework.kafka.core.KafkaAdmin.initialize(KafkaAdmin.java:178) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.3]
-  	at org.springframework.kafka.core.KafkaAdmin.afterSingletonsInstantiated(KafkaAdmin.java:145) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.3]
+  	at org.springframework.kafka.core.KafkaAdmin.checkPartitions(KafkaAdmin.java:254) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.5]
+  	at org.springframework.kafka.core.KafkaAdmin.addOrModifyTopicsIfNeeded(KafkaAdmin.java:240) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.5]
+  	at org.springframework.kafka.core.KafkaAdmin.initialize(KafkaAdmin.java:178) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.5]
+  	at org.springframework.kafka.core.KafkaAdmin.afterSingletonsInstantiated(KafkaAdmin.java:145) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.5]
   	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:972) ~[na:na]
   	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[na:na]
   	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[na:na]
   	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:64) ~[na:na]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.4]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.4]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.4]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.4]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.4]
-  	at com.mycompany.producerkafka.ProducerKafkaApplication.main(ProducerKafkaApplication.java:32) ~[com.mycompany.producerkafka.ProducerKafkaApplication:na]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.6.7]
+  	at com.mycompany.producerkafka.ProducerKafkaApplication.main(ProducerKafkaApplication.java:34) ~[com.mycompany.producerkafka.ProducerKafkaApplication:na]
   Caused by: java.util.concurrent.TimeoutException: null
   	at java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java:1886) ~[na:na]
   	at java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2021) ~[na:na]
   	at org.apache.kafka.common.internals.KafkaFutureImpl.get(KafkaFutureImpl.java:180) ~[na:na]
-  	at org.springframework.kafka.core.KafkaAdmin.lambda$checkPartitions$5(KafkaAdmin.java:257) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.3]
+  	at org.springframework.kafka.core.KafkaAdmin.lambda$checkPartitions$5(KafkaAdmin.java:257) ~[com.mycompany.producerkafka.ProducerKafkaApplication:2.8.5]
   	... 15 common frames omitted
   ```
 - After building successfully the `consumer-kafka` Docker native image, the following exception is thrown during startup using `cloudkarafka` profile. Probably due to this issue [#1367](https://github.com/spring-projects-experimental/spring-native/issues/1367) as `sasl.jaas.config` is not created correctly is it's using environment variable to set the username and password.
   ```
-  WARN 1 --- [ntainer#0-1-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-2, groupId=consumerKafkaGroup] Connection to node -1 (...) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
-  WARN 1 --- [ntainer#0-1-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-2, groupId=consumerKafkaGroup] Bootstrap broker ... (id: -1 rack: null) disconnected
-  WARN 1 --- [ntainer#1-0-C-1] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerKafkaGroup-3, groupId=consumerKafkaGroup] Unexpected error from ...; closing connection
+  WARN 1 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-1, groupId=consumerKafkaGroup] Connection to node -1 (...) terminated during authentication. This may happen due to any of the following reasons: (1) Authentication failed due to invalid credentials with brokers older than 1.0.0, (2) Firewall blocking Kafka TLS traffic (eg it may only allow HTTPS traffic), (3) Transient network issue.
+  WARN 1 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-consumerKafkaGroup-1, groupId=consumerKafkaGroup] Bootstrap broker ... (id: -1 rack: null) disconnected
+  WARN 1 --- [ntainer#1-1-C-1] o.apache.kafka.common.network.Selector   : [Consumer clientId=consumer-consumerKafkaGroup-4, groupId=consumerKafkaGroup] Unexpected error from ...; closing connection
   
   java.lang.NullPointerException: null
   	at java.util.regex.Matcher.getTextLength(Matcher.java:1770) ~[na:na]
@@ -290,14 +290,14 @@ docker rmi ivanfranchin/consumer-kafka:1.0.0
   	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:227) ~[na:na]
   	at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.awaitMetadataUpdate(ConsumerNetworkClient.java:164) ~[na:na]
   	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureCoordinatorReady(AbstractCoordinator.java:258) ~[na:na]
-  	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.poll(ConsumerCoordinator.java:480) ~[na:na]
+  	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.poll(ConsumerCoordinator.java:483) ~[na:na]
   	at org.apache.kafka.clients.consumer.KafkaConsumer.updateAssignmentMetadataIfNeeded(KafkaConsumer.java:1262) ~[na:na]
   	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1231) ~[na:na]
   	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1211) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollConsumer(KafkaMessageListenerContainer.java:1510) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doPoll(KafkaMessageListenerContainer.java:1500) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollAndInvoke(KafkaMessageListenerContainer.java:1328) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:1237) ~[na:na]
+  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollConsumer(KafkaMessageListenerContainer.java:1521) ~[na:na]
+  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doPoll(KafkaMessageListenerContainer.java:1511) ~[na:na]
+  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollAndInvoke(KafkaMessageListenerContainer.java:1339) ~[na:na]
+  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:1251) ~[na:na]
   	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515) ~[na:na]
   	at java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
   	at java.lang.Thread.run(Thread.java:829) ~[na:na]
