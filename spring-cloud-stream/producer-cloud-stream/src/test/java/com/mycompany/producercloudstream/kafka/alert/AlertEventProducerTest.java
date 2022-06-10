@@ -33,7 +33,7 @@ class AlertEventProducerTest {
             ObjectMapper objectMapper = context.getBean(ObjectMapper.class);
             OutputDestination outputDestination = context.getBean(OutputDestination.class);
 
-            Message<byte[]> outputMessage = outputDestination.receive(0, "alert.json");
+            Message<byte[]> outputMessage = outputDestination.receive(0, "spring.cloud.stream.alert");
             MessageHeaders headers = outputMessage.getHeaders();
             Alert payload = deserialize(objectMapper, outputMessage.getPayload(), Alert.class);
 

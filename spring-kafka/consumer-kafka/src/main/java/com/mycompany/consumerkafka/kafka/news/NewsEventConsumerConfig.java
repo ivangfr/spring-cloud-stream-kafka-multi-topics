@@ -22,7 +22,7 @@ public class NewsEventConsumerConfig {
     private final KafkaProperties kafkaProperties;
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, News> newsKafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, News> newsKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, News> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(newsConsumerFactory());
         factory.setConcurrency(kafkaProperties.getListener().getConcurrency());

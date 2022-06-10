@@ -22,7 +22,8 @@ import org.springframework.nativex.hint.TypeHint;
                 },
                 typeNames = {
                         "org.apache.kafka.common.security.authenticator.AbstractLogin$DefaultLoginCallbackHandler", // 4
-                        "org.apache.kafka.common.security.scram.internals.ScramSaslClient$ScramSaslClientFactory" // 7
+                        "org.apache.kafka.common.security.scram.internals.ScramSaslClient$ScramSaslClientFactory", // 7
+                        "org.springframework.boot.autoconfigure.condition.OnBeanCondition" // 9
                 },
                 access = { TypeAccess.PUBLIC_CONSTRUCTORS, TypeAccess.PUBLIC_METHODS } // 8
         )

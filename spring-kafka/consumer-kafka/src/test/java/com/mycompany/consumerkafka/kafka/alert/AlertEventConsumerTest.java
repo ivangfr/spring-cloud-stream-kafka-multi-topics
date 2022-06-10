@@ -56,12 +56,12 @@ class AlertEventConsumerTest {
     void testAlert(CapturedOutput output) throws JsonProcessingException {
         String id = "id";
         String payload = objectMapper.writeValueAsString(new Alert(id, 1, "message"));
-        producer.send(new ProducerRecord<>("alert.json", 0, id, payload));
+        producer.send(new ProducerRecord<>("spring.kafka.alert", 0, id, payload));
         producer.flush();
 
         await().atMost(AT_MOST_DURATION).pollInterval(POLL_INTERVAL_DURATION).untilAsserted(() -> {
             assertThat(output).contains("Received message");
-            assertThat(output).contains("TOPIC: alert.json; PARTITION: 0; OFFSET: 0;");
+            assertThat(output).contains("TOPIC: spring.kafka.alert; PARTITION: 0; OFFSET: 0;");
             assertThat(output).contains("PAYLOAD: Alert(id=id, level=1, message=message)");
         });
     }

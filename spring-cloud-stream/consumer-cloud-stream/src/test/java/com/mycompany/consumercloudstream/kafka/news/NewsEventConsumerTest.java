@@ -30,7 +30,7 @@ class NewsEventConsumerTest {
             Message<News> newsMessage = MessageBuilder.withPayload(news).build();
 
             InputDestination inputDestination = context.getBean(InputDestination.class);
-            inputDestination.send(newsMessage, "news.json");
+            inputDestination.send(newsMessage, "spring.cloud.stream.news");
 
             assertThat(output).contains("Received message");
             assertThat(output).contains("PAYLOAD: News(id=id, source=source, title=title)");

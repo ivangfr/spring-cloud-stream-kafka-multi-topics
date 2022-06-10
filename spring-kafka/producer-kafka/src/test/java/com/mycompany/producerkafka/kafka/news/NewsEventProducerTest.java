@@ -46,7 +46,7 @@ class NewsEventProducerTest {
     @BeforeAll
     void setUp() {
         DefaultKafkaConsumerFactory<String, String> consumerFactory = new DefaultKafkaConsumerFactory<>(getConsumerProperties());
-        ContainerProperties containerProperties = new ContainerProperties("news.json", "alert.json");
+        ContainerProperties containerProperties = new ContainerProperties("spring.kafka.news", "spring.kafka.alert");
         container = new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
         queue = new LinkedBlockingQueue<>();
         container.setupMessageListener((MessageListener<String, String>) queue::add);

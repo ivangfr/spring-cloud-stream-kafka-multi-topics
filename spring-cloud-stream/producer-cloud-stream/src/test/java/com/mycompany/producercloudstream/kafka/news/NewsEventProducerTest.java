@@ -33,7 +33,7 @@ class NewsEventProducerTest {
             ObjectMapper objectMapper = context.getBean(ObjectMapper.class);
             OutputDestination outputDestination = context.getBean(OutputDestination.class);
 
-            Message<byte[]> outputMessage = outputDestination.receive(0, "news.json");
+            Message<byte[]> outputMessage = outputDestination.receive(0, "spring.cloud.stream.news");
             MessageHeaders headers = outputMessage.getHeaders();
             News payload = deserialize(objectMapper, outputMessage.getPayload(), News.class);
 

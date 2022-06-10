@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 public class AlertEventConsumer {
 
     @Bean
-    public Consumer<Message<Alert>> alert() {
+    Consumer<Message<Alert>> alert() {
         return message -> {
             Alert alert = message.getPayload();
             MessageHeaders messageHeaders = message.getHeaders();

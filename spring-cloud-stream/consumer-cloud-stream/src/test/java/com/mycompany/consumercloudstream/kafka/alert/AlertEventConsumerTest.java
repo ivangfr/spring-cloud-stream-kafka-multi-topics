@@ -30,7 +30,7 @@ class AlertEventConsumerTest {
             Message<Alert> alertMessage = MessageBuilder.withPayload(alert).build();
 
             InputDestination inputDestination = context.getBean(InputDestination.class);
-            inputDestination.send(alertMessage, "alert.json");
+            inputDestination.send(alertMessage, "spring.cloud.stream.alert");
 
             assertThat(output).contains("Received message");
             assertThat(output).contains("PAYLOAD: Alert(id=id, level=1, message=message)");

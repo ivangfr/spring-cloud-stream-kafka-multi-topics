@@ -1,6 +1,6 @@
 # spring-cloud-stream-kafka-multi-topics-cloudkarafka
 
-The goal of this project is to implement a [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that _produces_ messages to a [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot` application that _consumes_ those messages.
+The goal of this project is to implement a [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that _produces_ messages to a [`Kafka`](https://kafka.apache.org/) topic and another `Spring Boot` application that _consumes_ these messages.
 
 Similar projects are: [`spring-kafka-de-serialization-types`](https://github.com/ivangfr/spring-kafka-de-serialization-types) and [`spring-cloud-stream-kafka-elasticsearch`](https://github.com/ivangfr/spring-cloud-stream-kafka-elasticsearch).
 
@@ -33,7 +33,9 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
   ![cloudkarafka-topics](documentation/cloudkarafka-topics.png)
 
-- You can use the topic with suffix `default` or create new ones. In my case, I created two: one with suffix `news.json` and another with suffix `alert.json`.
+- You can use the topic with suffix `default` or create new ones. In my case, I created four:
+  - for `spring-kafka` applications, one with suffix `spring.kafka.news` and another with suffix `spring.kafka.alert`;
+  - for `spring-cloud-stream` applications, one with suffix `spring.cloud.stream.news` and another with suffix `spring.cloud.stream.alert`.
 
 ## Using Kafka running locally
 
@@ -49,23 +51,16 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
   docker-compose ps
   ```
 
+- Create the Kafka topics used by the applications
+  ```
+  ./create-kafka-topics.sh
+  ```
+
 ### Useful Links
 
-- **Kafka Topics UI**
-   
-  `Kafka Topics UI` can be accessed at http://localhost:8085
+- **Kafdrop**
 
-- **Kafka Manager**
-   
-  `Kafka Manager` can be accessed at http://localhost:9000
-
-  _Configuration_
-
-  - First, you must create a new cluster. Click on `Cluster` (dropdown on the header) and then on `Add Cluster`
-  - Type the name of your cluster in `Cluster Name` field, for example: `MyCluster`
-  - Type `zookeeper:2181` in `Cluster Zookeeper Hosts` field
-  - Enable checkbox `Poll consumer information (Not recommended for large # of consumers if ZK is used for offsets tracking on older Kafka versions)`
-  - Click on `Save` button at the bottom of the page.
+  `Kafdrop` can be accessed at http://localhost:9000
 
 ### Shutdown
 

@@ -56,12 +56,12 @@ class NewsEventConsumerTest {
     void testNews(CapturedOutput output) throws JsonProcessingException {
         String id = "id";
         String payload = objectMapper.writeValueAsString(new News(id, "source", "title"));
-        producer.send(new ProducerRecord<>("news.json", 0, id, payload));
+        producer.send(new ProducerRecord<>("spring.kafka.news", 0, id, payload));
         producer.flush();
 
         await().atMost(AT_MOST_DURATION).pollInterval(POLL_INTERVAL_DURATION).untilAsserted(() -> {
             assertThat(output).contains("Received message");
-            assertThat(output).contains("TOPIC: news.json; PARTITION: 0; OFFSET: 0;");
+            assertThat(output).contains("TOPIC: spring.kafka.news; PARTITION: 0; OFFSET: 0;");
             assertThat(output).contains("PAYLOAD: News(id=id, source=source, title=title)");
         });
     }
