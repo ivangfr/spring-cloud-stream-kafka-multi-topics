@@ -61,7 +61,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 - #### Using Kafka running locally
 
-  > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)  
+  > **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)  
 
   - **producer-cloud-stream**
 
@@ -103,12 +103,12 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - **producer-cloud-stream** and **consumer-cloud-stream**
 
-    | Environment Variable     | Description |
-    |--------------------------|-------------|
+    | Environment Variable     | Description                                                                                                                                |
+    |--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
     | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
-    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value is `localhost:29092` |
-    | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
-    | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
+    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value is `localhost:29092`                                                |
+    | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile                                                           |
+    | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile                                                           |
 
 - ### Starting application's Docker container
 
@@ -154,7 +154,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - #### Using Kafka running locally
 
-    > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
+    > **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
 
     - **producer-kafka**
 
@@ -187,7 +187,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 In a terminal, submit the following POST requests to `producer-cloud-stream` and check its logs and `consumer-cloud-stream` logs
 
-> **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow
+> **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow
 
 - **news**
   ```
@@ -236,15 +236,15 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
 - Unable to run `consumer-cloud-stream` tests due to the following exception
   ```
   ...
-  [ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.088 s <<< FAILURE! - in com.mycompany.consumercloudstream.kafka.alert.AlertEventConsumerTest
+  [ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.088 s <<< FAILURE! - in alert.kafka.com.ivanfranchin.consumercloudstream.AlertEventConsumerTest
   [ERROR] testAlert{CapturedOutput}  Time elapsed: 3.065 s  <<< ERROR!
   java.lang.NullPointerException
-  	at com.mycompany.consumercloudstream.kafka.alert.AlertEventConsumerTest.testAlert(AlertEventConsumerTest.java:33)
+  	at alert.kafka.com.ivanfranchin.consumercloudstream.AlertEventConsumerTest.testAlert(AlertEventConsumerTest.java:33)
   ...
-  [ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.474 s <<< FAILURE! - in com.mycompany.consumercloudstream.kafka.news.NewsEventConsumerTest
+  [ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.474 s <<< FAILURE! - in news.kafka.com.ivanfranchin.consumercloudstream.NewsEventConsumerTest
   [ERROR] testNews{CapturedOutput}  Time elapsed: 0.474 s  <<< ERROR!
   java.lang.NullPointerException
-  	at com.mycompany.consumercloudstream.kafka.news.NewsEventConsumerTest.testNews(NewsEventConsumerTest.java:33)
+  	at news.kafka.com.ivanfranchin.consumercloudstream.NewsEventConsumerTest.testNews(NewsEventConsumerTest.java:33)
   ...
   ```
 
@@ -272,58 +272,58 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
           at org.springframework.cloud.stream.binder.DefaultBinderFactory.getBinderInstance(DefaultBinderFactory.java:265) ~[na:na]
           at org.springframework.cloud.stream.binder.DefaultBinderFactory.doGetBinder(DefaultBinderFactory.java:223) ~[na:na]
           at org.springframework.cloud.stream.binder.DefaultBinderFactory.getBinder(DefaultBinderFactory.java:151) ~[na:na]
-          at org.springframework.cloud.stream.binding.BindingService.getBinder(BindingService.java:394) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-          at org.springframework.cloud.stream.binding.BindingService.bindProducer(BindingService.java:277) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-          at org.springframework.cloud.stream.function.StreamBridge.resolveDestination(StreamBridge.java:296) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-          at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:213) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-          at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:170) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-          at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:150) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-          at com.mycompany.producercloudstream.kafka.news.NewsEventProducer.send(NewsEventProducer.java:27) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-          at com.mycompany.producercloudstream.rest.news.NewsController.publish(NewsController.java:29) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-          at java.lang.reflect.Method.invoke(Method.java:566) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+          at org.springframework.cloud.stream.binding.BindingService.getBinder(BindingService.java:394) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+          at org.springframework.cloud.stream.binding.BindingService.bindProducer(BindingService.java:277) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+          at org.springframework.cloud.stream.function.StreamBridge.resolveDestination(StreamBridge.java:296) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+          at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:213) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+          at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:170) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+          at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:150) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+          at news.kafka.com.ivanfranchin.producercloudstream.NewsEventProducer.send(NewsEventProducer.java:27) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
+          at news.rest.com.ivanfranchin.producercloudstream.NewsController.publish(NewsController.java:29) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
+          at java.lang.reflect.Method.invoke(Method.java:566) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
           at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:144) ~[na:na]
-          at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-          at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-          at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-          at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+          at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+          at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+          at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+          at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
           at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[na:na]
           at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:101) ~[na:na]
           at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:200) ~[na:na]
           at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:74) ~[na:na]
           at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[na:na]
-          at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-          at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+          at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+          at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
           at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[na:na]
           at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:299) ~[na:na]
           at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[na:na]
-          at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+          at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
           at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:159) ~[na:na]
           at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[na:na]
           at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:260) ~[na:na]
           at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[na:na]
-          at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:400) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.19]
-          at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:419) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.19]
-          at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:600) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.19]
+          at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:400) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:1.0.19]
+          at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:419) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:1.0.19]
+          at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:600) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:1.0.19]
           at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:93) ~[na:na]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
           at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:266) ~[na:na]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:327) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:299) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:327) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:299) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
           at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[na:na]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-          at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+          at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
           at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:722) ~[na:na]
           at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:658) ~[na:na]
           at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:584) ~[na:na]
@@ -331,12 +331,12 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
           at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:995) ~[na:na]
           at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[na:na]
           at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[na:na]
-          at java.lang.Thread.run(Thread.java:829) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-          at com.oracle.svm.core.thread.PlatformThreads.threadStartRoutine(PlatformThreads.java:704) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+          at java.lang.Thread.run(Thread.java:829) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
+          at com.oracle.svm.core.thread.PlatformThreads.threadStartRoutine(PlatformThreads.java:704) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
           at com.oracle.svm.core.posix.thread.PosixPlatformThreads.pthreadStartRoutine(PosixPlatformThreads.java:202) ~[na:na]
   Caused by: java.lang.NoSuchMethodException: org.springframework.boot.autoconfigure.condition.OnBeanCondition.<init>()
-      at java.lang.Class.getConstructor0(DynamicHub.java:3349) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-      at java.lang.Class.getDeclaredConstructor(DynamicHub.java:2553) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+      at java.lang.Class.getConstructor0(DynamicHub.java:3349) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
+      at java.lang.Class.getDeclaredConstructor(DynamicHub.java:2553) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
       at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:25) ~[na:na]
       at org.springframework.context.annotation.ConditionEvaluator.getCondition(ConditionEvaluator.java:125) ~[na:na]
       at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:96) ~[na:na]
@@ -350,58 +350,58 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
       at org.springframework.cloud.stream.binder.DefaultBinderFactory.getBinderInstance(DefaultBinderFactory.java:265) ~[na:na]
       at org.springframework.cloud.stream.binder.DefaultBinderFactory.doGetBinder(DefaultBinderFactory.java:223) ~[na:na]
       at org.springframework.cloud.stream.binder.DefaultBinderFactory.getBinder(DefaultBinderFactory.java:151) ~[na:na]
-      at org.springframework.cloud.stream.binding.BindingService.getBinder(BindingService.java:394) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-      at org.springframework.cloud.stream.binding.BindingService.bindProducer(BindingService.java:277) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-      at org.springframework.cloud.stream.function.StreamBridge.resolveDestination(StreamBridge.java:296) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-      at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:213) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-      at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:170) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-      at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:150) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.2.4]
-      at com.mycompany.producercloudstream.kafka.news.NewsEventProducer.send(NewsEventProducer.java:27) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-      at com.mycompany.producercloudstream.rest.news.NewsController.publish(NewsController.java:29) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-      at java.lang.reflect.Method.invoke(Method.java:566) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+      at org.springframework.cloud.stream.binding.BindingService.getBinder(BindingService.java:394) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+      at org.springframework.cloud.stream.binding.BindingService.bindProducer(BindingService.java:277) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+      at org.springframework.cloud.stream.function.StreamBridge.resolveDestination(StreamBridge.java:296) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+      at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:213) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+      at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:170) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+      at org.springframework.cloud.stream.function.StreamBridge.send(StreamBridge.java:150) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.2.4]
+      at news.kafka.com.ivanfranchin.producercloudstream.NewsEventProducer.send(NewsEventProducer.java:27) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
+      at news.rest.com.ivanfranchin.producercloudstream.NewsController.publish(NewsController.java:29) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
+      at java.lang.reflect.Method.invoke(Method.java:566) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
       at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:144) ~[na:na]
-      at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-      at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-      at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-      at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+      at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+      at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+      at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:251) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+      at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:336) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
       at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[na:na]
       at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:101) ~[na:na]
       at reactor.core.publisher.FluxPeek$PeekSubscriber.onNext(FluxPeek.java:200) ~[na:na]
       at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:74) ~[na:na]
       at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[na:na]
-      at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
-      at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+      at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+      at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:151) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
       at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[na:na]
       at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:299) ~[na:na]
       at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[na:na]
-      at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:3.4.18]
+      at reactor.core.publisher.Operators$MonoSubscriber.complete(Operators.java:1816) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:3.4.18]
       at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:159) ~[na:na]
       at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[na:na]
       at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:260) ~[na:na]
       at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[na:na]
-      at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:400) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.19]
-      at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:419) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.19]
-      at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:600) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:1.0.19]
+      at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:400) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:1.0.19]
+      at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:419) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:1.0.19]
+      at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:600) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:1.0.19]
       at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:93) ~[na:na]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
       at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:266) ~[na:na]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:327) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:299) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:327) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:299) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
       at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[na:na]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
-      at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
+      at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:4.1.77.Final]
       at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:722) ~[na:na]
       at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:658) ~[na:na]
       at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:584) ~[na:na]
@@ -409,8 +409,8 @@ docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
       at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:995) ~[na:na]
       at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[na:na]
       at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[na:na]
-      at java.lang.Thread.run(Thread.java:829) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
-      at com.oracle.svm.core.thread.PlatformThreads.threadStartRoutine(PlatformThreads.java:704) ~[com.mycompany.producercloudstream.ProducerCloudStreamApplication:na]
+      at java.lang.Thread.run(Thread.java:829) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
+      at com.oracle.svm.core.thread.PlatformThreads.threadStartRoutine(PlatformThreads.java:704) ~[com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication:na]
       at com.oracle.svm.core.posix.thread.PosixPlatformThreads.pthreadStartRoutine(PosixPlatformThreads.java:202) ~[na:na]
   ```
 

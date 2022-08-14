@@ -61,7 +61,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 - #### Using Kafka running locally
 
-  > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)  
+  > **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)  
 
   - **producer-kafka**
 
@@ -103,12 +103,12 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **producer-kafka** and **consumer-kafka**
 
-    | Environment Variable     | Description |
-    |--------------------------|-------------|
+    | Environment Variable     | Description                                                                                                                                |
+    |--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
     | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
-    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value is `localhost:29092` |
-    | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile |
-    | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile |
+    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value is `localhost:29092`                                                |
+    | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile                                                           |
+    | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile                                                           |
 
 - ### Starting application's Docker container
 
@@ -154,7 +154,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - #### Using Kafka running locally
 
-    > **Note:** you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
+    > **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
 
     - **producer-kafka**
 
@@ -187,7 +187,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 In a terminal, submit the following POST requests to `producer-kafka` and check its logs and `consumer-kafka` logs
 
-> **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow 
+> **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow 
 
 - **news**
   ```

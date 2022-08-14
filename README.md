@@ -13,7 +13,7 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
+- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
@@ -27,11 +27,11 @@ However, in this one, when the Spring Profile `cloudkarafka` is used, `producer`
 
 - Once you log into `CloudKarafka`, click on `Details` menu. You should see something like the picture below. In this page you have all the credentials and the URLs of the `Kafka` brokers
 
-  ![cloudkarafka-details](documentation/cloudkarafka-details.png)
+  ![cloudkarafka-details](documentation/cloudkarafka-details.jpeg)
 
 - In order to get information about the topic you will use, click on the `Topics` menu
 
-  ![cloudkarafka-topics](documentation/cloudkarafka-topics.png)
+  ![cloudkarafka-topics](documentation/cloudkarafka-topics.jpeg)
 
 - You can use the topic with suffix `default` or create new ones. In my case, I created four:
   - for `spring-kafka` applications, one with suffix `spring.kafka.news` and another with suffix `spring.kafka.alert`;
