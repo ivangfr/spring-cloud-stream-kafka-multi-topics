@@ -4,12 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanfranchin.producercloudstream.kafka.alert.Alert;
 import com.ivanfranchin.producercloudstream.kafka.alert.AlertEventProducer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
@@ -18,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * The tests in this class are identical to the ones in AlertControllerTest of producer-kafka application
  */
-@ExtendWith(SpringExtension.class)
 @WebFluxTest(AlertController.class)
 class AlertControllerTest {
 

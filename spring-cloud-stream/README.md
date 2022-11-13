@@ -201,11 +201,7 @@ In a terminal, submit the following POST requests to `producer-cloud-stream` and
 
 ## Stop applications
 
-- If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
-- If they were started as Docker containers, go to a terminal and run the command below
-  ```
-  docker stop producer-cloud-stream consumer-cloud-stream
-  ```
+Go to the terminals where they are running and press `Ctrl+C`
 
 ## Running Test Cases
 
