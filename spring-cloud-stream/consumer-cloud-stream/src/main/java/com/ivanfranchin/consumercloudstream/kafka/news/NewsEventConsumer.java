@@ -22,7 +22,7 @@ public class NewsEventConsumer {
             MessageHeaders messageHeaders = message.getHeaders();
             log.info("Received message\n---\nTOPIC: {}; PARTITION: {}; OFFSET: {};\nPAYLOAD: {}\n---",
                     messageHeaders.get(KafkaHeaders.RECEIVED_TOPIC, String.class),
-                    messageHeaders.get(KafkaHeaders.RECEIVED_PARTITION_ID, Integer.class),
+                    messageHeaders.get(KafkaHeaders.RECEIVED_PARTITION, Integer.class),
                     messageHeaders.get(KafkaHeaders.OFFSET, Long.class),
                     news);
         };

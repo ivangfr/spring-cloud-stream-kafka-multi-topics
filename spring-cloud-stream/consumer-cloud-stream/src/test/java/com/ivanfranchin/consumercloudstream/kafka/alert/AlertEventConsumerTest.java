@@ -33,7 +33,7 @@ class AlertEventConsumerTest {
             inputDestination.send(alertMessage, "spring.cloud.stream.alert");
 
             assertThat(output).contains("Received message");
-            assertThat(output).contains("PAYLOAD: Alert(id=id, level=1, message=message)");
+            assertThat(output).contains("PAYLOAD: Alert[id=id, level=1, message=message]");
         }
     }
 }

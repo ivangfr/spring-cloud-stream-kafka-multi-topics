@@ -33,7 +33,7 @@ class NewsEventConsumerTest {
             inputDestination.send(newsMessage, "spring.cloud.stream.news");
 
             assertThat(output).contains("Received message");
-            assertThat(output).contains("PAYLOAD: News(id=id, source=source, title=title)");
+            assertThat(output).contains("PAYLOAD: News[id=id, source=source, title=title]");
         }
     }
 }

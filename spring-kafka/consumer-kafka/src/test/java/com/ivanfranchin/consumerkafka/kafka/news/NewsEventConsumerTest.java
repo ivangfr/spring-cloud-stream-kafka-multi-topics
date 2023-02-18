@@ -20,7 +20,6 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +41,7 @@ class NewsEventConsumerTest {
 
     @BeforeAll
     void setUp() {
-        Map<String, Object> configs = new HashMap<>(KafkaTestUtils.producerProps(embeddedKafkaBroker));
+        Map<String, Object> configs = KafkaTestUtils.producerProps(embeddedKafkaBroker);
         producer = new DefaultKafkaProducerFactory<>(configs, new StringSerializer(), new StringSerializer())
                 .createProducer();
     }
@@ -62,7 +61,7 @@ class NewsEventConsumerTest {
         await().atMost(AT_MOST_DURATION).pollInterval(POLL_INTERVAL_DURATION).untilAsserted(() -> {
             assertThat(output).contains("Received message");
             assertThat(output).contains("TOPIC: spring.kafka.news; PARTITION: 0; OFFSET: 0;");
-            assertThat(output).contains("PAYLOAD: News(id=id, source=source, title=title)");
+            assertThat(output).contains("PAYLOAD: News[id=id, source=source, title=title]");
         });
     }
 

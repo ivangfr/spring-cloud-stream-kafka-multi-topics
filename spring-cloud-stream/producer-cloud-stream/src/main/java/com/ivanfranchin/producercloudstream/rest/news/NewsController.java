@@ -2,6 +2,7 @@ package com.ivanfranchin.producercloudstream.rest.news;
 
 import com.ivanfranchin.producercloudstream.kafka.news.News;
 import com.ivanfranchin.producercloudstream.kafka.news.NewsEventProducer;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController

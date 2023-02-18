@@ -227,10 +227,58 @@ docker rmi ivanfranchin/consumer-kafka:1.0.0
 
 ## Issues
 
-- Unable to run `producer-kafka` tests as **Mockito** is still not supported in AOT. See `spring-native` issues [#1343](https://github.com/spring-projects-experimental/spring-native/issues/1343) and [#1063](https://github.com/spring-projects-experimental/spring-native/issues/1063)
-
-- Unable to run `consumer-kafka` tests due to the following exception
+- The `producer-kafka` unit tests are not working.
+- When trying to run the Docker native images of `producer-kafka` and `consumer-kafka` using `cloudkarafka` profile, the following exception is thrown
   ```
-  org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'null': Unsatisfied dependency expressed through field 'embeddedKafkaBroker'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.kafka.test.EmbeddedKafkaBroker' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-  Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.kafka.test.EmbeddedKafkaBroker' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+  ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+  
+  org.springframework.context.ApplicationContextException: Failed to start bean 'org.springframework.kafka.config.internalKafkaListenerEndpointRegistry'
+  	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.4]
+  	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356) ~[na:na]
+  	at java.base@17.0.6/java.lang.Iterable.forEach(Iterable.java:75) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.4]
+  	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.4]
+  	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:932) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.4]
+  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:587) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.4]
+  	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at com.ivanfranchin.consumerkafka.ConsumerKafkaApplication.main(ConsumerKafkaApplication.java:10) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
+  Caused by: org.apache.kafka.common.KafkaException: Failed to construct kafka consumer
+  	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:830) ~[na:na]
+  	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:666) ~[na:na]
+  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createRawConsumer(DefaultKafkaConsumerFactory.java:483) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createKafkaConsumer(DefaultKafkaConsumerFactory.java:451) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createConsumerWithAdjustedProperties(DefaultKafkaConsumerFactory.java:427) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createKafkaConsumer(DefaultKafkaConsumerFactory.java:394) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createConsumer(DefaultKafkaConsumerFactory.java:371) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.<init>(KafkaMessageListenerContainer.java:849) ~[na:na]
+  	at org.springframework.kafka.listener.KafkaMessageListenerContainer.doStart(KafkaMessageListenerContainer.java:380) ~[na:na]
+  	at org.springframework.kafka.listener.AbstractMessageListenerContainer.start(AbstractMessageListenerContainer.java:531) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.listener.ConcurrentMessageListenerContainer.doStart(ConcurrentMessageListenerContainer.java:226) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.listener.AbstractMessageListenerContainer.start(AbstractMessageListenerContainer.java:531) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.2]
+  	at org.springframework.kafka.config.KafkaListenerEndpointRegistry.startIfNecessary(KafkaListenerEndpointRegistry.java:383) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.kafka.config.KafkaListenerEndpointRegistry.start(KafkaListenerEndpointRegistry.java:328) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.4]
+  	... 13 common frames omitted
+  Caused by: org.apache.kafka.common.KafkaException: org.apache.kafka.common.KafkaException: Could not find a public no-argument constructor for org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler
+  	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:184) ~[na:na]
+  	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192) ~[na:na]
+  	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81) ~[na:na]
+  	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:105) ~[na:na]
+  	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:738) ~[na:na]
+  	... 27 common frames omitted
+  Caused by: org.apache.kafka.common.KafkaException: Could not find a public no-argument constructor for org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler
+  	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:394) ~[na:na]
+  	at org.apache.kafka.common.network.SaslChannelBuilder.createClientCallbackHandler(SaslChannelBuilder.java:305) ~[na:na]
+  	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:148) ~[na:na]
+  	... 31 common frames omitted
+  Caused by: java.lang.NoSuchMethodException: org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler.<init>()
+  	at java.base@17.0.6/java.lang.Class.getConstructor0(DynamicHub.java:3585) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
+  	at java.base@17.0.6/java.lang.Class.getDeclaredConstructor(DynamicHub.java:2754) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
+  	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:392) ~[na:na]
+  	... 33 common frames omitted
   ```

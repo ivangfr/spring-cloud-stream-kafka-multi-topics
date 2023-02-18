@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(properties = "spring.kafka.producer.properties.num-partitions=1")
+@SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @EmbeddedKafka(bootstrapServersProperty = "spring.kafka.bootstrap-servers")
 class AlertEventProducerTest {
@@ -46,7 +46,7 @@ class AlertEventProducerTest {
     @BeforeAll
     void setUp() {
         DefaultKafkaConsumerFactory<String, String> consumerFactory = new DefaultKafkaConsumerFactory<>(getConsumerProperties());
-        ContainerProperties containerProperties = new ContainerProperties("spring.kafka.news", "spring.kafka.alert");
+        ContainerProperties containerProperties = new ContainerProperties("spring.kafka.alert");
         container = new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
         queue = new LinkedBlockingQueue<>();
         container.setupMessageListener((MessageListener<String, String>) queue::add);
