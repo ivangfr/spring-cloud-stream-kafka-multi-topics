@@ -227,7 +227,6 @@ docker rmi ivanfranchin/consumer-kafka:1.0.0
 
 ## Issues
 
-- The `producer-kafka` unit tests are not working.
 - When trying to run the Docker native images of `producer-kafka` and `consumer-kafka` using `cloudkarafka` profile, the following exception is thrown
   ```
   ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
