@@ -14,7 +14,7 @@ public class AlertEventConsumer {
 
     @KafkaListener(
             topics = "${spring.kafka.consumer.alert-topic}",
-            groupId = "${spring.kafka.consumer.group-id}",
+            groupId = "${spring.kafka.consumer.alert-group-id}",
             containerFactory = "alertKafkaListenerContainerFactory")
     public void alert(@Payload Alert alert, ConsumerRecordMetadata metadata) {
         log.info("Received message\n---\nTOPIC: {}; PARTITION: {}; OFFSET: {};\nPAYLOAD: {}\n---",

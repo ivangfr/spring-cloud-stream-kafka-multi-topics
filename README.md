@@ -26,13 +26,15 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - Access [`CloudKarafka`](https://www.cloudkarafka.com/) website
 
-- Create an account. There is the `Developer Duck` plan that is totally free
+- Create a free account.
 
-- Once you log into `CloudKarafka`, click on `Details` menu. You should see something like the picture below. In this page you have all the credentials and the URLs of the `Kafka` brokers
+- Follow this [documentation](https://www.cloudkarafka.com/docs/index.html) on how to get started.
+
+- Here is the overview of my `Local Development` instance
 
   ![cloudkarafka-details](documentation/cloudkarafka-details.jpeg)
 
-- In order to get information about the topic you will use, click on the `Topics` menu
+- In order to get information about the topics, on the left-menu, select KAFKA > TOPICS
 
   ![cloudkarafka-topics](documentation/cloudkarafka-topics.jpeg)
 

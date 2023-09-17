@@ -14,7 +14,7 @@ public class NewsEventConsumer {
 
     @KafkaListener(
             topics = "${spring.kafka.consumer.news-topic}",
-            groupId = "${spring.kafka.consumer.group-id}",
+            groupId = "${spring.kafka.consumer.news-group-id}",
             containerFactory = "newsKafkaListenerContainerFactory")
     public void news(@Payload News news, ConsumerRecordMetadata metadata) {
         log.info("Received message\n---\nTOPIC: {}; PARTITION: {}; OFFSET: {};\nPAYLOAD: {}\n---",
