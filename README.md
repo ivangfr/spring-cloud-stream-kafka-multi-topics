@@ -19,7 +19,6 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://www.docker.com/)
-- [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
 ## Using CloudKarafka
 
@@ -47,12 +46,12 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - Open a terminal and inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder run
   ```
-  docker-compose up -d
+  docker compose up -d
   ```
 
 - Wait for Docker containers to be up and running. To check it, run
   ```
-  docker-compose ps
+  docker compose ps
   ```
 
 - Create the Kafka topics used by the applications
@@ -68,9 +67,9 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ### Shutdown
 
-To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka`, run the command below
+To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka`, run the command below
 ```
-docker-compose down -v
+docker compose down -v
 ```
 
 ## Cleanup
