@@ -6,6 +6,10 @@ Similar projects are: [`spring-kafka-de-serialization-types`](https://github.com
 
 However, in this one, when the Spring Profile `cloudkarafka` is used, `producer` and `consumer` will connect to a `Kafka` that is located in a cloud-based messaging service called [`CloudKarafka`](https://www.cloudkarafka.com/). When running the applications with `default` profile, `producer` and `consumer` will connect to `Kafka` that is running locally in a `Docker` container.
 
+## Proof-of-Concepts & Articles
+
+On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
+
 ## Examples
 
 - ### [spring-kafka](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka/tree/master/spring-kafka#spring-cloud-stream-kafka-multi-topics-cloudkarafka)
