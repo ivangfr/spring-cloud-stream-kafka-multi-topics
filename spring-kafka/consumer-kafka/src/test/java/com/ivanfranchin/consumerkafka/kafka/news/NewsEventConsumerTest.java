@@ -28,7 +28,7 @@ import static org.awaitility.Awaitility.await;
 @SpringBootTest
 @ExtendWith(OutputCaptureExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@EmbeddedKafka(bootstrapServersProperty = "spring.kafka.bootstrap-servers")
+@EmbeddedKafka
 class NewsEventConsumerTest {
 
     @Autowired
