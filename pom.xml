@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.ivanfranchin</groupId>
-    <artifactId>spring-cloud-stream-kafka-multi-topics-cloudkarafka</artifactId>
+    <artifactId>spring-cloud-stream-kafka-multi-topics</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>spring-cloud-stream-kafka-multi-topics-cloudkarafka</name>
+    <name>spring-cloud-stream-kafka-multi-topics</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
