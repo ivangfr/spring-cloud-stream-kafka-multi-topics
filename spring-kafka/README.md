@@ -1,7 +1,7 @@
 # spring-cloud-stream-kafka-multi-topics-cloudkarafka
 ## `> spring-kafka`
 
-In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/reference/html/) library to implement the configuration between `Spring Boot` applications and `Kafka`.
+In this example, we use [`Spring for Apache Kafka`](https://spring.io/projects/spring-kafka) dependency to implement the configuration between `Spring Boot` applications and `Kafka`.
 
 ## Applications
 
@@ -9,7 +9,7 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   `Spring Boot` Web Java application that exposes one endpoint at which users can post `news` or `alert`. Once a request is made, `producer-kafka` pushes a message related to the `news` or `alert` to Kafka.
 
-  Endpoints
+  Endpoints:
   ```
   POST /api/news {"source":"...", "title":"..."}
   POST /api/alerts {"level":"...", "message":"..."}
@@ -21,75 +21,35 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 ## Running applications using Maven
 
-- #### Using CloudKarafka
+> **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#start-environment)  
 
-  - **producer-kafka**
+- **producer-kafka**
 
-    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
-
-    - Export your `CloudKarafka` credentials to those environment variables
-      ```
-      export KAFKA_URL=...
-      export CLOUDKARAFKA_USERNAME=...
-      export CLOUDKARAFKA_PASSWORD=...
-      ```
-    
-    - Run the Maven command below to start the application
-      ```
-      ./mvnw clean spring-boot:run --projects spring-kafka/producer-kafka \
-        -Dspring-boot.run.jvmArguments="-Dserver.port=9080" \
-        -Dspring-boot.run.profiles=cloudkarafka
-      ```
-
-  - **consumer-kafka**
-
-    - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+  - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder:
   
-    - Export your `CloudKarafka` credentials to those environment variables
-      ```
-      export KAFKA_URL=...
-      export CLOUDKARAFKA_USERNAME=...
-      export CLOUDKARAFKA_PASSWORD=...
-      ```
+  - Run application:
+    ```
+    ./mvnw clean spring-boot:run --projects spring-kafka/producer-kafka \
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
+    ```
+
+- **consumer-kafka**
+
+  - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder:
   
-    - Run the Maven command below to start the application
-      ```
-      ./mvnw clean spring-boot:run --projects spring-kafka/consumer-kafka \
-        -Dspring-boot.run.jvmArguments="-Dserver.port=9081" \
-        -Dspring-boot.run.profiles=cloudkarafka
-      ```
-
-- #### Using Kafka running locally
-
-  > **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)  
-
-  - **producer-kafka**
-
-    - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
-  
-    - Run application
-      ```
-      ./mvnw clean spring-boot:run --projects spring-kafka/producer-kafka \
-        -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
-      ```
-
-  - **consumer-kafka**
-
-    - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
-  
-    - Run application
-      ```
-      ./mvnw clean spring-boot:run --projects spring-kafka/consumer-kafka \
-        -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
-      ```
+  - Run application:
+    ```
+    ./mvnw clean spring-boot:run --projects spring-kafka/consumer-kafka \
+      -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
+    ```
 
 ## Running applications as Docker containers
 
 - ### Build application's Docker image
 
-  - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+  - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder:
 
-  - Run the following script to build the Docker images
+  - Run the following script to build the Docker images:
     - JVM
       ```
       ./docker-build-spring-kafka.sh
@@ -103,78 +63,33 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
   - **producer-kafka** and **consumer-kafka**
 
-    | Environment Variable     | Description                                                                                                                                |
-    |--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-    | `SPRING_PROFILES_ACTIVE` | Specify the type of profile to run the application. To use `CloudKarafka` set `cloudkarafka`. The `default` profile will use local `Kafka` |
-    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value is `localhost:29092`                                                |
-    | `CLOUDKARAFKA_USERNAME`  | Specify your `CloudKarafka` username. Required when using `cloudkarafka` profile                                                           |
-    | `CLOUDKARAFKA_PASSWORD`  | Specify your `CloudKarafka` password. Required when using `cloudkarafka` profile                                                           |
+    | Environment Variable     | Description                                                                                 |
+    |--------------------------|---------------------------------------------------------------------------------------------|
+    | `KAFKA_URL`              | Specify url(s) of the `Kafka` message broker to use. The default value is `localhost:29092` |
 
 - ### Starting application's Docker container
 
-  - #### Using CloudKarafka
+  > **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#start-environment)
 
-    - **producer-kafka**
-      
-      - In a terminal, export your `CloudKarafka` credentials to these environment variables
-        ```
-        export KAFKA_URL=...
-        export CLOUDKARAFKA_USERNAME=...
-        export CLOUDKARAFKA_PASSWORD=...
-        ```
+  - **producer-kafka**
 
-      - Run the command below to start the Docker container
-        ```
-        docker run --rm --name producer-kafka -p 9080:8080 \
-          -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-          -e KAFKA_URL=$KAFKA_URL \
-          -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
-          -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-          ivanfranchin/producer-kafka:1.0.0
-        ```
+    In a terminal, run the command below to start the Docker container:
+    ```
+    docker run --rm --name producer-kafka -p 9080:8080 \
+      -e KAFKA_URL=kafka:9092 \
+      --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
+      ivanfranchin/producer-kafka:1.0.0
+    ```
 
-    - **consumer-kafka**
+  - **consumer-kafka**
 
-      - Open a new terminal and export your `CloudKarafka` credentials to these environment variables
-        ```
-        export KAFKA_URL=...
-        export CLOUDKARAFKA_USERNAME=...
-        export CLOUDKARAFKA_PASSWORD=...
-        ```
-
-      - Run the command below to start the Docker container
-        ```
-        docker run --rm --name consumer-kafka -p 9081:8080 \
-          -e SPRING_PROFILES_ACTIVE=cloudkarafka \
-          -e KAFKA_URL=$KAFKA_URL \
-          -e CLOUDKARAFKA_USERNAME=$CLOUDKARAFKA_USERNAME \
-          -e CLOUDKARAFKA_PASSWORD=$CLOUDKARAFKA_PASSWORD \
-          ivanfranchin/consumer-kafka:1.0.0
-        ```
-
-  - #### Using Kafka running locally
-
-    > **Note**: you must have the `docker-compose.yml` services up and running, as explained in the main [README](https://github.com/ivangfr/spring-cloud-stream-kafka-multi-topics-cloudkarafka#using-kafka-running-locally)
-
-    - **producer-kafka**
-
-      In a terminal, run the command below to start the Docker container
-      ```
-      docker run --rm --name producer-kafka -p 9080:8080 \
-        -e KAFKA_URL=kafka:9092 \
-        --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
-        ivanfranchin/producer-kafka:1.0.0
-      ```
-
-    - **consumer-kafka**
-
-      Open a new terminal and run the command below to start the Docker container
-      ```
-      docker run --rm --name consumer-kafka -p 9081:8080 \
-        -e KAFKA_URL=kafka:9092 \
-        --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
-        ivanfranchin/consumer-kafka:1.0.0
-      ```
+    Open a new terminal and run the command below to start the Docker container:
+    ```
+    docker run --rm --name consumer-kafka -p 9081:8080 \
+      -e KAFKA_URL=kafka:9092 \
+      --network spring-cloud-stream-kafka-multi-topics-cloudkarafka_default \
+      ivanfranchin/consumer-kafka:1.0.0
+    ```
 
 ## Applications URLs
 
@@ -185,13 +100,13 @@ In this example, we use [`Spring Kafka`](https://docs.spring.io/spring-kafka/ref
 
 ## Playing around
 
-In a terminal, submit the following POST requests to `producer-kafka` and check its logs and `consumer-kafka` logs
+In a terminal, submit the following POST requests to `producer-kafka` and check its logs and `consumer-kafka` logs:
 
 > **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow 
 
 - **news**
   ```
-  http :9080/api/news source="Spring Boot Blog" title="Spring Boot and CloudKarafka"
+  http :9080/api/news source="Spring Boot Blog" title="Spring Boot and Apache Kafka"
   ```
 
 - **alerts**
@@ -201,11 +116,11 @@ In a terminal, submit the following POST requests to `producer-kafka` and check 
 
 ## Stop applications
 
-Go to the terminals where they are running and press `Ctrl+C`
+Go to the terminals where they are running and press `Ctrl+C`.
 
 ## Running Test Cases
 
-In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder
+In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-cloudkarafka` root folder:
 
 - **producer-kafka**
   ```
@@ -219,66 +134,8 @@ In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics-
 
 ## Cleanup
 
-To remove the Docker images created by this example, go to a terminal and run the following commands
+To remove the Docker images created by this example, go to a terminal and run the following commands:
 ```
 docker rmi ivanfranchin/producer-kafka:1.0.0
 docker rmi ivanfranchin/consumer-kafka:1.0.0
 ```
-
-## Issues
-
-- When trying to run the Docker native images of `producer-kafka` and `consumer-kafka` using `cloudkarafka` profile, the following exception is thrown
-  ```
-  ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
-  
-  org.springframework.context.ApplicationContextException: Failed to start bean 'org.springframework.kafka.config.internalKafkaListenerEndpointRegistry'
-  	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:182) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.11]
-  	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:357) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.11]
-  	at java.base@17.0.7/java.lang.Iterable.forEach(Iterable.java:75) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
-  	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:156) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.11]
-  	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:124) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.11]
-  	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:958) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.11]
-  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:611) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.11]
-  	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.1.3]
-  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.1.3]
-  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:436) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.1.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.1.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.1.3]
-  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.1.3]
-  	at com.ivanfranchin.consumerkafka.ConsumerKafkaApplication.main(ConsumerKafkaApplication.java:10) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
-  Caused by: org.apache.kafka.common.KafkaException: Failed to construct kafka consumer
-  	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:830) ~[na:na]
-  	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:665) ~[na:na]
-  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createRawConsumer(DefaultKafkaConsumerFactory.java:483) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createKafkaConsumer(DefaultKafkaConsumerFactory.java:451) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createConsumerWithAdjustedProperties(DefaultKafkaConsumerFactory.java:427) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createKafkaConsumer(DefaultKafkaConsumerFactory.java:394) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.core.DefaultKafkaConsumerFactory.createConsumer(DefaultKafkaConsumerFactory.java:371) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.<init>(KafkaMessageListenerContainer.java:865) ~[na:na]
-  	at org.springframework.kafka.listener.KafkaMessageListenerContainer.doStart(KafkaMessageListenerContainer.java:380) ~[na:na]
-  	at org.springframework.kafka.listener.AbstractMessageListenerContainer.start(AbstractMessageListenerContainer.java:557) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.listener.ConcurrentMessageListenerContainer.doStart(ConcurrentMessageListenerContainer.java:231) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.listener.AbstractMessageListenerContainer.start(AbstractMessageListenerContainer.java:557) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.config.KafkaListenerEndpointRegistry.startIfNecessary(KafkaListenerEndpointRegistry.java:383) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.kafka.config.KafkaListenerEndpointRegistry.start(KafkaListenerEndpointRegistry.java:328) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:3.0.10]
-  	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:179) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:6.0.11]
-  	... 13 common frames omitted
-  Caused by: org.apache.kafka.common.KafkaException: org.apache.kafka.common.KafkaException: Could not find a public no-argument constructor for org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler
-  	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:184) ~[na:na]
-  	at org.apache.kafka.common.network.ChannelBuilders.create(ChannelBuilders.java:192) ~[na:na]
-  	at org.apache.kafka.common.network.ChannelBuilders.clientChannelBuilder(ChannelBuilders.java:81) ~[na:na]
-  	at org.apache.kafka.clients.ClientUtils.createChannelBuilder(ClientUtils.java:105) ~[na:na]
-  	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:737) ~[na:na]
-  	... 27 common frames omitted
-  Caused by: org.apache.kafka.common.KafkaException: Could not find a public no-argument constructor for org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler
-  	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:397) ~[na:na]
-  	at org.apache.kafka.common.network.SaslChannelBuilder.createClientCallbackHandler(SaslChannelBuilder.java:304) ~[na:na]
-  	at org.apache.kafka.common.network.SaslChannelBuilder.configure(SaslChannelBuilder.java:148) ~[na:na]
-  	... 31 common frames omitted
-  Caused by: java.lang.NoSuchMethodException: org.apache.kafka.common.security.authenticator.SaslClientCallbackHandler.<init>()
-  	at java.base@17.0.7/java.lang.Class.checkMethod(DynamicHub.java:1040) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
-  	at java.base@17.0.7/java.lang.Class.getConstructor0(DynamicHub.java:1206) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
-  	at java.base@17.0.7/java.lang.Class.getDeclaredConstructor(DynamicHub.java:2754) ~[com.ivanfranchin.consumerkafka.ConsumerKafkaApplication:na]
-  	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:395) ~[na:na]
-  	... 33 common frames omitted
-  ```
