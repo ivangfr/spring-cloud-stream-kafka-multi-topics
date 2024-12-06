@@ -1,7 +1,7 @@
 # spring-cloud-stream-kafka-multi-topics
 ## `> spring-cloud-stream`
 
-In this example, we use [`Spring Cloud Stream`](https://spring.io/projects/spring-cloud-stream) dependency to implement the configuration between `Spring Boot` applications and `Kafka`.
+In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/reference/) dependency to implement the configuration between `Spring Boot` applications and `Kafka`.
 
 ## Applications
 
@@ -25,7 +25,7 @@ In this example, we use [`Spring Cloud Stream`](https://spring.io/projects/sprin
 
 - **producer-cloud-stream**
 
-  - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics` root folder:
+  - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
   
   - Run the Maven command below to start the application:
     ```
@@ -35,7 +35,7 @@ In this example, we use [`Spring Cloud Stream`](https://spring.io/projects/sprin
 
 - **consumer-cloud-stream**
 
-  - Open a new terminal and navigate to `spring-cloud-stream-kafka-multi-topics` root folder:
+  - Open a new terminal and navigate to the `spring-cloud-stream-kafka-multi-topics` root folder:
   
   - Run the Maven command below to start the application:
     ```
@@ -47,7 +47,7 @@ In this example, we use [`Spring Cloud Stream`](https://spring.io/projects/sprin
 
 - ### Build application's Docker image
 
-  - In a terminal, make sure you are in `spring-cloud-stream-kafka-multi-topics` root folder:
+  - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
 
   - Run the following script to build the Docker images:
     - JVM
@@ -120,7 +120,7 @@ Go to the terminals where they are running and press `Ctrl+C`.
 
 ## Running Test Cases
 
-In a terminal, make sure you are inside `spring-cloud-stream-kafka-multi-topics` root folder:
+In a terminal, make sure you are inside the `spring-cloud-stream-kafka-multi-topics` root folder:
 
 - **producer-cloud-stream**
   ```

@@ -6,17 +6,14 @@
         <groupId>com.ivanfranchin</groupId>
         <artifactId>spring-cloud-stream-kafka-multi-topics</artifactId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-
     <artifactId>spring-kafka</artifactId>
     <packaging>pom</packaging>
     <name>spring-kafka</name>
     <description>Demo project for Spring Boot</description>
-
     <modules>
         <module>producer-kafka</module>
         <module>consumer-kafka</module>
     </modules>
-
 </project>

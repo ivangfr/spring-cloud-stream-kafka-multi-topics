@@ -6,13 +6,11 @@
         <groupId>com.ivanfranchin</groupId>
         <artifactId>spring-cloud-stream</artifactId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-
     <artifactId>consumer-cloud-stream</artifactId>
     <name>consumer-cloud-stream</name>
     <description>Demo project for Spring Boot</description>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

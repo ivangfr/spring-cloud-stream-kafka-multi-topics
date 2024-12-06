@@ -6,23 +6,15 @@
         <groupId>com.ivanfranchin</groupId>
         <artifactId>spring-cloud-stream-kafka-multi-topics</artifactId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-
     <artifactId>spring-cloud-stream</artifactId>
     <packaging>pom</packaging>
     <name>spring-cloud-stream</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
-        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
     </properties>
-
-    <modules>
-        <module>producer-cloud-stream</module>
-        <module>consumer-cloud-stream</module>
-    </modules>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -34,5 +26,10 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <modules>
+        <module>producer-cloud-stream</module>
+        <module>consumer-cloud-stream</module>
+    </modules>
 
 </project>

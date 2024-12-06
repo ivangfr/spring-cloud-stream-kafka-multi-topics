@@ -1,6 +1,6 @@
 # spring-cloud-stream-kafka-multi-topics
 
-The goal of this project is to create two applications: one as a [`Spring Boot`](https://spring.io/projects/spring-boot) producer and the other as a `Spring Boot` consumer. We'll be using [`Spring for Apache Kafka`](https://spring.io/projects/spring-kafka) and [`Spring Cloud Stream`](https://spring.io/projects/spring-cloud-stream).
+The goal of this project is to create two applications: one as a [`Spring Boot`](https://docs.spring.io/spring-boot/index.html) producer and the other as a `Spring Boot` consumer. We'll be using [`Spring for Apache Kafka`](https://docs.spring.io/spring-kafka/reference/index.html) and [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/reference/).
 
 Similar projects are: [`spring-kafka-de-serialization-types`](https://github.com/ivangfr/spring-kafka-de-serialization-types) and [`spring-cloud-stream-kafka-elasticsearch`](https://github.com/ivangfr/spring-cloud-stream-kafka-elasticsearch).
 
@@ -24,12 +24,12 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
-- [`Docker`](https://www.docker.com/)
+- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
+- Some containerization tool [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.
 
 ## Start Environment
 
-- Open a terminal and inside `spring-cloud-stream-kafka-multi-topics` root folder run:
+- Open a terminal and inside the `spring-cloud-stream-kafka-multi-topics` root folder run:
   ```
   docker compose up -d
   ```
@@ -52,14 +52,14 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Shutdown
 
-To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-kafka-multi-topics`, run the command below:
+To stop and remove docker compose containers, network and volumes, in a terminal, navigate to the `spring-cloud-stream-kafka-multi-topics`, run the command below:
 ```
 docker compose down -v
 ```
 
 ## Cleanup
 
-To remove the Docker images created by this project, go to a terminal and, inside `spring-cloud-stream-kafka-multi-topics` root folder, run the following script:
+To remove the Docker images created by this project, in a terminal and inside the `spring-cloud-stream-kafka-multi-topics` root folder, run the following script:
 ```
 ./remove-docker-images.sh
 ```
