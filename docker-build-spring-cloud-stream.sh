@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
 
-if [ "$1" = "native" ];
-then
-  ./mvnw clean -Pnative spring-boot:build-image --projects spring-cloud-stream/producer-cloud-stream -DskipTests
-  ./mvnw clean -Pnative spring-boot:build-image --projects spring-cloud-stream/consumer-cloud-stream -DskipTests
-else
-  ./mvnw clean compile jib:dockerBuild --projects spring-cloud-stream/producer-cloud-stream
-  ./mvnw clean compile jib:dockerBuild --projects spring-cloud-stream/consumer-cloud-stream
-fi
+DOCKER_IMAGE_PREFIX="ivanfranchin"
+APP_VERSION="1.0.0"
+
+PRODUCER_CLOUD_STREAM_APP_NAME="producer-cloud-stream"
+CONSUMER_CLOUD_STREAM_APP_NAME="consumer-cloud-stream"
+
+PRODUCER_CLOUD_STREAM_PROJECT_NAME="spring-cloud-stream/${PRODUCER_CLOUD_STREAM_APP_NAME}"
+CONSUMER_CLOUD_STREAM_PROJECT_NAME="spring-cloud-stream/${CONSUMER_CLOUD_STREAM_APP_NAME}"
+
+PRODUCER_CLOUD_STREAM_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${PRODUCER_CLOUD_STREAM_APP_NAME}:${APP_VERSION}"
+CONSUMER_CLOUD_STREAM_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${CONSUMER_CLOUD_STREAM_APP_NAME}:${APP_VERSION}"
+
+SKIP_TESTS="true"
+
+./mvnw clean compile jib:dockerBuild \
+  --projects "$PRODUCER_CLOUD_STREAM_PROJECT_NAME" \
+  -DskipTests="$SKIP_TESTS" \
+  -Dimage="$PRODUCER_CLOUD_STREAM_DOCKER_IMAGE_NAME"
+
+./mvnw clean compile jib:dockerBuild \
+  --projects "$CONSUMER_CLOUD_STREAM_PROJECT_NAME" \
+  -DskipTests="$SKIP_TESTS" \
+  -Dimage="$CONSUMER_CLOUD_STREAM_DOCKER_IMAGE_NAME"

@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
 
-if [ "$1" = "native" ];
-then
-  ./mvnw clean -Pnative spring-boot:build-image --projects spring-kafka/producer-kafka -DskipTests
-  ./mvnw clean -Pnative spring-boot:build-image --projects spring-kafka/consumer-kafka -DskipTests
-else
-  ./mvnw clean compile jib:dockerBuild --projects spring-kafka/producer-kafka
-  ./mvnw clean compile jib:dockerBuild --projects spring-kafka/consumer-kafka
-fi
+DOCKER_IMAGE_PREFIX="ivanfranchin"
+APP_VERSION="1.0.0"
+
+PRODUCER_KAFKA_APP_NAME="producer-kafka"
+CONSUMER_KAFKA_APP_NAME="consumer-kafka"
+
+PRODUCER_KAFKA_PROJECT_NAME="spring-kafka/${PRODUCER_KAFKA_APP_NAME}"
+CONSUMER_KAFKA_PROJECT_NAME="spring-kafka/${CONSUMER_KAFKA_APP_NAME}"
+
+PRODUCER_KAFKA_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${PRODUCER_KAFKA_APP_NAME}:${APP_VERSION}"
+CONSUMER_KAFKA_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${CONSUMER_KAFKA_APP_NAME}:${APP_VERSION}"
+
+SKIP_TESTS="true"
+
+./mvnw clean compile jib:dockerBuild \
+  --projects "$PRODUCER_KAFKA_PROJECT_NAME" \
+  -DskipTests="$SKIP_TESTS" \
+  -Dimage="$PRODUCER_KAFKA_DOCKER_IMAGE_NAME"
+
+./mvnw clean compile jib:dockerBuild \
+  --projects "$CONSUMER_KAFKA_PROJECT_NAME" \
+  -DskipTests="$SKIP_TESTS" \
+  -Dimage="$CONSUMER_KAFKA_DOCKER_IMAGE_NAME"

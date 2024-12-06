@@ -50,14 +50,9 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
   - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
 
   - Run the following script to build the Docker images:
-    - JVM
-      ```
-      ./docker-build-spring-kafka.sh
-      ```
-    - Native
-      ```
-      ./docker-build-spring-kafka.sh native
-      ```
+    ```
+    ./docker-build-spring-kafka.sh
+    ```
 
 - ### Application's Environment Variables
 

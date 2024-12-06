@@ -50,14 +50,9 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
 
   - Run the following script to build the Docker images:
-    - JVM
-      ```
-      ./docker-build-spring-cloud-stream.sh
-      ```
-    - Native
-      ```
-      ./docker-build-spring-cloud-stream.sh native
-      ```
+    ```
+    ./docker-build-spring-cloud-stream.sh
+    ```
 
 - ### Application's Environment Variables
 
