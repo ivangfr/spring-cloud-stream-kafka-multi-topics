@@ -51,7 +51,7 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
 
   - Run the following script to build the Docker images:
     ```
-    ./docker-build-spring-kafka.sh
+    ./build-docker-images-spring-kafka.sh
     ```
 
 - ### Application's Environment Variables
@@ -85,13 +85,6 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
       --network spring-cloud-stream-kafka-multi-topics_default \
       ivanfranchin/consumer-kafka:1.0.0
     ```
-
-## Applications URLs
-
-| Application    | URL                   |
-|----------------|-----------------------|
-| producer-kafka | http://localhost:9080 |
-| consumer-kafka | http://localhost:9081 |
 
 ## Playing around
 

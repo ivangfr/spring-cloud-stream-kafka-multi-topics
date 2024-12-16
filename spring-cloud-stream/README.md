@@ -51,7 +51,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
   - Run the following script to build the Docker images:
     ```
-    ./docker-build-spring-cloud-stream.sh
+    ./build-docker-images-spring-cloud-stream.sh
     ```
 
 - ### Application's Environment Variables
@@ -85,13 +85,6 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
       --network spring-cloud-stream-kafka-multi-topics_default \
       ivanfranchin/consumer-cloud-stream:1.0.0
     ```
-
-## Applications URLs
-
-| Application           | URL                   |
-|-----------------------|-----------------------|
-| producer-cloud-stream | http://localhost:9082 |
-| consumer-cloud-stream | http://localhost:9083 |
 
 ## Playing around
 

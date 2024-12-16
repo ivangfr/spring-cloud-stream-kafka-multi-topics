@@ -16,7 +16,7 @@ public class NewsEventConsumer {
     private static final Logger log = LoggerFactory.getLogger(NewsEventConsumer.class);
 
     @Bean
-    public Consumer<Message<News>> news() {
+    Consumer<Message<News>> news() {
         return message -> {
             News news = message.getPayload();
             MessageHeaders messageHeaders = message.getHeaders();

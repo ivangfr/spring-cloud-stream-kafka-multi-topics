@@ -24,7 +24,7 @@ public class AlertEventConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Alert> alertKafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, Alert> alertKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Alert> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(alertConsumerFactory());
         factory.setConcurrency(kafkaProperties.getListener().getConcurrency());

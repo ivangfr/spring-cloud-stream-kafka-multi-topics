@@ -16,7 +16,7 @@ public class AlertEventConsumer {
     private static final Logger log = LoggerFactory.getLogger(AlertEventConsumer.class);
 
     @Bean
-    public Consumer<Message<Alert>> alert() {
+    Consumer<Message<Alert>> alert() {
         return message -> {
             Alert alert = message.getPayload();
             MessageHeaders messageHeaders = message.getHeaders();
