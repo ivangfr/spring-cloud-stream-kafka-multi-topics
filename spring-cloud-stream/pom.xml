@@ -13,7 +13,7 @@
     <name>spring-cloud-stream</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -26,10 +26,8 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <modules>
         <module>producer-cloud-stream</module>
         <module>consumer-cloud-stream</module>
     </modules>
-
 </project>

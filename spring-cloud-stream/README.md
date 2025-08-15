@@ -1,16 +1,16 @@
 # spring-cloud-stream-kafka-multi-topics
 ## `> spring-cloud-stream`
 
-In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/reference/) dependency to implement the configuration between `Spring Boot` applications and `Kafka`.
+In this example, we use the [`Spring Cloud Stream`](https://docs.spring.io/spring-cloud-stream/reference/) dependency to configure communication between `Spring Boot` applications and `Kafka`.
 
 ## Applications
 
 - ### producer-cloud-stream
 
-  `Spring Boot` Web Java application that exposes one endpoint at which users can post `news` or `alert`. Once a request is made, `producer-cloud-stream` pushes a message related to the `news` or `alert` to Kafka.
+  `Spring Boot` Web Java application that exposes one endpoint at which users can post `news` or `alert`. Once a request is made, `producer-cloud-stream` pushes a message containing the `news` or `alert` information to Kafka.
 
   Endpoints:
-  ```
+  ```text
   POST /api/news {"source":"...", "title":"..."}
   POST /api/alerts {"level":"...", "message":"..."}
   ```
@@ -28,7 +28,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
   
   - Run the Maven command below to start the application:
-    ```
+    ```bash
     ./mvnw clean spring-boot:run --projects spring-cloud-stream/producer-cloud-stream \
       -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
     ```
@@ -38,7 +38,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - Open a new terminal and navigate to the `spring-cloud-stream-kafka-multi-topics` root folder:
   
   - Run the Maven command below to start the application:
-    ```
+    ```bash
     ./mvnw clean spring-boot:run --projects spring-cloud-stream/consumer-cloud-stream \
       -Dspring-boot.run.jvmArguments="-Dserver.port=9083"
     ```
@@ -50,7 +50,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
 
   - Run the following script to build the Docker images:
-    ```
+    ```bash
     ./build-docker-images-spring-cloud-stream.sh
     ```
 
@@ -69,7 +69,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - **producer-kafka**
 
     In a terminal, run the command below to start the Docker container:
-    ```
+    ```bash
     docker run --rm --name producer-cloud-stream -p 9082:8080 \
       -e KAFKA_URL=kafka:9092 \
       --network spring-cloud-stream-kafka-multi-topics_default \
@@ -79,7 +79,7 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
   - **consumer-kafka**
 
     Open a new terminal and run the command below to start the Docker container:
-    ```
+    ```bash
     docker run --rm --name consumer-cloud-stream -p 9083:8080 \
       -e KAFKA_URL=kafka:9092 \
       --network spring-cloud-stream-kafka-multi-topics_default \
@@ -88,17 +88,17 @@ In this example, we use [`Spring Cloud Stream`](https://docs.spring.io/spring-cl
 
 ## Playing around
 
-In a terminal, submit the following POST requests to `producer-cloud-stream` and check its logs and `consumer-cloud-stream` logs:
+In a terminal, submit the following POST requests to `producer-cloud-stream` and check its logs as well as the `consumer-cloud-stream` logs:
 
 > **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow
 
 - **news**
-  ```
+  ```bash
   http :9082/api/news source="Spring Boot Blog" title="Spring Boot and Apache Kafka"
   ```
   
 - **alerts**
-  ```
+  ```bash
   http :9082/api/alerts level=4 message="Tsunami is coming"
   ```
 
@@ -111,19 +111,19 @@ Go to the terminals where they are running and press `Ctrl+C`.
 In a terminal, make sure you are inside the `spring-cloud-stream-kafka-multi-topics` root folder:
 
 - **producer-cloud-stream**
-  ```
+  ```bash
   ./mvnw clean test --projects spring-cloud-stream/producer-cloud-stream
   ```
 
 - **consumer-cloud-stream**
-  ```
+  ```bash
   ./mvnw clean test --projects spring-cloud-stream/consumer-cloud-stream
   ```
 
 ## Cleanup
 
 To remove the Docker images created by this example, go to a terminal and run the following commands:
-```
+```bash
 docker rmi ivanfranchin/producer-cloud-stream:1.0.0
 docker rmi ivanfranchin/consumer-cloud-stream:1.0.0
 ```

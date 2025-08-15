@@ -1,16 +1,16 @@
 # spring-cloud-stream-kafka-multi-topics
 ## `> spring-kafka`
 
-In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/spring-kafka/reference/index.html) dependency to implement the configuration between `Spring Boot` applications and `Kafka`.
+In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/spring-kafka/reference/index.html) dependency to configure communication between `Spring Boot` applications and `Kafka`.
 
 ## Applications
 
 - ### producer-kafka
 
-  `Spring Boot` Web Java application that exposes one endpoint at which users can post `news` or `alert`. Once a request is made, `producer-kafka` pushes a message related to the `news` or `alert` to Kafka.
+  `Spring Boot` Web Java application that exposes one endpoint at which users can post `news` or `alert`. Once a request is made, `producer-kafka` pushes a message containing the `news` or `alert` information to Kafka.
 
   Endpoints:
-  ```
+  ```text
   POST /api/news {"source":"...", "title":"..."}
   POST /api/alerts {"level":"...", "message":"..."}
   ```
@@ -28,7 +28,7 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
   - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
   
   - Run application:
-    ```
+    ```bash
     ./mvnw clean spring-boot:run --projects spring-kafka/producer-kafka \
       -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
     ```
@@ -38,7 +38,7 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
   - Open a new terminal and navigate to the `spring-cloud-stream-kafka-multi-topics` root folder:
   
   - Run application:
-    ```
+    ```bash
     ./mvnw clean spring-boot:run --projects spring-kafka/consumer-kafka \
       -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
     ```
@@ -50,7 +50,7 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
   - In a terminal, make sure you are in the `spring-cloud-stream-kafka-multi-topics` root folder:
 
   - Run the following script to build the Docker images:
-    ```
+    ```bash
     ./build-docker-images-spring-kafka.sh
     ```
 
@@ -69,7 +69,7 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
   - **producer-kafka**
 
     In a terminal, run the command below to start the Docker container:
-    ```
+    ```bash
     docker run --rm --name producer-kafka -p 9080:8080 \
       -e KAFKA_URL=kafka:9092 \
       --network spring-cloud-stream-kafka-multi-topics_default \
@@ -79,7 +79,7 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
   - **consumer-kafka**
 
     Open a new terminal and run the command below to start the Docker container:
-    ```
+    ```bash
     docker run --rm --name consumer-kafka -p 9081:8080 \
       -e KAFKA_URL=kafka:9092 \
       --network spring-cloud-stream-kafka-multi-topics_default \
@@ -88,17 +88,17 @@ In this example, we use [`Spring for Apache Kafka`](https://docs.spring.io/sprin
 
 ## Playing around
 
-In a terminal, submit the following POST requests to `producer-kafka` and check its logs and `consumer-kafka` logs:
+In a terminal, submit the following POST requests to `producer-kafka` and check its logs as well as the `consumer-kafka` logs:
 
 > **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow 
 
 - **news**
-  ```
+  ```bash
   http :9080/api/news source="Spring Boot Blog" title="Spring Boot and Apache Kafka"
   ```
 
 - **alerts**
-  ```
+  ```bash
   http :9080/api/alerts level=4 message="Tsunami is coming"
   ```
 
@@ -111,19 +111,19 @@ Go to the terminals where they are running and press `Ctrl+C`.
 In a terminal, make sure you are inside the `spring-cloud-stream-kafka-multi-topics` root folder:
 
 - **producer-kafka**
-  ```
+  ```bash
   ./mvnw clean test --projects spring-kafka/producer-kafka
   ```
 
 - **consumer-kafka**
-  ```
+  ```bash
   ./mvnw clean test --projects spring-kafka/consumer-kafka
   ```
 
 ## Cleanup
 
 To remove the Docker images created by this example, go to a terminal and run the following commands:
-```
+```bash
 docker rmi ivanfranchin/producer-kafka:1.0.0
 docker rmi ivanfranchin/consumer-kafka:1.0.0
 ```

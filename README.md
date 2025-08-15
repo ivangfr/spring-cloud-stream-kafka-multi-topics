@@ -24,23 +24,23 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
-- Some containerization tool [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.
+- [`Java 21`](https://www.oracle.com/java/technologies/downloads/#java21) or higher.
+- A containerization tool (e.g., [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.)
 
 ## Start Environment
 
 - Open a terminal and inside the `spring-cloud-stream-kafka-multi-topics` root folder run:
-  ```
+  ```bash
   docker compose up -d
   ```
 
 - Wait for Docker containers to be up and running. To check it, run:
-  ```
+  ```bash
   docker ps -a
   ```
 
 - Create the Kafka topics used by the applications:
-  ```
+  ```bash
   ./create-kafka-topics.sh
   ```
 
@@ -52,14 +52,14 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Shutdown
 
-To stop and remove docker compose containers, network and volumes, in a terminal, navigate to the `spring-cloud-stream-kafka-multi-topics`, run the command below:
-```
+To stop and remove docker compose containers, network and volumes, in a terminal, navigate to the `spring-cloud-stream-kafka-multi-topics` folder, run the command below:
+```bash
 docker compose down -v
 ```
 
 ## Cleanup
 
-To remove the Docker images created by this project, in a terminal and inside the `spring-cloud-stream-kafka-multi-topics` root folder, run the following script:
-```
+To remove the Docker images created by this project, in a terminal, inside the `spring-cloud-stream-kafka-multi-topics` root folder, run the following script:
+```bash
 ./remove-docker-images.sh
 ```
