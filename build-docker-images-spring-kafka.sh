@@ -14,12 +14,12 @@ CONSUMER_KAFKA_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${CONSUMER_KAFKA_APP_NA
 
 SKIP_TESTS="true"
 
-./mvnw clean compile jib:dockerBuild \
+./mvnw clean spring-boot:build-image \
   --projects "$PRODUCER_KAFKA_PROJECT_NAME" \
   -DskipTests="$SKIP_TESTS" \
-  -Dimage="$PRODUCER_KAFKA_DOCKER_IMAGE_NAME"
+  -Dspring-boot.build-image.imageName="$PRODUCER_KAFKA_DOCKER_IMAGE_NAME"
 
-./mvnw clean compile jib:dockerBuild \
+./mvnw clean spring-boot:build-image \
   --projects "$CONSUMER_KAFKA_PROJECT_NAME" \
   -DskipTests="$SKIP_TESTS" \
-  -Dimage="$CONSUMER_KAFKA_DOCKER_IMAGE_NAME"
+  -Dspring-boot.build-image.imageName="$CONSUMER_KAFKA_DOCKER_IMAGE_NAME"

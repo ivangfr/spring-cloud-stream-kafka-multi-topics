@@ -14,12 +14,12 @@ CONSUMER_CLOUD_STREAM_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${CONSUMER_CLOUD
 
 SKIP_TESTS="true"
 
-./mvnw clean compile jib:dockerBuild \
+./mvnw clean spring-boot:build-image \
   --projects "$PRODUCER_CLOUD_STREAM_PROJECT_NAME" \
   -DskipTests="$SKIP_TESTS" \
-  -Dimage="$PRODUCER_CLOUD_STREAM_DOCKER_IMAGE_NAME"
+  -Dspring-boot.build-image.imageName="$PRODUCER_CLOUD_STREAM_DOCKER_IMAGE_NAME"
 
-./mvnw clean compile jib:dockerBuild \
+./mvnw clean spring-boot:build-image \
   --projects "$CONSUMER_CLOUD_STREAM_PROJECT_NAME" \
   -DskipTests="$SKIP_TESTS" \
-  -Dimage="$CONSUMER_CLOUD_STREAM_DOCKER_IMAGE_NAME"
+  -Dspring-boot.build-image.imageName="$CONSUMER_CLOUD_STREAM_DOCKER_IMAGE_NAME"

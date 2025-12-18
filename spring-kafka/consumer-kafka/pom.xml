@@ -11,8 +11,21 @@
     <artifactId>consumer-kafka</artifactId>
     <name>consumer-kafka</name>
     <description>Demo project for Spring Boot</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
     <properties>
-        <awaitility.version>4.2.2</awaitility.version>
+        <awaitility.version>4.3.0</awaitility.version>
     </properties>
     <dependencies>
         <dependency>

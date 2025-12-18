@@ -12,20 +12,19 @@
     <packaging>pom</packaging>
     <name>spring-cloud-stream</name>
     <description>Demo project for Spring Boot</description>
-    <properties>
-        <spring-cloud.version>2025.0.0</spring-cloud.version>
-    </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
     <modules>
         <module>producer-cloud-stream</module>
         <module>consumer-cloud-stream</module>
