@@ -1,7 +1,5 @@
 package com.ivanfranchin.producerkafka.alert;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -18,6 +16,7 @@ import org.springframework.kafka.listener.MessageListener;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -40,8 +39,8 @@ class AlertEventEmitterTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private BlockingQueue<ConsumerRecord<String, String>> queue;
-    private KafkaMessageListenerContainer<String, String> container;
+    private static BlockingQueue<ConsumerRecord<String, String>> queue;
+    private static KafkaMessageListenerContainer<String, String> container;
 
     @BeforeAll
     void setUp() {
@@ -60,7 +59,7 @@ class AlertEventEmitterTest {
     }
 
     @Test
-    void testSend() throws JsonProcessingException, InterruptedException {
+    void testSend() throws InterruptedException {
         Alert alert = new Alert("id", 1, "message");
 
         alertEventEmitter.send(alert);

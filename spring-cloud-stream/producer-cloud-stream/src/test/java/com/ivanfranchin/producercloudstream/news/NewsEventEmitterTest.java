@@ -1,6 +1,5 @@
 package com.ivanfranchin.producercloudstream.news;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanfranchin.producercloudstream.ProducerCloudStreamApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.WebApplicationType;
@@ -11,8 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
-
-import java.io.IOException;
+import tools.jackson.databind.ObjectMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,21 +33,13 @@ class NewsEventEmitterTest {
 
             Message<byte[]> outputMessage = outputDestination.receive(0, "spring.cloud.stream.news");
             MessageHeaders headers = outputMessage.getHeaders();
-            News payload = deserialize(objectMapper, outputMessage.getPayload(), News.class);
+            News payload = objectMapper.readValue(outputMessage.getPayload(), News.class);
 
             assertThat(headers.get(MessageHeaders.CONTENT_TYPE)).isEqualTo(MediaType.APPLICATION_JSON_VALUE);
             assertThat(payload).isNotNull();
             assertThat(payload.id()).isEqualTo(news.id());
             assertThat(payload.source()).isEqualTo(news.source());
             assertThat(payload.title()).isEqualTo(news.title());
-        }
-    }
-
-    private <T> T deserialize(ObjectMapper objectMapper, byte[] bytes, Class<T> clazz) {
-        try {
-            return objectMapper.readValue(bytes, clazz);
-        } catch (IOException e) {
-            return null;
         }
     }
 }
